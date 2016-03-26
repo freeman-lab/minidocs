@@ -2,11 +2,13 @@
 
 > build a site for your documentation
 
-This module makes it easy to build a documentation site from very simple components
+This module makes it easy to build a documentation site from simple and standard components
 - a collection of markdown documents
-- an object representing your table of contents
+- a nested object representing your table of contents
 
-Especially well suited to documenting collections of small modules, keeping all the documentation in one place.
+You can include it as a module and bundle the site yourself with `browserify`, or use as a command line tool.
+
+This is deliberately much, much simpler than something like Jekyll or Sphinx. It's well-suited to cases where your documentation consists entirely of markdown files, either specifically for your project or from the README files of other modules.
 
 ## install
 
@@ -25,13 +27,12 @@ var contents = {
   'overview': {
     'about': 'about.md'
   },
-  'packages': {
-    'core': {
-      'cool-module': 'cool-module-readme.md',
-      'rad-module': 'rad-module-readme.md'
+  'animals': {
+    'furry': {
+      'sheep': 'sheep.md'
     },
-    'extra': {
-      'another-module': 'another-module-readme.md'
+    'pink': {
+      'pig': 'pig.md'
     }
   }
 }
@@ -44,8 +45,7 @@ var docs = require('minidocs')
 
 docs({
   contents: contents,
-  path: './markdown'
 })
 ```
 
-This assumes you have the files `cool-module-readme.md`, `rad-module-readme.md`, and `another-module-readme.md` inside the folder `./markdown`.
+This assumes you have the files `about.md`, `sheep.md`, and `pig.md` inside the folder `./markdown`.
