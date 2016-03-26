@@ -22,12 +22,25 @@
   "bugs": {
     "url": "https://github.com/freeman-lab/minidocs/issues"
   },
+  "browserify": {
+    "transform": [
+      "brfs",
+      "folderify"
+    ]
+  },
   "homepage": "https://github.com/freeman-lab/minidocs#readme",
   "dependencies": {
+    "brfs": "^1.4.3",
+    "bulkify": "^1.2.0",
+    "camelcase": "^2.1.1",
     "dom-css": "^2.0.0",
+    "folderify": "^1.2.0",
     "lodash.foreach": "^4.1.0",
     "lodash.isobject": "^3.0.2",
     "lodash.map": "^4.2.1",
+    "marked": "^0.3.5",
+    "static-eval": "^0.2.4",
+    "stringify": "^5.1.0",
     "yo-yo": "^1.1.1"
   }
 }

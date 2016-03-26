@@ -1,31 +1,31 @@
-var yo = require('yo-yo')
+var fs = require('fs')
+var path = require('path')
 var css = require('dom-css')
-var contents = require('./components/contents')
-var main = require('./components/main')
+var marked = require('marked')
+var camelcase = require('camelcase')
+var foreach = require('lodash.foreach')
+var include = require('include-folder')
 
 module.exports = function (opts) {
+  var contents = opts.contents
 
-  var source = opts.source
-  var theme = opts.theme
+  var documents = include('./markdown')
 
-  var page = yo`<div style=${{width: '50%'}}>
-  ${contents(opts.contents)}
-  ${main()}
-  </div>`
-  css(page, {width: '100%'})
+  parsed = {}
+  foreach(documents, function (value, key) {
+    parsed[key] = marked(value)
+  })
+
+  var container = document.createElement('div')
+  document.body.appendChild(container)
+  
+  var sidebar = require('./components/sidebar')(container, contents)
+  var main = require('./components/main')(container)
+  
+  sidebar.on('selected', function (id) {
+    var fileid = camelcase(id.replace('.md', ''))
+    main.show(parsed[fileid])
+  })
 
   css(document.body, {margin: '0px', padding: '0px'})
-
-  document.body.appendChild(page)
 }
-
-
-
-
-
-
-// build a nested list on the left
-
-// add an onclick event for each one
-
-// onclick opens the markdown
