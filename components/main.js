@@ -6,7 +6,8 @@ var fs = require('fs')
 module.exports = function (container, documents) {
   var style = {
     wrapper: {
-      width: '75%',
+      width: '70%',
+      paddingLeft: '2%',
       verticalAlign: 'top',
       display: 'inline-block'
     },
@@ -16,6 +17,7 @@ module.exports = function (container, documents) {
   }
 
   var wrapper = document.createElement('div')
+  wrapper.className = 'minidocs-main'
   css(wrapper, style.wrapper)
   container.appendChild(wrapper)
 

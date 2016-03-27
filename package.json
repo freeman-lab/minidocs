@@ -4,6 +4,7 @@
   "description": "build a simple site for your documentation",
   "main": "index.js",
   "scripts": {
+    "start": "budo example.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -31,16 +32,18 @@
   "homepage": "https://github.com/freeman-lab/minidocs#readme",
   "dependencies": {
     "brfs": "^1.4.3",
-    "bulkify": "^1.2.0",
     "camelcase": "^2.1.1",
     "dom-css": "^2.0.0",
     "folderify": "^1.2.0",
+    "highlight.js": "^9.2.0",
+    "insert-css": "^0.2.0",
+    "lodash.find": "^4.2.0",
     "lodash.foreach": "^4.1.0",
     "lodash.isobject": "^3.0.2",
     "lodash.map": "^4.2.1",
-    "marked": "^0.3.5",
-    "static-eval": "^0.2.4",
-    "stringify": "^5.1.0",
-    "yo-yo": "^1.1.1"
+    "marked": "^0.3.5"
+  },
+  "devDependencies": {
+    "budo": "^8.1.0"
   }
 }

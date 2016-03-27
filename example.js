@@ -1,10 +1,11 @@
 var contents = {
   'overview': {
-    'about': 'about.md'
+    'about': 'about-file.md'
   },
   'animals': {
     'furry': {
-      'sheep': 'sheep.md'
+      'sheep': 'sheep.md',
+      'puppy': 'puppy.md'
     },
     'pink': {
       'pig': 'pig.md'
@@ -14,4 +15,5 @@ var contents = {
 
 require('./index')({
   contents: contents,
+  logo: 'logo.svg'
 })

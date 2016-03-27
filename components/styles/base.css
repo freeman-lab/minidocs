@@ -1,0 +1,39 @@
+@font-face {
+    font-family: ClearSans-Thin;
+    src: url(./components/assets/clearsans-1.00/ClearSans-Thin.woff);
+}
+
+@font-face {
+    font-family: ClearSans-Light;
+    src: url(./components/assets/clearsans-1.00/ClearSans-Light.woff);
+}
+
+@font-face {
+    font-family: ClearSans-Medium;
+    src: url(./components/assets/clearsans-1.00/ClearSans-Medium.woff);
+}
+
+body {
+  font-family: 'ClearSans-Thin';
+  color: rgb(80,80,80);
+}
+
+h1 {
+  font-family: 'ClearSans-Thin';
+}
+
+.contents-link {
+  padding-left: 2%;
+  cursor: pointer;
+  padding-bottom: 2px;
+  border-left: solid 1px white;
+}
+
+.contents-link:hover {
+  border-left: dotted 1px black;
+}
+
+.contents-link-selected {
+  border-left: dotted 1px black;
+  color: rgb(0,0,0);
+}

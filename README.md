@@ -8,7 +8,9 @@ This module makes it easy to build a documentation site from simple and standard
 
 You can include it as a module and bundle the site yourself with `browserify`, or use as a command line tool.
 
-This is deliberately much, much simpler than something like Jekyll or Sphinx. It's well-suited to cases where your documentation consists entirely of markdown files, either specifically for your project or from the README files of other modules.
+This is deliberately much simpler than something like Jekyll or Sphinx, and also less flexible. It's well-suited to cases where your documentation consists entirely of markdown files, either specifically for your project or from the README files of other modules. But it composes well with any tools that pull in markdown.
+
+There are options for specifying a project logo, and a color theme.
 
 ## install
 

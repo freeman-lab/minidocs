@@ -14,6 +14,7 @@ function Sidebar (container, contents) {
   var self = this
 
   var sidebar = document.createElement('div')
+  sidebar.className = 'minidocs-contents'
   iterate(sidebar, contents, -1)
 
   function heading (name, depth) {
@@ -22,7 +23,8 @@ function Sidebar (container, contents) {
     if (depth === 1) el = document.createElement('h2')
     if (depth === 2) el = document.createElement('h3')
     if (depth === 3) el = document.createElement('h4')
-    el.innerHTML = name
+    if (depth === 0) el.innerHTML = '# '
+    el.innerHTML += name
     return el
   }
 
@@ -39,15 +41,35 @@ function Sidebar (container, contents) {
       el.appendChild(heading(key, depth))
       iterate(el, value, depth)
     } else {
+      var item = document.createElement('div')
+      css(item, {marginBottom: '5px'})
+      container.appendChild(item)
       var link = document.createElement('a')
+      link.id = key + '-link'
       link.innerHTML = key
+      link.className = 'contents-link'
       link.onclick = function () {
-        self.emit('selected', value)
+        highlight(link)
+        self.emit('selected', key)
       }
-      container.appendChild(link)
+      item.appendChild(link)
     }
   }
 
-  css(sidebar, {width: '24%', display: 'inline-block'})
+  function highlight (link) {
+    foreach(document.querySelectorAll('.contents-link'), function (item) {
+      item.className = 'contents-link'
+    })
+    link.className = 'contents-link contents-link-selected'
+  }
+
+  function select (key) {
+    highlight(document.querySelector('#' + key + '-link'))
+    self.emit('selected', key)
+  }
+
+  css(sidebar, {width: '24%', paddingLeft: '1%', display: 'inline-block'})
   container.appendChild(sidebar)
+
+  self.select = select
 }
