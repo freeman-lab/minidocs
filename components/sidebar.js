@@ -13,6 +13,16 @@ function Sidebar (container, contents) {
   if (!(this instanceof Sidebar)) return new Sidebar(container, contents)
   var self = this
 
+  var style = {
+    sidebar: {
+      width: '25%',
+      paddingLeft: '1%',
+      display: 'inline-block',
+      overflowY: 'scroll',
+      height: '80%'
+    }
+  }
+
   var sidebar = document.createElement('div')
   sidebar.className = 'minidocs-contents'
   iterate(sidebar, contents, -1)
@@ -68,7 +78,7 @@ function Sidebar (container, contents) {
     self.emit('selected', key)
   }
 
-  css(sidebar, {width: '24%', paddingLeft: '1%', display: 'inline-block'})
+  css(sidebar, style.sidebar)
   container.appendChild(sidebar)
 
   self.select = select

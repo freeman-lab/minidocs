@@ -6,6 +6,8 @@ module.exports = function (container, logo) {
       width: '100%',
       paddingLeft: '0%',
       marginTop: '25px',
+      height: '10%',
+      marginBottom: '5px',
       verticalAlign: 'top',
       display: 'inline-block',
     },

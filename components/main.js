@@ -6,8 +6,8 @@ var fs = require('fs')
 module.exports = function (container, documents) {
   var style = {
     wrapper: {
-      width: '70%',
-      paddingLeft: '2%',
+      width: '65%',
+      paddingLeft: '6%',
       verticalAlign: 'top',
       display: 'inline-block'
     },
