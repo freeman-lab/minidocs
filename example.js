@@ -1,6 +1,6 @@
 var contents = {
   'overview': {
-    'about': 'about-file.md'
+    'about': 'about.md'
   },
   'animals': {
     'furry': {
