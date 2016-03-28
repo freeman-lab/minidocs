@@ -20,12 +20,6 @@
   "bugs": {
     "url": "https://github.com/freeman-lab/minidocs/issues"
   },
-  "browserify": {
-    "transform": [
-      "brfs",
-      "folderify"
-    ]
-  },
   "homepage": "https://github.com/freeman-lab/minidocs#readme",
   "dependencies": {
     "minidocs": "^1.0.0"
