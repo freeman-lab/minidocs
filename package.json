@@ -4,7 +4,8 @@
   "description": "build a simple site for your documentation",
   "main": "index.js",
   "scripts": {
-    "start": "budo example.js"
+    "build": "cd example && browserify index.js -o bundle.js",
+    "deploy": "surge example minidocs.surge.sh"
   },
   "repository": {
     "type": "git",

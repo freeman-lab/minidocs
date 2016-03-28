@@ -1,7 +1,6 @@
-var yo = require('yo-yo')
+var fs = require('fs')
 var css = require('dom-css')
 var marked = require('marked')
-var fs = require('fs')
 
 module.exports = function (container, documents) {
 

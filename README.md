@@ -11,6 +11,8 @@ This module is intentionally simpler and more opinionated than something like [J
 
 There are options for specifying a project logo and which document to show on load. Support for themes, and bundling via a command-line tool, coming soon. PRs welcome!
 
+[**live demo**](http://minidocs.surge.sh)
+
 ## install
 
 Add to your project with 

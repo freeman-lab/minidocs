@@ -27,6 +27,9 @@
     ]
   },
   "homepage": "https://github.com/freeman-lab/minidocs#readme",
+  "dependencies": {
+    "minidocs": "^1.0.0"
+  },
   "devDependencies": {
     "budo": "^8.1.0"
   }
