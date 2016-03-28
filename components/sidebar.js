@@ -19,7 +19,7 @@ function Sidebar (container, contents) {
       paddingLeft: '1%',
       display: 'inline-block',
       overflowY: 'scroll',
-      height: '80%'
+      height: window.innerHeight * 0.8
     },
     link: {
     }

@@ -9,10 +9,10 @@ var isobject = require('lodash.isobject')
 var foreach = require('lodash.foreach')
 var include = require('include-folder')
 
-module.exports = function (opts) {
-  var contents = opts.contents
+module.exports = function (contents, opts) {
   var logo = opts.logo
-  var init = opts.init
+  var initial = opts.initial
+  var node = opts.node || document.body 
 
   var documents = include('./markdown')
 
@@ -42,7 +42,9 @@ module.exports = function (opts) {
 
   var container = document.createElement('div')
   container.className = 'minidocs'
-  document.body.appendChild(container)
+  node.appendChild(container)
+  css(node, {margin: '0px', padding: '0px'})
+  css(container, {width: '90%', marginLeft: '5%', marginRight: '5%'})
 
   var basecss = fs.readFileSync(path.join(__dirname, 'components', 'styles', 'base.css'))
   var highlightcss = fs.readFileSync(path.join(__dirname, 'components', 'styles', 'highlighting', 'tomorrow.css'))
@@ -63,9 +65,6 @@ module.exports = function (opts) {
     main.show(parsed[fileid])
   })
 
-  css(document.body, {margin: '0px', padding: '0px'})
-  css(container, {width: '90%', marginLeft: '5%', marginRight: '5%'})
-
-  if (init) sidebar.select(init)
+  if (initial) sidebar.select(initial)
   else sidebar.select(first)
 }

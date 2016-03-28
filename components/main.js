@@ -4,16 +4,17 @@ var marked = require('marked')
 var fs = require('fs')
 
 module.exports = function (container, documents) {
+
   var style = {
     wrapper: {
       width: '60%',
-      height: '77%',
+      height: window.innerHeight * 0.77,
       paddingLeft: '6%',
       paddingRight: '5%',
-      paddingTop: '1.9%',
+      paddingTop: window.innerHeight * 0.03,
       verticalAlign: 'top',
       display: 'inline-block',
-      overflowY: 'scroll'
+      overflowY: 'scroll',
     },
     markdown: {
 

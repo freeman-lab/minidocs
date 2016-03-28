@@ -1,0 +1,33 @@
+{
+  "name": "minidocs-example",
+  "version": "0.0.0",
+  "description": "example for minidocs",
+  "main": "index.js",
+  "scripts": {
+    "start": "budo index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freeman-lab/minidocs.git"
+  },
+  "keywords": [
+    "minidocs",
+    "example",
+    "documentation"
+  ],
+  "author": "freeman-lab",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/freeman-lab/minidocs/issues"
+  },
+  "browserify": {
+    "transform": [
+      "brfs",
+      "folderify"
+    ]
+  },
+  "homepage": "https://github.com/freeman-lab/minidocs#readme",
+  "devDependencies": {
+    "budo": "^8.1.0"
+  }
+}

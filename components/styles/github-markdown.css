@@ -6,7 +6,7 @@
 .markdown-body {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  color: #333;
+  color: rgb(80,80,80);
   font-size: 16px;
   line-height: 1.6;
   word-wrap: break-word;
