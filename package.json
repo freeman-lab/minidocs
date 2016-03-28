@@ -35,6 +35,7 @@
     "camelcase": "^2.1.1",
     "dom-css": "^2.0.0",
     "folderify": "^1.2.0",
+    "github-markdown-css": "^2.2.1",
     "highlight.js": "^9.2.0",
     "insert-css": "^0.2.0",
     "lodash.find": "^4.2.0",

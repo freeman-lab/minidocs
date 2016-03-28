@@ -20,6 +20,8 @@ function Sidebar (container, contents) {
       display: 'inline-block',
       overflowY: 'scroll',
       height: '80%'
+    },
+    link: {
     }
   }
 
@@ -55,6 +57,7 @@ function Sidebar (container, contents) {
       css(item, {marginBottom: '5px'})
       container.appendChild(item)
       var link = document.createElement('a')
+      css(link, style.link)
       link.id = key + '-link'
       link.innerHTML = key
       link.className = 'contents-link'

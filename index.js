@@ -18,7 +18,6 @@ module.exports = function (opts) {
 
   marked.setOptions({
     highlight: function (code) {
-      console.log(require('highlight.js').highlightAuto(code).value)
       return require('highlight.js').highlightAuto(code).value
     }
   })
@@ -47,9 +46,13 @@ module.exports = function (opts) {
 
   var basecss = fs.readFileSync(path.join(__dirname, 'components', 'styles', 'base.css'))
   var highlightcss = fs.readFileSync(path.join(__dirname, 'components', 'styles', 'highlighting', 'tomorrow.css'))
+  var githubcss = fs.readFileSync(path.join(__dirname, 'components', 'styles', 'github-markdown.css'))
+  var fontscss = fs.readFileSync(path.join(__dirname, 'components', 'styles', 'fonts.css'))
   insertcss(basecss)
   insertcss(highlightcss)
-  
+  insertcss(githubcss)
+  insertcss(fontscss)
+
   if (logo) require('./components/header')(container, logo)
   var sidebar = require('./components/sidebar')(container, contents)
   var main = require('./components/main')(container)
