@@ -41,16 +41,16 @@ var contents = {
 }
 ```
 
-Then build a site by specifying the base path for all markdown files
+Then generate the site
 
 ```javascript
 var minidocs = require('minidocs')
 minidocs(contents)
 ```
 
-This assumes you have the files `about.md`, `sheep.md`, and `pig.md` inside a folder `markdown`.
+This assumes you have the files `about.md`, `sheep.md`, and `pig.md` inside a local folder `markdown`.
 
-To run a full example, clone this repository, go into the folder `example` then call
+To run a full example, clone this repository, go into the folder [`example`](example) then call
 
 ```
 npm install
