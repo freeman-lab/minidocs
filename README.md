@@ -7,11 +7,9 @@
 
 This module makes it easy to build a documentation site from two simple components: (1) a collection of markdown documents and (2) a hierarchical object specifying your table of contents.
 
-Currently, you can install `minidocs` as a module and bundle the site yourself with `browserify`. I'll add a command-line tool in a future release.
+This module is intentionally simpler and more opinionated than something like [Jekyll](https://jekyllrb.com/) or [Sphinx](http://www.sphinx-doc.org/en/stable/). Depending on what you're looking for, that might be goo, because it's easier to reason about, or not, because it's less flexible. It'll probably be most useful if your documentation already consists entirely of markdown files, possibly , and it composes well with any tools that generate markdown, for example [`ecosystem-docs`](https://github.com/hughsk/ecosystem-docs), which pulls README files from GitHub across a collection of modules.
 
-This module is intentionally simpler and more opinionated than something like Jekyll or Sphinx. Depending on what you're looking for, that might be good (because it's easier to reason about) or not (because it's less flexible). It'll probably be most useful if your documentation already consists entirely of markdown files, possibly , and it composes well with any tools that generate markdown, for example `ecosystem-docs`, which pulls README files from GitHub across a collection of modules.
-
-There are options for specifying a project logo and a page to load onview. Support for themes coming soon. PRs welcome!
+There are options for specifying a project logo and a page to show onload. Support for themes, and bundling via a command-line tool, coming soon. PRs welcome!
 
 ## install
 
