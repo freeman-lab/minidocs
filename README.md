@@ -43,7 +43,6 @@ Then build a site by specifying the base path for all markdown files
 
 ```javascript
 var minidocs = require('minidocs')
-
 minidocs(contents)
 ```
 
