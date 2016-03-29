@@ -1,9 +1,6 @@
-var fs = require('fs')
 var css = require('dom-css')
-var marked = require('marked')
 
 module.exports = function (container, documents) {
-
   var style = {
     wrapper: {
       width: '60%',
@@ -13,7 +10,7 @@ module.exports = function (container, documents) {
       paddingTop: window.innerHeight * 0.03,
       verticalAlign: 'top',
       display: 'inline-block',
-      overflowY: 'scroll',
+      overflowY: 'scroll'
     },
     markdown: {
 

@@ -4,7 +4,6 @@ var css = require('dom-css')
 var marked = require('marked')
 var camelcase = require('camelcase')
 var insertcss = require('insert-css')
-var find = require('lodash.find')
 var isobject = require('lodash.isobject')
 var foreach = require('lodash.foreach')
 var include = require('include-folder')
@@ -22,7 +21,7 @@ module.exports = function (contents, opts) {
     }
   })
 
-  parsed = {}
+  var parsed = {}
   foreach(documents, function (value, key) {
     parsed[key] = marked(value)
   })

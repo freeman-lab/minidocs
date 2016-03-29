@@ -1,6 +1,6 @@
 {
   "name": "minidocs",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "build a simple site for your documentation",
   "main": "index.js",
   "scripts": {
@@ -37,7 +37,6 @@
     "folderify": "^1.2.0",
     "highlight.js": "^9.2.0",
     "insert-css": "^0.2.0",
-    "lodash.find": "^4.2.0",
     "lodash.foreach": "^4.1.0",
     "lodash.isobject": "^3.0.2",
     "lodash.map": "^4.2.1",
