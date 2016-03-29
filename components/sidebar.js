@@ -1,6 +1,5 @@
 var css = require('dom-css')
 var inherits = require('inherits')
-var map = require('lodash.map')
 var foreach = require('lodash.foreach')
 var isobject = require('lodash.isobject')
 var EventEmitter = require('events').EventEmitter

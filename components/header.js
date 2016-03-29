@@ -9,7 +9,7 @@ module.exports = function (container, logo) {
       height: '10%',
       marginBottom: '5px',
       verticalAlign: 'top',
-      display: 'inline-block',
+      display: 'inline-block'
     },
     graphic: {
       width: '200px'

@@ -23,7 +23,7 @@ module.exports = function (opts) {
     }
   })
 
-  parsed = {}
+  var parsed = {}
   foreach(documents, function (value, key) {
     parsed[key] = marked(value)
   })
