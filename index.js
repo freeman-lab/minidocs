@@ -12,9 +12,9 @@ var include = require('include-folder')
 module.exports = function (contents, opts) {
   var logo = opts.logo
   var initial = opts.initial
+
   var node = opts.node || document.body 
-  console.log(opts)
-  var documents = opts.markdown //|| include('./markdown')
+  var documents = opts.markdown || include('./markdown')
 
   marked.setOptions({
     highlight: function (code) {
@@ -55,10 +55,19 @@ module.exports = function (contents, opts) {
   insertcss(githubcss)
   insertcss(fontscss)
 
+  if (opts.style === true) {
+    try {
+      var customcss = fs.readFileSync('./style.css')
+      insertcss(customcss)
+    } catch (e) {
+      throw new Error('style.css not found.')
+    }
+  }
+
   if (logo) require('./components/header')(container, logo)
   var sidebar = require('./components/sidebar')(container, contents)
   var main = require('./components/main')(container)
-  
+
   sidebar.on('selected', function (key) {
     var name = lookup[key]
     var fileid = camelcase(name.replace('.md', ''))

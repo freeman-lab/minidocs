@@ -15,7 +15,7 @@ There are options for specifying a project logo and which document to show on lo
 
 ## install
 
-Add to your project with 
+Add to your project with
 
 ```
 npm install minidocs
@@ -66,6 +66,7 @@ Where `contents` is an object describing the hierarchy of contents, used to buil
 - `logo` relative file path to a logo file, if unspecified will not include a logo
 - `initial` which document to show on load, if unspecified will load the first document
 - `root` a DOM node to append to, if unspecified will append to `document.body`
+- `style` a Boolean value to use custom style, if specified it will try to load `style.css` into the page, default to `false`
 
 ## license
 

@@ -4,7 +4,7 @@
   "description": "example for minidocs",
   "main": "index.js",
   "scripts": {
-    "start": "budo index.js:bundle.js "
+    "start": "budo index.js:bundle.js"
   },
   "repository": {
     "type": "git",
