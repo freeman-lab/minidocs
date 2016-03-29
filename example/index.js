@@ -13,4 +13,7 @@ var contents = {
   }
 }
 
-require('../index')(contents, {logo: 'logo.svg'})
+require('../index.js')(contents, {
+  logo: 'logo.svg',
+  theme: true
+})
