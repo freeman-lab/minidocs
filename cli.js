@@ -47,7 +47,8 @@ var site = {}
 * Show help text
 */
 if (argv.help) {
-  return console.log(usage)
+  console.log(usage)
+  process.exit()
 }
 
 /*
@@ -59,17 +60,19 @@ if (sourceDir) {
   site.markdown = includeFolder(sourceDir)
 } else {
   console.log('\nError:\nsource markdown directory is required')
-  return console.log(usage)
+  console.log(usage)
+  process.exit()
 }
 
 /*
 * Read the table of contents
 */
 if (argv.contents) {
-  site.contents = require('./'+argv.contents)
+  site.contents = require('./' + argv.contents)
 } else {
   console.log('\nError:\n--contents/-c option is required')
-  return console.log(usage)
+  console.log(usage)
+  process.exit()
 }
 
 /*
@@ -105,7 +108,6 @@ function buildJS () {
   fs.writeFile(filepath, js, function (err) {
     if (err) return error(err)
     browserify(filepath)
-      //.transform({ global: true }, 'uglifyify')
       .transform('brfs')
       .bundle(function (err, src) {
         if (err) return error(err)

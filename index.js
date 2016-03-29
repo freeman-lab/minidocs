@@ -1,9 +1,6 @@
-var fs = require('fs')
-var path = require('path')
 var css = require('dom-css')
 var marked = require('marked')
 var camelcase = require('camelcase')
-var find = require('lodash.find')
 var isobject = require('lodash.isobject')
 var foreach = require('lodash.foreach')
 
