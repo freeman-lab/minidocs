@@ -37,6 +37,21 @@ npm install --save minidocs
 minidocs docs/ --logo logo.svg --css style.css --contents contents.json
 ```
 
+### commannd-line usage:
+
+```
+Usage:
+  minidocs {sourceDir} -c {contents.json} -o {buildDir}
+
+Options:
+  * --contents, -c     JSON file that defines the table of contents
+  * --output, -o       Directory for built site [site]
+  * --title, -t        Project name [name of current directory]
+  * --logo, -l         Project logo
+  * --css              Optional stylesheet
+  * --help, -h         Show this help message
+```
+
 ## library example
 
 Specify a table of contents
