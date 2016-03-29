@@ -4,7 +4,7 @@
   "description": "example for minidocs",
   "main": "index.js",
   "scripts": {
-    "start": "budo index.js"
+    "start": "budo index.js:bundle.js "
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/freeman-lab/minidocs#readme",
   "dependencies": {
-    "minidocs": "^1.0.0"
+    "minidocs": "^1.0.1"
   },
   "devDependencies": {
     "budo": "^8.1.0"

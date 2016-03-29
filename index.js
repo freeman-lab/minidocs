@@ -13,8 +13,8 @@ module.exports = function (contents, opts) {
   var logo = opts.logo
   var initial = opts.initial
   var node = opts.node || document.body 
-
-  var documents = include('./markdown')
+  console.log(opts)
+  var documents = opts.markdown //|| include('./markdown')
 
   marked.setOptions({
     highlight: function (code) {
