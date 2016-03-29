@@ -55,12 +55,12 @@ module.exports = function (contents, opts) {
   insertcss(githubcss)
   insertcss(fontscss)
 
-  if (opts.theme === true) {
+  if (opts.style === true) {
     try {
-      var themecss = fs.readFileSync('./theme.css')
-      insertcss(themecss)
+      var customcss = fs.readFileSync('./style.css')
+      insertcss(customcss)
     } catch (e) {
-      throw new Error('theme.css not found.')
+      throw new Error('style.css not found.')
     }
   }
 

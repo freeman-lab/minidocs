@@ -15,5 +15,5 @@ var contents = {
 
 require('../index.js')(contents, {
   logo: 'logo.svg',
-  theme: true
+  style: true
 })

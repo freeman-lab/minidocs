@@ -66,7 +66,7 @@ Where `contents` is an object describing the hierarchy of contents, used to buil
 - `logo` relative file path to a logo file, if unspecified will not include a logo
 - `initial` which document to show on load, if unspecified will load the first document
 - `root` a DOM node to append to, if unspecified will append to `document.body`
-- `theme` a Boolean value to use custom style or theme, if specified it will try to load `theme.css` into the page, default to `false`
+- `style` a Boolean value to use custom style, if specified it will try to load `style.css` into the page, default to `false`
 
 ## license
 
