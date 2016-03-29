@@ -7,6 +7,9 @@
     "build": "cd example && browserify index.js -o bundle.js -t brfs -t folderify",
     "deploy": "surge example minidocs.surge.sh"
   },
+  "bin": {
+    "minidocs": "cli.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/freeman-lab/minidocs.git"
