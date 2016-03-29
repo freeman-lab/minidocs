@@ -3,18 +3,19 @@ var path = require('path')
 var css = require('dom-css')
 var marked = require('marked')
 var camelcase = require('camelcase')
-var insertcss = require('insert-css')
 var find = require('lodash.find')
 var isobject = require('lodash.isobject')
 var foreach = require('lodash.foreach')
-var include = require('include-folder')
 
-module.exports = function (contents, opts) {
+module.exports = function (opts) {
+  if (!opts.contents) throw new Error('contents option is required')
+  if (!opts.markdown) throw new Error('markdown option is required')
+
+  var contents = opts.contents
+  var documents = opts.markdown
   var logo = opts.logo
   var initial = opts.initial
-
-  var node = opts.node || document.body 
-  var documents = opts.markdown || include('./markdown')
+  var node = opts.node || document.body
 
   marked.setOptions({
     highlight: function (code) {
@@ -38,6 +39,7 @@ module.exports = function (contents, opts) {
       }
     })
   }
+
   iterate(contents)
 
   var container = document.createElement('div')
@@ -45,24 +47,6 @@ module.exports = function (contents, opts) {
   node.appendChild(container)
   css(node, {margin: '0px', padding: '0px'})
   css(container, {width: '90%', marginLeft: '5%', marginRight: '5%'})
-
-  var basecss = fs.readFileSync(path.join(__dirname, 'components', 'styles', 'base.css'))
-  var highlightcss = fs.readFileSync(path.join(__dirname, 'components', 'styles', 'highlighting', 'tomorrow.css'))
-  var githubcss = fs.readFileSync(path.join(__dirname, 'components', 'styles', 'github-markdown.css'))
-  var fontscss = fs.readFileSync(path.join(__dirname, 'components', 'styles', 'fonts.css'))
-  insertcss(basecss)
-  insertcss(highlightcss)
-  insertcss(githubcss)
-  insertcss(fontscss)
-
-  if (opts.style === true) {
-    try {
-      var customcss = fs.readFileSync('./style.css')
-      insertcss(customcss)
-    } catch (e) {
-      throw new Error('style.css not found.')
-    }
-  }
 
   if (logo) require('./components/header')(container, logo)
   var sidebar = require('./components/sidebar')(container, contents)

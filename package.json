@@ -3,7 +3,9 @@
   "version": "1.0.1",
   "description": "build a simple site for your documentation",
   "main": "index.js",
+  "style": "components/styles/index.css",
   "scripts": {
+    "lint": "standard",
     "build": "cd example && browserify index.js -o bundle.js -t brfs -t folderify",
     "deploy": "surge example minidocs.surge.sh"
   },
@@ -39,6 +41,7 @@
     "camelcase": "^2.1.1",
     "dom-css": "^2.0.0",
     "folderify": "^1.2.0",
+    "from2-string": "^1.1.0",
     "highlight.js": "^9.2.0",
     "include-folder": "^1.0.0",
     "insert-css": "^0.2.0",
@@ -51,9 +54,13 @@
     "mkdirp": "^0.5.1",
     "os-tmpdir": "^1.0.1",
     "rimraf": "^2.5.2",
-    "simple-html-index": "^1.2.0"
+    "simple-html-index": "^1.2.0",
+    "style-deps": "^2.0.1",
+    "uglifyify": "^3.0.1"
   },
   "devDependencies": {
-    "budo": "^8.1.0"
+    "budo": "^8.1.0",
+    "debug": "^2.2.0",
+    "standard": "^6.0.8"
   }
 }

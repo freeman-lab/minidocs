@@ -2,15 +2,17 @@
 
 var fs = require('fs')
 var path = require('path')
-var tmpdir = require('os-tmpdir')
 var includeFolder = require('include-folder')
 var html = require('simple-html-index')
 var browserify = require('browserify')
 var minimist = require('minimist')
+var cssdeps = require('style-deps')
 var mkdir = require('mkdirp')
 var rm = require('rimraf')
+var debug = require('debug')('minidocs:cli')
 
 var cwd = process.cwd().split('/')
+var projectdir = cwd[cwd.length - 1]
 
 var argv = minimist(process.argv.slice(2), {
   alias: {
@@ -22,7 +24,7 @@ var argv = minimist(process.argv.slice(2), {
   },
   default: {
     output: 'site',
-    title: cwd[cwd.length - 1]
+    title: projectdir
   }
 })
 
@@ -70,61 +72,99 @@ if (argv.contents) {
   return console.log(usage)
 }
 
+/*
+* Get the project logo if provided
+*/
 if (argv.logo) {
   site.logo = path.parse(argv.logo).base
 }
 
-var minidocs = path.join(__dirname, 'index')
-var js = `require('${minidocs}')(${JSON.stringify(site.contents)}, ${JSON.stringify(site)})`
-
-bundle(js, output)
-
-function bundle (js, callback) {
-  var filepath = path.join(tmpdir(), 'minidocs-index.js')
-  fs.writeFile(filepath, js, function (err) {
-    browserify(filepath)
-      .transform('brfs')
-      .transform('folderify')
-      .bundle(callback)
-  })
-}
-
-function output (err, src) {
-  createOutputDir(function () {
-    var filepath = path.join(argv.output, 'bundle.js')
-    fs.writeFile(filepath, src, function (err) {
-      if (argv.css) buildCSS()
-      if (argv.logo) buildLogo()
-      buildHTML()
+createOutputDir(function () {
+  debug('createOutputDir')
+  if (argv.logo) buildLogo()
+  buildCSS(function () {
+    buildHTML(function () {
+      buildJS()
     })
   })
-}
+})
 
-function createOutputDir (callback) {
+function createOutputDir (done) {
+  debug('createOutputDir', argv.ouput)
   rm(argv.output, function (err) {
-    mkdir(argv.output, callback)
+    if (err) return error(err)
+    mkdir(argv.output, done)
   })
 }
 
-function buildHTML () {
+function buildJS () {
+  var filepath = path.join(__dirname, argv.output, 'index.js')
+  var minidocs = path.join(__dirname, 'index')
+  var js = `require('${minidocs}')(${JSON.stringify(site)})`
+
+  fs.writeFile(filepath, js, function (err) {
+    if (err) return error(err)
+    browserify(filepath)
+      //.transform({ global: true }, 'uglifyify')
+      .transform('brfs')
+      .bundle(function (err, src) {
+        if (err) return error(err)
+        var filepath = path.join(argv.output, 'bundle.js')
+        fs.writeFile(filepath, src, function (err) {
+          debug('bundle.js', filepath)
+          if (err) return error(err)
+        })
+      })
+  })
+}
+
+function buildHTML (done) {
   var filepath = path.join(argv.output, 'index.html')
   var write = fs.createWriteStream(filepath)
   var opts = {
     title: argv.title,
     entry: 'bundle.js',
-    css: argv.css ? 'theme.css' : null
+    css: 'style.css'
   }
-  html(opts).pipe(write)
+  debug('build html', filepath)
+  var read = html(opts)
+  read.pipe(write)
+  read.on('end', done)
 }
 
-function buildCSS () {
-  var csspath = path.join(argv.output, 'theme.css')
-  var writecss = fs.createWriteStream(csspath)
-  fs.createReadStream(argv.css).pipe(writecss)
+function buildCSS (done) {
+  debug('buildCSS')
+  var opts = {}
+  var rootcss = path.join(__dirname, 'components', 'styles', 'index.css')
+
+  function write (txt) {
+    debug('write the css bundle')
+    var csspath = path.join(argv.output, 'style.css')
+    fs.writeFile(csspath, txt, done)
+  }
+
+  cssdeps(rootcss, opts, function (err, deps) {
+    console.log('waaaaaaaaa')
+    if (err) return error(err)
+    if (argv.css) {
+      fs.readFile(argv.css, 'utf8', function (err, src) {
+        if (err) return error(err)
+        deps += '\n' + src
+        write(deps)
+      })
+    } else {
+      write(deps)
+    }
+  })
 }
 
 function buildLogo () {
   var logopath = path.join(argv.output, site.logo)
   var writelogo = fs.createWriteStream(logopath)
   fs.createReadStream(argv.logo).pipe(writelogo)
+}
+
+function error (err) {
+  console.log(err)
+  process.exit(1)
 }
