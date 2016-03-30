@@ -3,6 +3,7 @@ var marked = require('marked')
 var camelcase = require('camelcase')
 var isobject = require('lodash.isobject')
 var foreach = require('lodash.foreach')
+var insertcss = require('insert-css')
 
 module.exports = function (opts) {
   if (!opts.contents) throw new Error('contents option is required')
@@ -11,6 +12,7 @@ module.exports = function (opts) {
   var contents = opts.contents
   var documents = opts.markdown
   var logo = opts.logo
+  var styles = opts.styles
   var initial = opts.initial
   var node = opts.node || document.body
 
@@ -44,6 +46,7 @@ module.exports = function (opts) {
   node.appendChild(container)
   css(node, {margin: '0px', padding: '0px'})
   css(container, {width: '90%', marginLeft: '5%', marginRight: '5%'})
+  if (styles) insertcss(styles)
 
   if (logo) require('./components/header')(container, logo)
   var sidebar = require('./components/sidebar')(container, contents)

@@ -79,12 +79,18 @@ var minidocs = require('minidocs')
 var include = require('include-folder')
 
 minidocs({
+  contents: contents,
   markdown: include('./markdown')
-  contents: contents
+  styles: fs.readFileSync('./styles.css')
 })
 ```
 
 This assumes you have the files `about.md`, `sheep.md`, and `pig.md` inside a local folder `markdown`.
+
+To run this in the browser you'll need two browserify transforms:
+
+- [folderify](), to transform the call to the `include-folder` module into an object with all your markdown files
+- [brfs](), to transform `fs.readFileSync('./styles.css')` into a string with the contents of that file
 
 To run a full example, clone this repository, go into the folder [`example`](example) then call
 
