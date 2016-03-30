@@ -146,7 +146,6 @@ function buildCSS (done) {
   }
 
   cssdeps(rootcss, opts, function (err, deps) {
-    console.log('waaaaaaaaa')
     if (err) return error(err)
     if (argv.css) {
       fs.readFile(argv.css, 'utf8', function (err, src) {
