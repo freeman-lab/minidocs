@@ -63,7 +63,7 @@ var contents = {
 }
 ```
 
-Then generate the site
+Then build the site and add it to the page with
 
 ```javascript
 var minidocs = require('minidocs')
@@ -72,7 +72,6 @@ var include = require('include-folder')
 minidocs({
   contents: contents,
   markdown: include('./markdown')
-  styles: fs.readFileSync('./styles.css')
 })
 ```
 
