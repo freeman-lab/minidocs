@@ -22,7 +22,7 @@ PRs welcome!
 Install as a command
 
 ```
-npm i -g minidocs
+npm install -g minidocs
 ```
 
 ### library
