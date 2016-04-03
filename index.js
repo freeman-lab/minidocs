@@ -16,14 +16,8 @@ module.exports = function (opts) {
   var logo = opts.logo
   var styles = opts.styles
   var initial = opts.initial
-  var title = opts.title
+  var title = opts.title || ''
   var node = opts.node || document.body
-
-  if (!title) {
-    console.log(process.cwd())
-    title = process.cwd().split('/')
-    title = title[title.length - 1]
-  }
 
   marked.setOptions({
     highlight: function (code) {
