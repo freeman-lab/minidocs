@@ -11,8 +11,9 @@ var mkdir = require('mkdirp')
 var rm = require('rimraf')
 var debug = require('debug')('minidocs:cli')
 
-var cwd = process.cwd().split('/')
-var projectdir = cwd[cwd.length - 1]
+var cwd = process.cwd()
+var cwdArr = cwd.split('/')
+var projectdir = cwdArr[cwdArr.length - 1]
 
 var argv = minimist(process.argv.slice(2), {
   alias: {
@@ -41,7 +42,9 @@ Options:
   * --help, -h         Show this help message
 `
 
-var site = {}
+var site = {
+  outputDir: path.resolve(cwd, argv.output)
+}
 
 /*
 * Show help text
@@ -54,10 +57,9 @@ if (argv.help) {
 /*
 * Get source markdown directory
 */
-var sourceDir = argv._[0]
-
-if (sourceDir) {
-  site.markdown = includeFolder(sourceDir)
+if (argv._[0]) {
+  var source = path.resolve(cwd, argv._[0])
+  site.markdown = includeFolder(source)
 } else {
   console.log('\nError:\nsource markdown directory is required')
   console.log(usage)
@@ -68,7 +70,8 @@ if (sourceDir) {
 * Read the table of contents
 */
 if (argv.contents) {
-  site.contents = require('./' + argv.contents)
+  var contents = path.resolve(process.cwd(), argv.contents)
+  site.contents = require(contents)
 } else {
   console.log('\nError:\n--contents/-c option is required')
   console.log(usage)
@@ -93,17 +96,16 @@ createOutputDir(function () {
 })
 
 function createOutputDir (done) {
-  debug('createOutputDir', argv.ouput)
-  rm(argv.output, function (err) {
+  debug('createOutputDir', site.outputDir)
+  rm(site.outputDir, function (err) {
     if (err) return error(err)
-    mkdir(argv.output, done)
+    mkdir(site.outputDir, done)
   })
 }
 
 function buildJS () {
-  var filepath = path.join(__dirname, argv.output, 'index.js')
-  var minidocs = path.join(__dirname, 'index')
-  var js = `require('${minidocs}')(${JSON.stringify(site)})`
+  var filepath = path.join(site.outputDir, 'index.js')
+  var js = `require('minidocs')(${JSON.stringify(site)})`
 
   fs.writeFile(filepath, js, function (err) {
     if (err) return error(err)
@@ -111,7 +113,7 @@ function buildJS () {
       .transform('brfs')
       .bundle(function (err, src) {
         if (err) return error(err)
-        var filepath = path.join(argv.output, 'bundle.js')
+        var filepath = path.join(site.outputDir, 'bundle.js')
         fs.writeFile(filepath, src, function (err) {
           debug('bundle.js', filepath)
           if (err) return error(err)
@@ -121,7 +123,7 @@ function buildJS () {
 }
 
 function buildHTML (done) {
-  var filepath = path.join(argv.output, 'index.html')
+  var filepath = path.join(site.outputDir, 'index.html')
   var write = fs.createWriteStream(filepath)
   var opts = {
     title: argv.title,
@@ -141,7 +143,7 @@ function buildCSS (done) {
 
   function write (txt) {
     debug('write the css bundle')
-    var csspath = path.join(argv.output, 'style.css')
+    var csspath = path.join(site.outputDir, 'style.css')
     fs.writeFile(csspath, txt, done)
   }
 
@@ -160,7 +162,7 @@ function buildCSS (done) {
 }
 
 function buildLogo () {
-  var logopath = path.join(argv.output, site.logo)
+  var logopath = path.join(site.outputDir, site.logo)
   var writelogo = fs.createWriteStream(logopath)
   fs.createReadStream(argv.logo).pipe(writelogo)
 }
