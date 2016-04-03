@@ -6,7 +6,6 @@ var includeFolder = require('include-folder')
 var html = require('simple-html-index')
 var browserify = require('browserify')
 var minimist = require('minimist')
-var cssdeps = require('style-deps')
 var mkdir = require('mkdirp')
 var rm = require('rimraf')
 var debug = require('debug')('minidocs:cli')
@@ -139,7 +138,6 @@ function buildHTML (done) {
 
 function buildCSS (done) {
   debug('buildCSS')
-  var opts = {}
 
   function write (txt) {
     debug('write the css bundle')

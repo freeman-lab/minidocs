@@ -50,7 +50,7 @@ module.exports = function (opts) {
   css(container, {width: '90%', marginLeft: '5%', marginRight: '5%'})
 
   if (styles) insertcss(styles)
-  
+
   var basecss = fs.readFileSync(path.join(__dirname, './components/styles/base.css'))
   var fontcss = fs.readFileSync(path.join(__dirname, './components/styles/fonts.css'))
   var githubcss = fs.readFileSync(path.join(__dirname, './components/styles/github-markdown.css'))
