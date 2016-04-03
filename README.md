@@ -17,7 +17,7 @@ There are options for specifying a project logo and which document to show on lo
 
 ### command-line
 
-Install as a command:
+Install as a command
 
 ```
 npm i -g minidocs
@@ -31,28 +31,17 @@ Add to your project with
 npm install --save minidocs
 ```
 
-## command-line example
+## example
+
+### command-line
+
+Just specify the location of your markdown files, the table of contents, the output location, and build the site
 
 ```
-minidocs docs/ --logo logo.svg --css style.css --contents contents.json
+minidocs docs/ --contents contents.json --output site/
 ```
 
-### commannd-line usage:
-
-```
-Usage:
-  minidocs {sourceDir} -c {contents.json} -o {buildDir}
-
-Options:
-  * --contents, -c     JSON file that defines the table of contents
-  * --output, -o       Directory for built site [site]
-  * --title, -t        Project name [name of current directory]
-  * --logo, -l         Project logo
-  * --css              Optional stylesheet
-  * --help, -h         Show this help message
-```
-
-## library example
+### library
 
 Specify a table of contents
 
@@ -101,10 +90,30 @@ npm start
 
 ## usage
 
-#### `require('minidocs')(contents, opts)`
+### command-line
 
-Where `contents` is an object describing the hierarchy of contents, used to build the sidebar, and `opts` is an object that can specify the following options
+```
+Usage:
+  minidocs {sourceDir} -c {contents.json} -o {buildDir}
 
+Options:
+  * --contents, -c     JSON file that defines the table of contents
+  * --output, -o       Directory for built site [site]
+  * --title, -t        Project name [name of current directory]
+  * --logo, -l         Project logo
+  * --css              Optional stylesheet
+  * --help, -h         Show this help message
+```
+
+### usage
+
+#### `require('minidocs')(opts)`
+
+Where `opts` is an object that can specify the following options
+
+- `contents` object with the table of contents, required
+- `documents` array of markdown files, required
+- `styles` a stylesheet, if not required will only use base styles
 - `logo` relative file path to a logo file, if unspecified will not include a logo
 - `initial` which document to show on load, if unspecified will load the first document
 - `root` a DOM node to append to, if unspecified will append to `document.body`
