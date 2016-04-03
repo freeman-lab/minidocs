@@ -21,6 +21,7 @@ var argv = minimist(process.argv.slice(2), {
     o: 'output',
     t: 'title',
     l: 'logo',
+    s: 'css',
     h: 'help'
   },
   default: {
@@ -38,7 +39,7 @@ Options:
   * --output, -o       Directory for built site [site]
   * --title, -t        Project name [name of current directory]
   * --logo, -l         Project logo
-  * --css              Optional stylesheet
+  * --css, -s          Optional stylesheet
   * --help, -h         Show this help message
 `
 
@@ -128,7 +129,7 @@ function buildHTML (done) {
   var opts = {
     title: argv.title,
     entry: 'bundle.js',
-    css: 'style.css'
+    css: argv.css ? 'style.css' : null
   }
   debug('build html', filepath)
   var read = html(opts)
@@ -139,7 +140,6 @@ function buildHTML (done) {
 function buildCSS (done) {
   debug('buildCSS')
   var opts = {}
-  var rootcss = path.join(__dirname, 'components', 'styles', 'index.css')
 
   function write (txt) {
     debug('write the css bundle')
@@ -147,18 +147,14 @@ function buildCSS (done) {
     fs.writeFile(csspath, txt, done)
   }
 
-  cssdeps(rootcss, opts, function (err, deps) {
-    if (err) return error(err)
-    if (argv.css) {
-      fs.readFile(argv.css, 'utf8', function (err, src) {
-        if (err) return error(err)
-        deps += '\n' + src
-        write(deps)
-      })
-    } else {
-      write(deps)
-    }
-  })
+  if (argv.css) {
+    fs.readFile(argv.css, 'utf8', function (err, src) {
+      if (err) return error(err)
+      write(src)
+    })
+  } else {
+    done()
+  }
 }
 
 function buildLogo () {
