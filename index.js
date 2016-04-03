@@ -16,7 +16,14 @@ module.exports = function (opts) {
   var logo = opts.logo
   var styles = opts.styles
   var initial = opts.initial
+  var title = opts.title
   var node = opts.node || document.body
+
+  if (!title) {
+    console.log(process.cwd())
+    title = process.cwd().split('/')
+    title = title[title.length - 1]
+  }
 
   marked.setOptions({
     highlight: function (code) {
@@ -60,7 +67,7 @@ module.exports = function (opts) {
   insertcss(githubcss)
   insertcss(highlightcss)
 
-  if (logo) require('./components/header')(container, logo)
+  require('./components/header')(container, logo, title)
   var sidebar = require('./components/sidebar')(container, contents)
   var main = require('./components/main')(container)
 

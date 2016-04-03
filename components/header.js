@@ -1,18 +1,21 @@
 var css = require('dom-css')
 
-module.exports = function (container, logo) {
+module.exports = function (container, logo, title) {
   var style = {
     header: {
       width: '100%',
       paddingLeft: '0%',
-      marginTop: '25px',
-      height: '10%',
-      marginBottom: '5px',
+      marginTop: '30px',
+      height: window.innerHeight * 0.09,
+      marginBottom: '10px',
       verticalAlign: 'top',
       display: 'inline-block'
     },
-    graphic: {
+    logo: {
       width: '200px'
+    },
+    title: {
+      fontSize: '300%'
     }
   }
 
@@ -21,8 +24,15 @@ module.exports = function (container, logo) {
   css(header, style.header)
   container.appendChild(header)
 
-  var graphic = document.createElement('img')
-  css(graphic, style.graphic)
-  graphic.src = logo
-  header.appendChild(graphic)
+  if (logo) {
+    var img = document.createElement('img')
+    css(img, style.logo)
+    img.src = logo
+    header.appendChild(img)
+  } else {
+    var div = document.createElement('div')
+    div.innerHTML = title
+    css(div, style.title)
+    header.appendChild(div)
+  }
 }

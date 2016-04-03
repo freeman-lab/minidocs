@@ -85,6 +85,11 @@ if (argv.logo) {
   site.logo = path.parse(argv.logo).base
 }
 
+/*
+* Add the title
+*/
+site.title = argv.title
+
 createOutputDir(function () {
   debug('createOutputDir')
   if (argv.logo) buildLogo()
