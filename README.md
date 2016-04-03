@@ -3,7 +3,7 @@
 [![NPM version][npm-image]][npm-url]
 [![js-standard-style][standard-image]][standard-url]
 
-> build a site for your documentation
+> build a minimalist site for your documentation
 
 This module generates a documentation site from two simple components: (1) a collection of markdown documents and (2) a hierarchical object specifying your table of contents.
 
