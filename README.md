@@ -9,7 +9,9 @@ This module generates a documentation site from two simple components: (1) a col
 
 This module is intentionally simpler and more opinionated than something like [Jekyll](https://jekyllrb.com/) or [Sphinx](http://www.sphinx-doc.org/en/stable/). Depending on what you're looking for, that might be good, because it's easier to reason about, or not, because it's less flexible! It'll probably be most useful if your documentation already consists entirely of markdown files, and it composes well with any tools that generate markdown, for example [`ecosystem-docs`](https://github.com/hughsk/ecosystem-docs), which pulls README files from a collection of GitHub repositories.
 
-There are options for specifying a project logo and which document to show on load. Support for themes coming soon. PRs welcome!
+Sites can be built using a command-line tool, or using the library as a module with browserify. There are options for specifying a project logo, custom css, and other basic formatting. Support for themes coming soon!
+
+PRs welcome!
 
 [**live demo**](http://minidocs.surge.sh)
 
@@ -17,7 +19,7 @@ There are options for specifying a project logo and which document to show on lo
 
 ### command-line
 
-Install as a command:
+Install as a command
 
 ```
 npm i -g minidocs
@@ -31,28 +33,17 @@ Add to your project with
 npm install --save minidocs
 ```
 
-## command-line example
+## example
+
+### command-line
+
+Just specify the location of your markdown files, the table of contents, the output location, and build the site
 
 ```
-minidocs docs/ --logo logo.svg --css style.css --contents contents.json
+minidocs docs/ --contents contents.json --output site/
 ```
 
-### commannd-line usage:
-
-```
-Usage:
-  minidocs {sourceDir} -c {contents.json} -o {buildDir}
-
-Options:
-  * --contents, -c     JSON file that defines the table of contents
-  * --output, -o       Directory for built site [site]
-  * --title, -t        Project name [name of current directory]
-  * --logo, -l         Project logo
-  * --css              Optional stylesheet
-  * --help, -h         Show this help message
-```
-
-## library example
+### library
 
 Specify a table of contents
 
@@ -89,8 +80,8 @@ This assumes you have the files `about.md`, `sheep.md`, and `pig.md` inside a lo
 
 To run this in the browser you'll need two browserify transforms:
 
-- [folderify](), to transform the call to the `include-folder` module into an object with all your markdown files
-- [brfs](), to transform `fs.readFileSync('./styles.css')` into a string with the contents of that file
+- [folderify](https://github.com/parro-it/folderify), to transform the call to the `include-folder` module into an object with all your markdown files
+- [brfs](https://github.com/substack/brfs), to transform `fs.readFileSync('./styles.css')` into a string with the contents of that file
 
 To run a full example, clone this repository, go into the folder [`example`](example) then call
 
@@ -101,10 +92,30 @@ npm start
 
 ## usage
 
-#### `require('minidocs')(contents, opts)`
+### command-line
 
-Where `contents` is an object describing the hierarchy of contents, used to build the sidebar, and `opts` is an object that can specify the following options
+```
+Usage:
+  minidocs {sourceDir} -c {contents.json} -o {buildDir}
 
+Options:
+  * --contents, -c     JSON file that defines the table of contents
+  * --output, -o       Directory for built site [site]
+  * --title, -t        Project name [name of current directory]
+  * --logo, -l         Project logo
+  * --css              Optional stylesheet
+  * --help, -h         Show this help message
+```
+
+### library
+
+#### `require('minidocs')(opts)`
+
+Where `opts` is an object that can specify the following options
+
+- `contents` object with the table of contents, required
+- `documents` array of markdown files, required
+- `styles` a stylesheet, if not required will only use base styles
 - `logo` relative file path to a logo file, if unspecified will not include a logo
 - `initial` which document to show on load, if unspecified will load the first document
 - `root` a DOM node to append to, if unspecified will append to `document.body`
