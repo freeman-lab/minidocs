@@ -28,8 +28,8 @@
   },
   "homepage": "https://github.com/freeman-lab/minidocs#readme",
   "dependencies": {
-    "folderify": "^1.2.1",
-    "minidocs": "^1.0.1"
+    "brfs": "^1.4.3",
+    "folderify": "^1.2.1"
   },
   "devDependencies": {
     "budo": "^8.1.0"
