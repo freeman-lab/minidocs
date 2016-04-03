@@ -53,8 +53,7 @@
     "mkdirp": "^0.5.1",
     "os-tmpdir": "^1.0.1",
     "rimraf": "^2.5.2",
-    "simple-html-index": "^1.2.0",
-    "style-deps": "^2.0.1"
+    "simple-html-index": "^1.2.0"
   },
   "devDependencies": {
     "budo": "^8.1.0",

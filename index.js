@@ -1,3 +1,5 @@
+var fs = require('fs')
+var path = require('path')
 var css = require('dom-css')
 var marked = require('marked')
 var camelcase = require('camelcase')
@@ -46,7 +48,17 @@ module.exports = function (opts) {
   node.appendChild(container)
   css(node, {margin: '0px', padding: '0px'})
   css(container, {width: '90%', marginLeft: '5%', marginRight: '5%'})
+
   if (styles) insertcss(styles)
+
+  var basecss = fs.readFileSync(path.join(__dirname, './components/styles/base.css'))
+  var fontcss = fs.readFileSync(path.join(__dirname, './components/styles/fonts.css'))
+  var githubcss = fs.readFileSync(path.join(__dirname, './components/styles/github-markdown.css'))
+  var highlightcss = fs.readFileSync(path.join(__dirname, './components/styles/highlighting/tomorrow.css'))
+  insertcss(basecss)
+  insertcss(fontcss)
+  insertcss(githubcss)
+  insertcss(highlightcss)
 
   if (logo) require('./components/header')(container, logo)
   var sidebar = require('./components/sidebar')(container, contents)
