@@ -9,7 +9,9 @@ This module generates a documentation site from two simple components: (1) a col
 
 This module is intentionally simpler and more opinionated than something like [Jekyll](https://jekyllrb.com/) or [Sphinx](http://www.sphinx-doc.org/en/stable/). Depending on what you're looking for, that might be good, because it's easier to reason about, or not, because it's less flexible! It'll probably be most useful if your documentation already consists entirely of markdown files, and it composes well with any tools that generate markdown, for example [`ecosystem-docs`](https://github.com/hughsk/ecosystem-docs), which pulls README files from a collection of GitHub repositories.
 
-There are options for specifying a project logo and which document to show on load. Support for themes coming soon. PRs welcome!
+There are options for specifying a project logo and which document to show on load. Support for themes coming soon. 
+
+PRs welcome!
 
 [**live demo**](http://minidocs.surge.sh)
 
@@ -78,8 +80,8 @@ This assumes you have the files `about.md`, `sheep.md`, and `pig.md` inside a lo
 
 To run this in the browser you'll need two browserify transforms:
 
-- [folderify](), to transform the call to the `include-folder` module into an object with all your markdown files
-- [brfs](), to transform `fs.readFileSync('./styles.css')` into a string with the contents of that file
+- [folderify](https://github.com/parro-it/folderify), to transform the call to the `include-folder` module into an object with all your markdown files
+- [brfs](https://github.com/substack/brfs), to transform `fs.readFileSync('./styles.css')` into a string with the contents of that file
 
 To run a full example, clone this repository, go into the folder [`example`](example) then call
 
@@ -105,7 +107,7 @@ Options:
   * --help, -h         Show this help message
 ```
 
-### usage
+### library
 
 #### `require('minidocs')(opts)`
 
