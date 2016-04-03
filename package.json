@@ -3,9 +3,14 @@
   "version": "1.1.0",
   "description": "build a simple site for your documentation",
   "main": "index.js",
+  "style": "components/styles/index.css",
   "scripts": {
-    "build": "cd example && browserify index.js -o bundle.js",
+    "lint": "standard",
+    "build": "cd example && browserify index.js -o bundle.js -t brfs -t folderify",
     "deploy": "surge example minidocs.surge.sh"
+  },
+  "bin": {
+    "minidocs": "cli.js"
   },
   "repository": {
     "type": "git",
@@ -32,17 +37,28 @@
   "homepage": "https://github.com/freeman-lab/minidocs#readme",
   "dependencies": {
     "brfs": "^1.4.3",
+    "browserify": "^13.0.0",
     "camelcase": "^2.1.1",
     "dom-css": "^2.0.0",
     "folderify": "^1.2.0",
+    "from2-string": "^1.1.0",
     "highlight.js": "^9.2.0",
+    "include-folder": "^1.0.0",
     "insert-css": "^0.2.0",
     "lodash.foreach": "^4.1.0",
     "lodash.isobject": "^3.0.2",
     "lodash.map": "^4.2.1",
-    "marked": "^0.3.5"
+    "marked": "^0.3.5",
+    "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "os-tmpdir": "^1.0.1",
+    "rimraf": "^2.5.2",
+    "simple-html-index": "^1.2.0",
+    "style-deps": "^2.0.1"
   },
   "devDependencies": {
-    "budo": "^8.1.0"
+    "budo": "^8.1.0",
+    "debug": "^2.2.0",
+    "standard": "^6.0.8"
   }
 }

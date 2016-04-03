@@ -1,17 +1,4 @@
-var contents = {
-  'overview': {
-    'about': 'about.md'
-  },
-  'animals': {
-    'furry': {
-      'sheep': 'sheep.md',
-      'puppy': 'puppy.md'
-    },
-    'pink': {
-      'pig': 'pig.md'
-    }
-  }
-}
+var contents = require('./contents')
 
 require('../index.js')(contents, {
   logo: 'logo.svg',
