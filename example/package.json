@@ -15,6 +15,12 @@
     "example",
     "documentation"
   ],
+  "browserify": {
+    "transform": [
+      "brfs",
+      "folderify"
+    ]
+  },
   "author": "freeman-lab",
   "license": "MIT",
   "bugs": {
@@ -22,6 +28,7 @@
   },
   "homepage": "https://github.com/freeman-lab/minidocs#readme",
   "dependencies": {
+    "folderify": "^1.2.1",
     "minidocs": "^1.0.1"
   },
   "devDependencies": {
