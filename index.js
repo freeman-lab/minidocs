@@ -48,7 +48,7 @@ module.exports = function (opts) {
   container.className = 'minidocs'
   node.appendChild(container)
   css(node, {margin: '0px', padding: '0px'})
-  css(container, {width: '90%', marginLeft: '5%', marginRight: '5%'})
+  css(container, {width: '100%', marginLeft: '0%', marginRight: '0%'})
 
   if (styles) insertcss(styles)
 
@@ -61,8 +61,7 @@ module.exports = function (opts) {
   insertcss(githubcss)
   insertcss(highlightcss)
 
-  require('./components/header')(container, logo, title)
-  var sidebar = require('./components/sidebar')(container, contents)
+  var sidebar = require('./components/sidebar')(container, contents, logo, title)
   var main = require('./components/main')(container)
 
   sidebar.on('selected', function (key) {
