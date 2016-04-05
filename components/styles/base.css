@@ -7,7 +7,8 @@ body {
   padding-left: 2%;
   cursor: pointer;
   padding-bottom: 2px;
-  border-left: solid 1px white;
+  border-left: solid 1px rgb(240,240,240);
+  padding-right: 5px;
 }
 
 .contents-link:hover {
@@ -16,7 +17,6 @@ body {
 
 .contents-link-selected {
   border-left: dotted 1px black;
-  color: rgb(0,0,0);
 }
 
 ::-webkit-scrollbar {

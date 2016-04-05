@@ -7,7 +7,7 @@ module.exports = function (container, logo, title) {
       paddingLeft: '0%',
       marginTop: '30px',
       height: window.innerHeight * 0.09,
-      marginBottom: '10px',
+      marginBottom: '0px',
       verticalAlign: 'top',
       display: 'inline-block'
     },

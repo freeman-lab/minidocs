@@ -3,11 +3,12 @@ var css = require('dom-css')
 module.exports = function (container, documents) {
   var style = {
     wrapper: {
-      width: '60%',
-      height: window.innerHeight * 0.77,
+      width: '57%',
+      height: window.innerHeight * 0.75,
       paddingLeft: '6%',
-      paddingRight: '5%',
-      paddingTop: window.innerHeight * 0.03,
+      paddingRight: '10%',
+      paddingTop: window.innerHeight * 0.15,
+      paddingBottom: window.innerHeight * 0.1,
       verticalAlign: 'top',
       display: 'inline-block',
       overflowY: 'scroll'

@@ -7,23 +7,28 @@ var EventEmitter = require('events').EventEmitter
 module.exports = Sidebar
 inherits(Sidebar, EventEmitter)
 
-function Sidebar (container, contents) {
-  if (!(this instanceof Sidebar)) return new Sidebar(container, contents)
+function Sidebar (container, contents, logo, title) {
+  if (!(this instanceof Sidebar)) return new Sidebar(container, contents, logo, title)
   var self = this
 
   var style = {
     sidebar: {
-      width: '25%',
-      paddingLeft: '1%',
+      width: '24%',
+      paddingLeft: '3%',
       display: 'inline-block',
+      paddingBottom: window.innerHeight * 0.03,
       overflowY: 'scroll',
-      height: window.innerHeight * 0.8
+      background: 'rgb(240,240,240)',
+      height: window.innerHeight * 0.96
     },
     link: {
     }
   }
 
+  
   var sidebar = document.createElement('div')
+  var header = require('./header')(sidebar, logo, title)
+
   sidebar.className = 'minidocs-contents'
   iterate(sidebar, contents, -1)
 
