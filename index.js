@@ -6,6 +6,7 @@ var camelcase = require('camelcase')
 var isobject = require('lodash.isobject')
 var foreach = require('lodash.foreach')
 var insertcss = require('insert-css')
+var hl = require('highlight.js')
 
 module.exports = function (opts) {
   if (!opts.contents) throw new Error('contents option is required')
@@ -20,8 +21,9 @@ module.exports = function (opts) {
   var node = opts.node || document.body
 
   marked.setOptions({
-    highlight: function (code) {
-      return require('highlight.js').highlightAuto(code).value
+    highlight: function (code, lang) {
+      var out = lang ? hl.highlight(lang, code) : hl.highlightAuto(code)
+      return out.value
     }
   })
 
