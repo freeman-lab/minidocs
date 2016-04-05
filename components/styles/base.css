@@ -8,7 +8,7 @@ body {
   cursor: pointer;
   padding-bottom: 2px;
   border-left: solid 4px rgb(240,240,240);
-  padding-right: 5px;
+  padding-right: 12px;
 }
 
 .contents-link:hover {
