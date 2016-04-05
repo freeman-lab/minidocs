@@ -7,16 +7,17 @@ body {
   padding-left: 2%;
   cursor: pointer;
   padding-bottom: 2px;
-  border-left: solid 1px rgb(240,240,240);
+  border-left: solid 4px rgb(240,240,240);
   padding-right: 5px;
 }
 
 .contents-link:hover {
-  border-left: dotted 1px black;
+  border-left: solid 4px rgb(255,255,255);
 }
 
 .contents-link-selected {
-  border-left: dotted 1px black;
+  border-left: solid 4px rgb(255,255,255);
+  background: rgb(255,255,255);
 }
 
 ::-webkit-scrollbar {
