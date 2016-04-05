@@ -7,16 +7,16 @@ body {
   padding-left: 2%;
   cursor: pointer;
   padding-bottom: 2px;
-  border-left: solid 4px rgb(240,240,240);
-  padding-right: 12px;
+  border-left: solid 1px rgb(240,240,240);
+  padding-right: 10px;
 }
 
 .contents-link:hover {
-  border-left: solid 4px rgb(255,255,255);
+  border-left: dotted 1px rgb(40,40,40);
 }
 
 .contents-link-selected {
-  border-left: solid 4px rgb(255,255,255);
+  border-left: dotted 1px rgb(40,40,40);
   background: rgb(255,255,255);
 }
 
