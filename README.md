@@ -128,7 +128,7 @@ Where `opts` is an object that can specify the following options
 
 [MIT](LICENSE)
 
-[npm-image]: https://img.shields.io/badge/npm-v1.1.0-lightgray.svg?style=flat-square
+[npm-image]: https://img.shields.io/badge/npm-v1.1.1-lightgray.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/minidocs
 [standard-image]: https://img.shields.io/badge/code%20style-standard-lightgray.svg?style=flat-square
 [standard-url]: https://github.com/feross/standard
