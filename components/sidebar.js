@@ -25,9 +25,8 @@ function Sidebar (container, contents, logo, title) {
     }
   }
 
-  
   var sidebar = document.createElement('div')
-  var header = require('./header')(sidebar, logo, title)
+  require('./header')(sidebar, logo, title)
 
   sidebar.className = 'minidocs-contents'
   iterate(sidebar, contents, -1)
