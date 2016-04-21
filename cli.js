@@ -21,11 +21,13 @@ var argv = minimist(process.argv.slice(2), {
     t: 'title',
     l: 'logo',
     s: 'css',
+    p: 'pushstate',
     h: 'help'
   },
   default: {
     output: 'site',
-    title: projectdir
+    title: projectdir,
+    pushstate: true
   }
 })
 
@@ -39,11 +41,13 @@ Options:
   * --title, -t        Project name [name of current directory]
   * --logo, -l         Project logo
   * --css, -s          Optional stylesheet
+  * --pushstate, -p    Use HTML5 pushstate [true]
   * --help, -h         Show this help message
 `
 
 var site = {
-  outputDir: path.resolve(cwd, argv.output)
+  outputDir: path.resolve(cwd, argv.output),
+  pushstate: argv.pushstate
 }
 
 /*

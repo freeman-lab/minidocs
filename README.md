@@ -107,7 +107,8 @@ Options:
   * --output, -o       Directory for built site [site]
   * --title, -t        Project name [name of current directory]
   * --logo, -l         Project logo
-  * --css              Optional stylesheet
+  * --css, -s          Optional stylesheet
+  * --pushstate, -p    Use HTML5 pushstate [true]
   * --help, -h         Show this help message
 ```
 
@@ -123,6 +124,7 @@ Where `opts` is an object that can specify the following options
 - `logo` relative file path to a logo file, if unspecified will not include a logo
 - `initial` which document to show on load, if unspecified will load the first document
 - `root` a DOM node to append to, if unspecified will append to `document.body`
+- `pushstate` a boolean to toggle HTML5 pushstate, default is `true`
 
 ## license
 
