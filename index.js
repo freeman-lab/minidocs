@@ -31,7 +31,6 @@ module.exports = function (opts) {
     }
   })
 
-  console.log('pushstate?', pushstate)
   if (pushstate) {
     var pathname = url.parse(document.location.href).pathname
     href(setPathname)
