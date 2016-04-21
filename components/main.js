@@ -29,6 +29,7 @@ module.exports = function (container, documents) {
   wrapper.appendChild(markdown)
 
   function show (text) {
+    if (wrapper.scrollTop > 0) wrapper.scrollTop = 0
     markdown.innerHTML = text
   }
 
