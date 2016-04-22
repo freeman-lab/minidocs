@@ -6,8 +6,10 @@
   "style": "components/styles/index.css",
   "scripts": {
     "lint": "standard",
-    "build": "cd example && browserify index.js -o bundle.js -t brfs -t folderify",
-    "deploy": "surge example minidocs.surge.sh"
+    "build:example": "browserify example/index.js -o example/bundle.js",
+    "deploy:example": "surge example minidocs-example.surge.sh",
+    "build": "browserify docs/index.js -o docs/bundle.js",
+    "deploy": "npm run build && surge site minidocs.surge.sh"
   },
   "bin": {
     "minidocs": "cli.js"
