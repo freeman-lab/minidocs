@@ -49,7 +49,7 @@ function Sidebar (container, contents, logo, title) {
   }
 
   function level (container, key, value, depth) {
-    if (isobject(value)) {
+    if (isobject(value) && Object.keys(value).indexOf('file') < 0) {
       var el = document.createElement('div')
       container.appendChild(el)
       el.appendChild(heading(key, depth))
@@ -63,6 +63,7 @@ function Sidebar (container, contents, logo, title) {
       link.id = key + '-link'
       link.innerHTML = key
       link.className = 'contents-link'
+      console.log('link', link)
       link.onclick = function () {
         highlight(link)
         self.emit('selected', key)

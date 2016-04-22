@@ -15,6 +15,12 @@ module.exports = function (container, documents) {
     },
     markdown: {
 
+    },
+    link: {
+      textDecoration: 'none',
+      padding: '4px 6px',
+      marginBottom: '10px',
+      borderRadius: '2px'
     }
   }
 
@@ -23,13 +29,24 @@ module.exports = function (container, documents) {
   css(wrapper, style.wrapper)
   container.appendChild(wrapper)
 
+  var link = document.createElement('a')
+  css(link, style.link)
+  wrapper.appendChild(link)
+
   var markdown = document.createElement('div')
   markdown.className = 'markdown-body'
   css(markdown, style.markdown)
   wrapper.appendChild(markdown)
 
-  function show (text) {
-    markdown.innerHTML = text
+  function show (opts) {
+    if (opts.link) {
+      link.href = opts.link
+      link.innerHTML = 'Source'
+      link.className = 'markdown-link'
+    } else {
+      link.className = 'markdown-link hidden'
+    }
+    markdown.innerHTML = opts.text
   }
 
   return {
