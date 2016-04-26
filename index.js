@@ -50,10 +50,13 @@ module.exports = function (opts) {
   var first
   function iterate (data) {
     foreach(data, function (value, key) {
-      if (isobject(data[key])) iterate(value)
-      else {
+      if (isobject(value) && Object.keys(value).indexOf('file') < 0) {
+        iterate(value)
+      } else {
         if (!first) first = key
-        lookup[key.replace(/\s+/g, '-')] = value
+        lookup[key.replace(/\s+/g, '-')] = typeof value === 'string'
+          ? { file: value }
+          : value
       }
     })
   }
@@ -84,15 +87,14 @@ module.exports = function (opts) {
     title: title,
     pushstate: pushstate
   })
+
   var main = require('./components/main')(container)
 
-  sidebar.on('selected', showFile)
-
-  function showFile (key) {
-    var name = lookup[key.replace(/\s+/g, '-')]
-    var fileid = camelcase(name.replace('.md', ''))
-    main.show(parsed[fileid])
-  }
+  sidebar.on('selected', function (key) {
+    var value = lookup[key.replace(/\s+/g, '-')]
+    var fileid = camelcase(value.file.replace('.md', ''))
+    main.show({ text: parsed[fileid], link: value.link, key: key })
+  })
 
   if (pushstate && pathname.length > 1) sidebar.select(pathname.replace(/^\/|\/$/g, ''))
   else if (initial) sidebar.select(initial)

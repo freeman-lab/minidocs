@@ -56,7 +56,7 @@ function Sidebar (opts) {
   }
 
   function level (container, key, value, depth) {
-    if (isobject(value)) {
+    if (isobject(value) && Object.keys(value).indexOf('file') < 0) {
       var el = document.createElement('div')
       container.appendChild(el)
       el.appendChild(heading(key, depth))
@@ -72,6 +72,7 @@ function Sidebar (opts) {
       if (pushstate) link.href = slug
       link.innerHTML = key
       link.className = 'contents-link'
+
       link.onclick = function () {
         highlight(link)
         self.emit('selected', key)
