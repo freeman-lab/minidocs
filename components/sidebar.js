@@ -7,9 +7,14 @@ var EventEmitter = require('events').EventEmitter
 module.exports = Sidebar
 inherits(Sidebar, EventEmitter)
 
-function Sidebar (container, contents, logo, title) {
-  if (!(this instanceof Sidebar)) return new Sidebar(container, contents, logo, title)
+function Sidebar (opts) {
+  if (!(this instanceof Sidebar)) return new Sidebar(opts)
   var self = this
+  var container = opts.container
+  var contents = opts.contents
+  var logo = opts.logo
+  var title = opts.title
+  var pushstate = opts.pushstate
 
   var style = {
     sidebar: {
@@ -22,6 +27,8 @@ function Sidebar (container, contents, logo, title) {
       height: window.innerHeight * 0.96
     },
     link: {
+      textDecoration: 'none',
+      color: 'rgb(80,80,80)'
     }
   }
 
@@ -60,7 +67,9 @@ function Sidebar (container, contents, logo, title) {
       container.appendChild(item)
       var link = document.createElement('a')
       css(link, style.link)
-      link.id = key + '-link'
+      var slug = key.replace(/\s+/g, '-')
+      link.id = slug + '-link'
+      if (pushstate) link.href = slug
       link.innerHTML = key
       link.className = 'contents-link'
 
@@ -81,7 +90,7 @@ function Sidebar (container, contents, logo, title) {
 
   function select (key) {
     highlight(document.querySelector('#' + key + '-link'))
-    self.emit('selected', key)
+    self.emit('selected', key.replace(/\s+/g, '-'))
   }
 
   css(sidebar, style.sidebar)

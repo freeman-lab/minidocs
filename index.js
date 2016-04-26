@@ -1,8 +1,11 @@
 var fs = require('fs')
+var url = require('url')
 var path = require('path')
 var css = require('dom-css')
 var marked = require('marked')
 var camelcase = require('camelcase')
+var history = require('sheet-router/history')
+var href = require('sheet-router/href')
 var isobject = require('lodash.isobject')
 var foreach = require('lodash.foreach')
 var insertcss = require('insert-css')
@@ -19,6 +22,7 @@ module.exports = function (opts) {
   var initial = opts.initial
   var title = opts.title || ''
   var node = opts.node || document.body
+  var pushstate = opts.pushstate !== false
 
   marked.setOptions({
     highlight: function (code, lang) {
@@ -26,6 +30,16 @@ module.exports = function (opts) {
       return out.value
     }
   })
+
+  if (pushstate) {
+    var pathname = url.parse(document.location.href).pathname
+    href(setPathname)
+    history(setPathname)
+  }
+
+  function setPathname (href) {
+    pathname = url.parse(href).pathname
+  }
 
   var parsed = {}
   foreach(documents, function (value, key) {
@@ -40,7 +54,9 @@ module.exports = function (opts) {
         iterate(value)
       } else {
         if (!first) first = key
-        lookup[key] = typeof value === 'string' ? { file: value } : value
+        lookup[key.replace(/\s+/g, '-')] = typeof value === 'string'
+          ? { file: value }
+          : value
       }
     })
   }
@@ -64,15 +80,23 @@ module.exports = function (opts) {
   insertcss(githubcss)
   insertcss(highlightcss)
 
-  var sidebar = require('./components/sidebar')(container, contents, logo, title)
+  var sidebar = require('./components/sidebar')({
+    container: container,
+    contents: contents,
+    logo: logo,
+    title: title,
+    pushstate: pushstate
+  })
+
   var main = require('./components/main')(container)
 
   sidebar.on('selected', function (key) {
-    var value = lookup[key]
+    var value = lookup[key.replace(/\s+/g, '-')]
     var fileid = camelcase(value.file.replace('.md', ''))
     main.show({ text: parsed[fileid], link: value.link, key: key })
   })
 
-  if (initial) sidebar.select(initial)
+  if (pushstate && pathname.length > 1) sidebar.select(pathname.replace(/^\/|\/$/g, ''))
+  else if (initial) sidebar.select(initial)
   else sidebar.select(first)
 }
