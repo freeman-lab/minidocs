@@ -63,7 +63,7 @@ function Sidebar (container, contents, logo, title) {
       link.id = key + '-link'
       link.innerHTML = key
       link.className = 'contents-link'
-      console.log('link', link)
+
       link.onclick = function () {
         highlight(link)
         self.emit('selected', key)
