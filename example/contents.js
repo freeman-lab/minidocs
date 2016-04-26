@@ -1,6 +1,9 @@
 module.exports = {
   'overview': {
-    'about': 'about.md'
+    'about': {
+      file: 'about.md',
+      link: 'http://github.com/freeman-lab/minidocs'
+    }
   },
   'animals': {
     'furry': {
