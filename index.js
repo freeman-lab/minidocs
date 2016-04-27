@@ -36,10 +36,11 @@ module.exports = function (opts) {
   var first
   function iterate (data) {
     foreach(data, function (value, key) {
-      if (isobject(data[key])) iterate(value)
-      else {
+      if (isobject(value) && Object.keys(value).indexOf('file') < 0) {
+        iterate(value)
+      } else {
         if (!first) first = key
-        lookup[key] = value
+        lookup[key] = typeof value === 'string' ? { file: value } : value
       }
     })
   }
@@ -67,9 +68,9 @@ module.exports = function (opts) {
   var main = require('./components/main')(container)
 
   sidebar.on('selected', function (key) {
-    var name = lookup[key]
-    var fileid = camelcase(name.replace('.md', ''))
-    main.show(parsed[fileid])
+    var value = lookup[key]
+    var fileid = camelcase(value.file.replace('.md', ''))
+    main.show({ text: parsed[fileid], link: value.link, key: key })
   })
 
   console.log(first)
