@@ -60,7 +60,7 @@ function Sidebar (container, contents, logo, title) {
       container.appendChild(item)
       var link = document.createElement('a')
       css(link, style.link)
-      link.id = key + '-link'
+      link.id = key.replace(/\s+/g, '-') + '-link'
       link.innerHTML = key
       link.className = 'contents-link'
       link.onclick = function () {
@@ -79,7 +79,7 @@ function Sidebar (container, contents, logo, title) {
   }
 
   function select (key) {
-    highlight(document.querySelector('#' + key + '-link'))
+    highlight(document.querySelector('#' + key.replace(/\s+/g, '-') + '-link'))
     self.emit('selected', key)
   }
 

@@ -72,6 +72,8 @@ module.exports = function (opts) {
     main.show(parsed[fileid])
   })
 
+  console.log(first)
+
   if (initial) sidebar.select(initial)
   else sidebar.select(first)
 }
