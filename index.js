@@ -73,8 +73,6 @@ module.exports = function (opts) {
     main.show({ text: parsed[fileid], link: value.link, key: key })
   })
 
-  console.log(first)
-
   if (initial) sidebar.select(initial)
   else sidebar.select(first)
 }
