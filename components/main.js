@@ -39,6 +39,7 @@ module.exports = function (container, documents) {
   wrapper.appendChild(markdown)
 
   function show (opts) {
+    if (wrapper.scrollTop > 0) wrapper.scrollTop = 0
     if (opts.link) {
       link.href = opts.link
       link.innerHTML = 'Source'
