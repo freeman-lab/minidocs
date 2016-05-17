@@ -2,18 +2,19 @@
 
 var fs = require('fs')
 var path = require('path')
-var includeFolder = require('include-folder')
+var read = require('read-directory')
+var parsePath = require('parse-filepath')
 var html = require('simple-html-index')
 var browserify = require('browserify')
 var minimist = require('minimist')
 var mkdir = require('mkdirp')
 var rm = require('rimraf')
+var exit = require('exit')
 var debug = require('debug')('minidocs:cli')
 
 var cwd = process.cwd()
-var cwdArr = cwd.split('/')
-var projectdir = cwdArr[cwdArr.length - 1]
-
+var cwdParsed = parsePath(cwd)
+var projectdir = cwdParsed.name
 var argv = minimist(process.argv.slice(2), {
   alias: {
     c: 'contents',
@@ -51,7 +52,7 @@ var site = {
 */
 if (argv.help) {
   console.log(usage)
-  process.exit()
+  exit()
 }
 
 /*
@@ -59,11 +60,11 @@ if (argv.help) {
 */
 if (argv._[0]) {
   var source = path.resolve(cwd, argv._[0])
-  site.markdown = includeFolder(source)
+  site.markdown = read.sync(source, { extensions: false })
 } else {
   console.log('\nError:\nsource markdown directory is required')
   console.log(usage)
-  process.exit()
+  exit()
 }
 
 /*
@@ -75,7 +76,7 @@ if (argv.contents) {
 } else {
   console.log('\nError:\n--contents/-c option is required')
   console.log(usage)
-  process.exit()
+  exit()
 }
 
 /*
@@ -168,5 +169,5 @@ function buildLogo () {
 
 function error (err) {
   console.log(err)
-  process.exit(1)
+  exit(1)
 }
