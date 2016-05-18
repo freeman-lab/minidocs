@@ -42,6 +42,7 @@
     "browserify": "^13.0.0",
     "camelcase": "^2.1.1",
     "dom-css": "^2.0.0",
+    "exit": "^0.1.2",
     "folderify": "^1.2.0",
     "from2-string": "^1.1.0",
     "highlight.js": "^9.2.0",
@@ -54,6 +55,8 @@
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "os-tmpdir": "^1.0.1",
+    "parse-filepath": "^1.0.1",
+    "read-directory": "^1.2.0",
     "rimraf": "^2.5.2",
     "simple-html-index": "^1.2.0"
   },
