@@ -1,91 +1,42 @@
-var css = require('dom-css')
-var inherits = require('inherits')
-var foreach = require('lodash.foreach')
 var isobject = require('lodash.isobject')
-var EventEmitter = require('events').EventEmitter
+var map = require('lodash.map')
+var css = require('sheetify')
+var el = require('bel')
 
-module.exports = Sidebar
-inherits(Sidebar, EventEmitter)
+var parseContents = require('../lib/parse-contents')
 
-function Sidebar (container, contents, logo, title) {
-  if (!(this instanceof Sidebar)) return new Sidebar(container, contents, logo, title)
-  var self = this
+module.exports = function (params, state, send) {
+  var contents = state.pages.contents
 
-  var style = {
-    sidebar: {
-      width: '24%',
-      paddingLeft: '3%',
-      display: 'inline-block',
-      paddingBottom: window.innerHeight * 0.03,
-      overflowY: 'scroll',
-      background: 'rgb(240,240,240)',
-      height: window.innerHeight * 0.96
-    },
-    link: {
+  var prefix = css`
+    :host {
+      width: 24%;
+      padding-left: 3%;
+      display: inline-block;
+      padding-bottom: 3%;
+      overflow-y: scroll;
+      background: rgb(240,240,240);
+      height: 100%;
     }
-  }
+  `
 
-  var sidebar = document.createElement('div')
-  require('./header')(sidebar, logo, title)
-
-  sidebar.className = 'minidocs-contents'
-  iterate(sidebar, contents, -1)
-
-  function heading (name, depth) {
-    var el
-    if (depth === 0) el = document.createElement('h1')
-    if (depth === 1) el = document.createElement('h2')
-    if (depth === 2) el = document.createElement('h3')
-    if (depth === 3) el = document.createElement('h4')
-    if (depth === 0) el.innerHTML = '# '
-    el.innerHTML += name
-    return el
-  }
-
-  function iterate (container, contents, depth) {
-    foreach(contents, function (value, key) {
-      level(container, key, value, depth + 1)
-    })
-  }
-
-  function level (container, key, value, depth) {
-    if (isobject(value) && Object.keys(value).indexOf('file') < 0) {
-      var el = document.createElement('div')
-      container.appendChild(el)
-      el.appendChild(heading(key, depth))
-      iterate(el, value, depth)
-    } else {
-      var item = document.createElement('div')
-      css(item, {marginBottom: '5px'})
-      container.appendChild(item)
-      var link = document.createElement('a')
-      css(link, style.link)
-      link.id = key.replace(/\s+/g, '-') + '-link'
-      link.innerHTML = key
-      link.className = 'contents-link'
-
-      link.onclick = function () {
-        highlight(link)
-        self.emit('selected', key)
+  function createMenu (contents) {
+    return contents.map(function (item) {
+      if (item.link) {
+        return el`<div class="depth-${item.depth}">
+          <a href="${item.link}">${item.key}</a>
+        </div>`
       }
-      item.appendChild(link)
-    }
-  }
-
-  function highlight (link) {
-    foreach(document.querySelectorAll('.contents-link'), function (item) {
-      item.className = 'contents-link'
+      return el`<div class="depth-${item.depth}">${item.key}</div>`
     })
-    link.className = 'contents-link contents-link-selected'
   }
 
-  function select (key) {
-    highlight(document.querySelector('#' + key.replace(/\s+/g, '-') + '-link'))
-    self.emit('selected', key)
-  }
-
-  css(sidebar, style.sidebar)
-  container.appendChild(sidebar)
-
-  self.select = select
+  return el`<div class="prefix minidocs-sidebar">
+    <div class="minidocs-header">
+      <h1>${state.app.title}</h1>
+    </div>
+    <div class="minidocs-contents">
+      ${createMenu(contents)}
+    </div>
+  </div>`
 }

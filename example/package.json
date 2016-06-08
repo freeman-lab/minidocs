@@ -15,12 +15,7 @@
     "example",
     "documentation"
   ],
-  "browserify": {
-    "transform": [
-      "brfs",
-      "folderify"
-    ]
-  },
+  "browserify": {},
   "author": "freeman-lab",
   "license": "MIT",
   "bugs": {
