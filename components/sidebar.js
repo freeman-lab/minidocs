@@ -1,12 +1,8 @@
-var isobject = require('lodash.isobject')
-var map = require('lodash.map')
 var css = require('sheetify')
 var el = require('bel')
 
-var parseContents = require('../lib/parse-contents')
-
 module.exports = function (params, state, send) {
-  var contents = state.pages.contents
+  var contents = state.contents
 
   var prefix = css`
     :host {
@@ -19,7 +15,8 @@ module.exports = function (params, state, send) {
       height: 100%;
     }
   `
-
+  console.log('prefix', prefix)
+  
   function createMenu (contents) {
     return contents.map(function (item) {
       if (item.link) {
@@ -31,9 +28,9 @@ module.exports = function (params, state, send) {
     })
   }
 
-  return el`<div class="prefix minidocs-sidebar">
+  return el`<div class="${prefix} minidocs-sidebar">
     <div class="minidocs-header">
-      <h1>${state.app.title}</h1>
+      <h1>${state.title}</h1>
     </div>
     <div class="minidocs-contents">
       ${createMenu(contents)}
