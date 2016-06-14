@@ -11,7 +11,7 @@ module.exports = function (params, state, send) {
     :host {}
   `
 
-  var element = el`<div class="prefix minidocs-content"></div>`
+  var element = el`<div class="${prefix} minidocs-content"></div>`
   element.innerHTML = page
   return element
 }

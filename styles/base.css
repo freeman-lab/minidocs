@@ -1,6 +1,8 @@
 body {
   font-family: 'clear_sans_thinregular';
   color: rgb(80,80,80);
+  margin: 0px;
+  padding: 0px;
 }
 
 .contents-link {
