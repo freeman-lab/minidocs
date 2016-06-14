@@ -11,7 +11,7 @@ module.exports = function (params, state, send) {
       padding: 105.9px 10% 70.6px 6%;
       vertical-align: top;
       display: inline-block;
-      margin-left: 24%;
+      margin-left: 28%;
     }
   `
 

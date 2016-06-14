@@ -10,7 +10,7 @@ module.exports = function (opts) {
 
   var contents = parseContents(opts.contents)
   var documents = parseMarkdown(opts.markdown)
-  console.log('opts.title', opts.title)
+
   app.model({
     state: {
       title: opts.title,
