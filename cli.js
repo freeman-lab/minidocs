@@ -117,8 +117,9 @@ function buildHTML (done) {
     })
 
     mkdir(dirpath, function (err) {
+      if (err) error(err)
       fs.writeFile(filepath, html, function (err) {
-        if (err) console.log(err)
+        if (err) error(err)
         done()
       })
     })

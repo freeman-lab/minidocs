@@ -1,4 +1,3 @@
-var path = require('path')
 var choo = require('choo')
 
 var parseContents = require('./lib/parse-contents')

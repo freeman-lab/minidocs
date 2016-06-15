@@ -2,7 +2,6 @@ var css = require('sheetify')
 var el = require('bel')
 
 module.exports = function (params, state, send) {
-  var contents = state.contents
   var html = state.html
   var currentPage = params.page || state.current
   var page = html[currentPage]
