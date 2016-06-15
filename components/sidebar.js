@@ -1,8 +1,11 @@
+var url = require('url')
 var css = require('sheetify')
 var el = require('bel')
 
 module.exports = function (params, state, send) {
   var contents = state.contents
+
+  // TODO: fix sidebar menu styles
 
   var prefix = css`
     :host {
@@ -22,20 +25,35 @@ module.exports = function (params, state, send) {
       width: 100%;
     }
 
-    .depth-1 {
+    .h1 {
       display: block;
       font-size: 2em;
       font-weight: bold;
+      margin-top: 10px;
     }
 
-    .depth-1:before {
+    .h1:before {
       content: '# '
     }
 
-    .depth-2 {
+    .h2 {
       display: block;
       font-size: 1.5em;
       font-weight: bold;
+      margin-top: 5px;
+    }
+
+    a.content-link {
+      padding-left: 2%;
+      cursor: pointer;
+      padding-bottom: 2px;
+      padding-right: 10px;
+      text-decoration: none;
+      color: #505050;
+    }
+
+    a.content-link.active, a.content-link:hover {
+      background-color: #fff;
     }
   `
 
@@ -49,14 +67,24 @@ module.exports = function (params, state, send) {
   }
 
   function createMenu (contents) {
-    return contents.map(function (item) {
+    return contents.map(function (item) {      
+      // TODO: figure out a better way to get current page in state based on link click
+      var location = url.parse(state.app.location)
+      var current = location.pathname.slice(1)
+      current = current.length === 0 ? state.current : current
+
       if (item.link) {
         return el`<div class="depth-${item.depth}">
-          <a href="${item.link}">${item.key}</a>
+          <a href="${item.link}" class="content-link ${isActive(current, item.key)}">${item.key}</a>
         </div>`
       }
-      return el`<div class="depth-${item.depth}">${item.key}</div>`
+
+      return el`<div class="h${item.depth} depth-${item.depth}">${item.key}</div>`
     })
+  }
+
+  function isActive (current, item) {
+    return current === item ? 'active' : ''
   }
 
   return el`<div class="${prefix} minidocs-sidebar">
