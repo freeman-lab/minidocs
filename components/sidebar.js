@@ -35,6 +35,15 @@ module.exports = function (params, state, send) {
     .h1:before {
       content: '# '
     }
+  
+    h1 a {
+      color: #505050;
+      text-decoration: none;
+    }
+
+    h1 a:hover {
+      color: #222;
+    }
 
     .h2 {
       display: block;
@@ -69,9 +78,15 @@ module.exports = function (params, state, send) {
   function createMenu (contents) {
     return contents.map(function (item) {      
       // TODO: figure out a better way to get current page in state based on link click
-      var location = url.parse(state.app.location)
-      var current = location.pathname.slice(1)
-      current = current.length === 0 ? state.current : current
+      var current
+      var location
+
+      if (state.map && state.map.location) {
+        location = url.parse(state.app.location)
+        current = location.pathname.slice(1)
+      } else {
+        current = state.current
+      }
 
       if (item.link) {
         return el`<div class="depth-${item.depth}">

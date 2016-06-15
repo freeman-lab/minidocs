@@ -82,6 +82,7 @@ function usage (exitcode) {
     * --title, -t        Project name [name of current directory]
     * --logo, -l         Project logo
     * --css, -s          Optional stylesheet
+    * --initial, -i      Page to use for root url
     * --help, -h         Show this help message
   `)
   exit(exitcode || 0)
@@ -126,14 +127,20 @@ function buildHTML (done) {
 
 function buildJS (done) {
   var filepath = path.join(outputDir, 'index.js')
-  var js = `var minidocs = require('minidocs')(${JSON.stringify(state)})
+  var customStylePath = path.join(cwd, argv.css)
+  var customStyle = argv.css ? `css('${customStylePath}', { global: true })` : ''
+
+  var js = `
+  var insertCSS = require('insert-css')
+  var css = require('sheetify')
+  var minidocs = require('minidocs')(${JSON.stringify(state)})
+  ${customStyle}
   minidocs.start('#choo-root')
   `
 
   fs.writeFile(filepath, js, function (err) {
     if (err) return error(err)
-
-    browserify(filepath)
+    browserify(filepath, { paths: [path.join(__dirname, 'node_modules')] })
       .transform(require('sheetify/transform'), { global: true })
       .plugin(require('css-extract'), { out: path.join(outputDir, 'bundle.css') })
       .bundle(function (err, src) {
@@ -156,8 +163,10 @@ function buildLogo () {
 
 createOutputDir(function () {
   debug('createOutputDir')
-  if (argv.logo) buildLogo()
+
   buildJS(function () {
-    buildHTML(function (err) {})
+    buildHTML(function () {
+      if (argv.logo) buildLogo()
+    })
   })
 })
