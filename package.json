@@ -16,7 +16,9 @@
     "minidocs": "cli.js"
   },
   "browserify": {
-    "transform": ["sheetify/transform"]
+    "transform": [
+      "sheetify/transform"
+    ]
   },
   "repository": {
     "type": "git",
@@ -49,7 +51,8 @@
     "mkdirp": "^0.5.1",
     "parse-filepath": "^1.0.1",
     "read-directory": "^1.2.0",
-    "rimraf": "^2.5.2"
+    "rimraf": "^2.5.2",
+    "slug": "^0.9.1"
   },
   "devDependencies": {
     "browserify": "^13.0.1",

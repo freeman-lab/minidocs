@@ -15,6 +15,10 @@ module.exports = function (params, state, send) {
     }
   `
 
+  if (document.body.scrollTop > 0) {
+    document.body.scrollTop = 0
+  }
+
   return el`<div id="choo-root" class="minidocs">
     ${sidebar(params, state, send)}
     <div class="${prefix} minidocs-main">

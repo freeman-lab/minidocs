@@ -79,7 +79,7 @@ module.exports = function (params, state, send) {
       var current
       var location
 
-      if (state.map && state.map.location) {
+      if (state.app && state.app.location) {
         location = url.parse(state.app.location)
         current = location.pathname.slice(1)
       } else {
@@ -88,11 +88,11 @@ module.exports = function (params, state, send) {
 
       if (item.link) {
         return el`<div class="depth-${item.depth}">
-          <a href="${item.link}" class="content-link ${isActive(current, item.key)}">${item.key}</a>
+          <a href="${item.link}" class="content-link ${isActive(current, item.key)}">${item.name}</a>
         </div>`
       }
 
-      return el`<div class="h${item.depth} depth-${item.depth}">${item.key}</div>`
+      return el`<div class="h${item.depth} depth-${item.depth}">${item.name}</div>`
     })
   }
 
