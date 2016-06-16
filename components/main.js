@@ -15,7 +15,7 @@ module.exports = function (params, state, send) {
     }
   `
 
-  if (document.body.scrollTop > 0) {
+  if (typeof document !== 'undefined' && document.body.scrollTop > 0) {
     document.body.scrollTop = 0
   }
 
