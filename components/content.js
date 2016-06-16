@@ -26,7 +26,6 @@ module.exports = function (params, state, send) {
 
   var contentWrapper = el`<div></div>`
   contentWrapper.innerHTML = page
-  console.log('pagedata.source?', pageData)
   var link = pageData.source ? el`<a class="markdown-link" href="${pageData.source}">source</a>` : ''
 
   return el`<div class="${prefix} minidocs-content">
