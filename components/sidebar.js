@@ -5,8 +5,6 @@ var el = require('bel')
 module.exports = function (params, state, send) {
   var contents = state.contents
 
-  // TODO: fix sidebar menu styles
-
   var prefix = css`
     :host {
       width: 24%;
