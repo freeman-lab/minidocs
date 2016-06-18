@@ -47,20 +47,23 @@ module.exports = function (params, state, send) {
       display: block;
       font-size: 1.5em;
       font-weight: bold;
-      margin-top: 5px;
+      margin-top: 6px;
+      margin-bottom: 4px;
     }
 
     a.content-link {
-      padding-left: 2%;
+      padding: 5px 8px 5px 5px;
+      margin-bottom: 5px;
       cursor: pointer;
-      padding-bottom: 2px;
-      padding-right: 10px;
       text-decoration: none;
       color: #505050;
+      display: block;
+      border-left: 3px solid #eee;
     }
 
     a.content-link.active, a.content-link:hover {
       background-color: #fff;
+      border-left: 3px solid #aaa;
     }
   `
 
@@ -82,10 +85,14 @@ module.exports = function (params, state, send) {
       if (state.app && state.app.location) {
         location = url.parse(state.app.location)
         current = location.pathname.slice(1)
-      } else {
+      }
+      
+      if (!current || current.length <= 1) {
         current = state.current
       }
 
+      console.log('current.length', current.length)
+      console.log('current', state, state.app.location)
       if (item.link) {
         return el`<div class="depth-${item.depth}">
           <a href="${item.link}" class="content-link ${isActive(current, item.key)}">${item.name}</a>

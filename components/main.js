@@ -6,7 +6,7 @@ var content = require('./content')
 module.exports = function (params, state, send) {
   var prefix = css`
     :host {
-      width: 57%;
+      width: 56%;
       height: 529.5px;
       padding: 105.9px 10% 70.6px 6%;
       vertical-align: top;
