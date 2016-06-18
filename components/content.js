@@ -14,6 +14,8 @@ module.exports = function (params, state, send) {
       color: #aaa;
       border: 1px solid #eee;
       display: inline-block;
+      position: fixed;
+      margin-top: -50px;
       padding: 3px 5px;
       text-decoration: none;
     }
