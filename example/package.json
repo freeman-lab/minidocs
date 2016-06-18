@@ -15,7 +15,12 @@
     "example",
     "documentation"
   ],
-  "browserify": {},
+  "browserify": {
+    "transform": [
+      "sheetify/transform",
+      "read-directory/transform"
+    ]
+  },
   "author": "freeman-lab",
   "license": "MIT",
   "bugs": {
