@@ -92,8 +92,6 @@ module.exports = function (params, state, send) {
         current = state.current
       }
 
-      console.log('current.length', current.length)
-      console.log('current', state, state.app.location)
       if (item.link) {
         return el`<div class="depth-${item.depth}">
           <a href="${item.link}" class="content-link ${isActive(current, item.key)}">${item.name}</a>
