@@ -178,9 +178,11 @@ npm install --save-dev surge
 
 Create a `deploy` npm script:
 
+```js
 "scripts": {
   "deploy": "surge dist"
 }
+```
 
 Publish your site:
 
@@ -221,9 +223,11 @@ npm install --save-dev gh-pages
 
 Create a `deploy` npm script:
 
+```js
 "scripts": {
   "deploy": "gh-pages -d dist"
 }
+```
 
 Publish your site:
 
