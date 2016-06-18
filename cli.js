@@ -28,6 +28,7 @@ var argv = minimist(process.argv.slice(2), {
     l: 'logo',
     s: 'css',
     i: 'initial',
+    p: 'pushstate',
     h: 'help'
   },
   default: {
@@ -70,6 +71,7 @@ var state = {
 var contents = parseContents(state.contents)
 var documents = parseMarkdown(state.markdown)
 var app = minidocs(state)
+state.contents = contents
 
 function usage (exitcode) {
   console.log(`
@@ -83,6 +85,7 @@ function usage (exitcode) {
     * --logo, -l         Project logo
     * --css, -s          Optional stylesheet
     * --initial, -i      Page to use for root url
+    * --pushstate, p     Create a 200.html file for hosting services like surge.sh
     * --help, -h         Show this help message
   `)
   exit(exitcode || 0)
@@ -106,7 +109,6 @@ function buildHTML (done) {
     var route = documents.routes[key]
     var dirpath = path.join(outputDir, route)
     var filepath = path.join(dirpath, 'index.html')
-    state.contents = contents
     var page = app.toString(route, state)
 
     var html = createHTML({
@@ -159,7 +161,7 @@ function buildJS (done) {
   })
 }
 
-function buildLogo () {
+function createLogo () {
   var logopath = path.join(outputDir, logo)
   var writelogo = fs.createWriteStream(logopath)
   fs.createReadStream(argv.logo).pipe(writelogo)
@@ -170,7 +172,24 @@ createOutputDir(function () {
 
   buildJS(function () {
     buildHTML(function () {
-      if (argv.logo) buildLogo()
+      if (argv.logo) createLogo()
+      if (argv.pushstate) createPushstateFile()
     })
   })
 })
+
+function createPushstateFile (done) {
+  var page = app.toString('/', state)
+  var pushstatefile = path.join(outputDir, '200.html')
+
+  var html = createHTML({
+    title: state.title,
+    body: page,
+    script: '/bundle.js',
+    css: '/bundle.css'
+  })
+
+  fs.writeFile(pushstatefile, html, function (err) {
+    if (err) return error(err)
+  })
+}
