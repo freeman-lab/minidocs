@@ -72,20 +72,35 @@ Then build the site and add it to the page with
 
 ```javascript
 var minidocs = require('minidocs')
-var include = require('include-folder')
+var read = require('read-directory')
 
-minidocs({
+var app = minidocs({
   contents: contents,
-  markdown: include('./markdown')
+  markdown: read.sync('./markdown', { extensions: false }),
+  logo: './logo.svg'
 })
+
+var tree = app.start()
+document.body.appendChild(tree)
 ```
 
 This assumes you have the files `about.md`, `sheep.md`, and `pig.md` inside a local folder `markdown`.
 
 To run this in the browser you'll need two browserify transforms:
 
-- [folderify](https://github.com/parro-it/folderify), to transform the call to the `include-folder` module into an object with all your markdown files
-- [brfs](https://github.com/substack/brfs), to transform `fs.readFileSync('./styles.css')` into a string with the contents of that file
+- [read-directory/transform](https://github.com/sethvincent/read-directory), to transform the call to the `read.sync` module into an object with all your markdown files. This transform is part of the read-directory module.
+- [sheetify/transform](https://github.com/stackcss/sheetify), to transform styles defined in the components into CSS that the browser can use. This transform is part of the sheetify module.
+
+The easiest way to add transforms to your project is to add a `browserify` field to the package.json file with a `transform` array:
+
+```js
+"browserify": {
+  "transform": [
+    "sheetify/transform",
+    "read-directory/transform"
+  ]
+}
+```
 
 To run a full example, clone this repository, go into the folder [`example`](example) then call
 
@@ -107,13 +122,15 @@ Options:
   * --output, -o       Directory for built site [site]
   * --title, -t        Project name [name of current directory]
   * --logo, -l         Project logo
-  * --css              Optional stylesheet
+  * --css, -s          Optional stylesheet
+  * --initial, -i      Page to use for root url
+  * --pushstate, p     Create a 200.html file for hosting services like surge.sh
   * --help, -h         Show this help message
 ```
 
 ### library
 
-#### `require('minidocs')(opts)`
+#### `var minidocs = require('minidocs')(opts)`
 
 Where `opts` is an object that can specify the following options
 
@@ -123,6 +140,100 @@ Where `opts` is an object that can specify the following options
 - `logo` relative file path to a logo file, if unspecified will not include a logo
 - `initial` which document to show on load, if unspecified will load the first document
 - `root` a DOM node to append to, if unspecified will append to `document.body`
+
+#### `var tree = minidocs.start(rootId?, opts)`
+The `start` method accepts the same options as [choo's `start` method](https://github.com/yoshuawuyts/choo#tree--appstartrootid-opts).
+
+This generates the html tree of the application that can be added to the DOM like this:
+
+```js
+var tree = app.start()
+document.body.appendChild(tree)
+```
+
+#### `var html = app.toString(route, state)`
+The `toString` method accepts the same options as [choo's `toString` method](https://github.com/yoshuawuyts/choo#html--apptostringroute-state)
+
+We use this in the command-line tool to generate the static files of the site.
+
+## deploying minidocs
+
+### surge
+
+Surge supports HTML5 pushstate if you have a 200.html file in your built site. You can either create that file yourself when using minidocs as a JS module, or you can build the site with the minidocs cli tool and the `--pushstate` option:
+
+```sh
+minidocs docs/ -c contents.json --pushstate -o site/
+```
+
+##### Deploy with the `surge` command
+
+You can use the [`surge`](https://www.npmjs.com/package/surge) module to push the built site to the [surge.sh service](https://surge.sh).
+
+Install `surge`:
+
+```sh
+npm install --save-dev surge
+```
+
+Create a `deploy` npm script:
+
+```js
+"scripts": {
+  "deploy": "surge dist"
+}
+```
+
+Publish your site:
+
+```sh
+npm run deploy
+```
+
+### github pages
+
+GitHub Pages doesn't support HTML5 pushstate, so you have two options:
+
+##### 1. Generate the site with the minidocs cli
+
+To create a minidocs site with the cli:
+
+```sh
+minidocs path/to/docs/dir -c contents.json -o site
+```
+
+##### 2. Use hash routing with the JS module
+
+To use hash routing, start the app with the `{ hash: true }` option in the `minidocs.start` method:
+
+```js
+var tree = app.start({ hash: true })
+document.body.appendChild(tree)
+```
+
+##### Deploy with the `gh-pages` command
+
+You can use the [`gh-pages`](https://www.npmjs.com/package/gh-pages) module to push the built site to the gh-pages branch of your repo.
+
+Install `gh-pages`:
+
+```sh
+npm install --save-dev gh-pages
+```
+
+Create a `deploy` npm script:
+
+```js
+"scripts": {
+  "deploy": "gh-pages -d dist"
+}
+```
+
+Publish your site:
+
+```sh
+npm run deploy
+```
 
 ## license
 

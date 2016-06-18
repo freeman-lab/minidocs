@@ -4,13 +4,18 @@ var fs = require('fs')
 var path = require('path')
 var read = require('read-directory')
 var parsePath = require('parse-filepath')
-var html = require('simple-html-index')
+var createHTML = require('create-html')
 var browserify = require('browserify')
 var minimist = require('minimist')
 var mkdir = require('mkdirp')
 var rm = require('rimraf')
 var exit = require('exit')
-var debug = require('debug')('minidocs:cli')
+
+var debug = require('debug')('minidocs')
+var minidocs = require('./app')
+
+var parseContents = require('./lib/parse-contents')
+var parseMarkdown = require('./lib/parse-markdown')
 
 var cwd = process.cwd()
 var cwdParsed = parsePath(cwd)
@@ -22,6 +27,8 @@ var argv = minimist(process.argv.slice(2), {
     t: 'title',
     l: 'logo',
     s: 'css',
+    i: 'initial',
+    p: 'pushstate',
     h: 'help'
   },
   default: {
@@ -30,144 +37,160 @@ var argv = minimist(process.argv.slice(2), {
   }
 })
 
-var usage = `
-Usage:
-  minidocs {sourceDir} -c {contents.json} -o {buildDir}
+var outputDir = path.resolve(cwd, argv.output)
 
-Options:
-  * --contents, -c     JSON file that defines the table of contents
-  * --output, -o       Directory for built site [site]
-  * --title, -t        Project name [name of current directory]
-  * --logo, -l         Project logo
-  * --css, -s          Optional stylesheet
-  * --help, -h         Show this help message
-`
-
-var site = {
-  outputDir: path.resolve(cwd, argv.output)
-}
-
-/*
-* Show help text
-*/
 if (argv.help) {
-  console.log(usage)
-  exit()
+  usage()
 }
 
-/*
-* Get source markdown directory
-*/
 if (argv._[0]) {
   var source = path.resolve(cwd, argv._[0])
-  site.markdown = read.sync(source, { extensions: false })
+  var markdown = read.sync(source, { extensions: false })
 } else {
-  console.log('\nError:\nsource markdown directory is required')
-  console.log(usage)
-  exit()
+  error('\nError:\nsource markdown directory is required', { usage: true })
 }
 
-/*
-* Read the table of contents
-*/
 if (argv.contents) {
-  var contents = path.resolve(process.cwd(), argv.contents)
-  site.contents = require(contents)
+  var contentsPath = path.resolve(process.cwd(), argv.contents)
 } else {
-  console.log('\nError:\n--contents/-c option is required')
-  console.log(usage)
-  exit()
+  error('\nError:\n--contents/-c option is required', { usage: true })
 }
 
-/*
-* Get the project logo if provided
-*/
 if (argv.logo) {
-  site.logo = path.parse(argv.logo).base
+  var logo = path.parse(argv.logo).base
 }
 
-/*
-* Add the title
-*/
-site.title = argv.title
+var state = {
+  title: argv.title,
+  logo: logo,
+  contents: require(contentsPath),
+  markdown: markdown,
+  initial: argv.initial || Object.keys(markdown)[0]
+}
 
-createOutputDir(function () {
-  debug('createOutputDir')
-  if (argv.logo) buildLogo()
-  buildCSS(function () {
-    buildHTML(function () {
-      buildJS()
-    })
-  })
-})
+var contents = parseContents(state.contents)
+var documents = parseMarkdown(state.markdown)
+var app = minidocs(state)
+
+function usage (exitcode) {
+  console.log(`
+  Usage:
+    minidocs {sourceDir} -c {contents.json} -o {buildDir}
+
+  Options:
+    * --contents, -c     JSON file that defines the table of contents
+    * --output, -o       Directory for built site [site]
+    * --title, -t        Project name [name of current directory]
+    * --logo, -l         Project logo
+    * --css, -s          Optional stylesheet
+    * --initial, -i      Page to use for root url
+    * --pushstate, p     Create a 200.html file for hosting services like surge.sh
+    * --help, -h         Show this help message
+  `)
+  exit(exitcode || 0)
+}
+
+function error (err, opts) {
+  console.log(err)
+  if (opts && opts.usage) usage(1)
+}
 
 function createOutputDir (done) {
-  debug('createOutputDir', site.outputDir)
-  rm(site.outputDir, function (err) {
+  debug('createOutputDir', outputDir)
+  rm(outputDir, function (err) {
     if (err) return error(err)
-    mkdir(site.outputDir, done)
+    mkdir(outputDir, done)
   })
 }
 
-function buildJS () {
-  var filepath = path.join(site.outputDir, 'index.js')
-  var js = `require('minidocs')(${JSON.stringify(site)})`
+function buildHTML (done) {
+  Object.keys(documents.routes).forEach(function (key) {
+    state.contents = contents
+    var route = documents.routes[key]
+    var dirpath = path.join(outputDir, route)
+    var filepath = path.join(dirpath, 'index.html')
+    var page = app.toString(route, state)
+
+    var html = createHTML({
+      title: state.title,
+      body: page,
+      script: '/bundle.js',
+      css: '/bundle.css'
+    })
+
+    mkdir(dirpath, function (err) {
+      if (err) error(err)
+      fs.writeFile(filepath, html, function (err) {
+        if (err) error(err)
+        done()
+      })
+    })
+  })
+}
+
+function buildJS (done) {
+  var filepath = path.join(outputDir, 'index.js')
+  
+  if (argv.css) {
+    var customStylePath = path.join(cwd, argv.css)
+    var customStyle = argv.css ? `css('${customStylePath}', { global: true })` : ''
+  }
+
+  var js = `
+  var insertCSS = require('insert-css')
+  var css = require('sheetify')
+  var minidocs = require('minidocs')(${JSON.stringify(state)})
+  ${customStyle}
+  minidocs.start('#choo-root')
+  `
 
   fs.writeFile(filepath, js, function (err) {
     if (err) return error(err)
-    browserify(filepath)
-      .transform('brfs')
+    browserify(filepath, { paths: [path.join(__dirname, 'node_modules')] })
+      .transform(require('sheetify/transform'), { global: true })
+      .plugin(require('css-extract'), { out: path.join(outputDir, 'bundle.css') })
       .bundle(function (err, src) {
         if (err) return error(err)
-        var filepath = path.join(site.outputDir, 'bundle.js')
+        var filepath = path.join(outputDir, 'bundle.js')
         fs.writeFile(filepath, src, function (err) {
           debug('bundle.js', filepath)
           if (err) return error(err)
+          done()
         })
       })
   })
 }
 
-function buildHTML (done) {
-  var filepath = path.join(site.outputDir, 'index.html')
-  var write = fs.createWriteStream(filepath)
-  var opts = {
-    title: argv.title,
-    entry: 'bundle.js',
-    css: argv.css ? 'style.css' : null
-  }
-  debug('build html', filepath)
-  var read = html(opts)
-  read.pipe(write)
-  read.on('end', done)
-}
-
-function buildCSS (done) {
-  debug('buildCSS')
-
-  function write (txt) {
-    debug('write the css bundle')
-    var csspath = path.join(site.outputDir, 'style.css')
-    fs.writeFile(csspath, txt, done)
-  }
-
-  if (argv.css) {
-    fs.readFile(argv.css, 'utf8', function (err, src) {
-      if (err) return error(err)
-      write(src)
-    })
-  } else {
-    done()
-  }
-}
-
-function buildLogo () {
-  var logopath = path.join(site.outputDir, site.logo)
+function createLogo () {
+  var logopath = path.join(outputDir, logo)
   var writelogo = fs.createWriteStream(logopath)
   fs.createReadStream(argv.logo).pipe(writelogo)
 }
 
-function error (err) {
-  console.log(err)
-  exit(1)
+createOutputDir(function () {
+  debug('createOutputDir')
+
+  buildJS(function () {
+    buildHTML(function () {
+      if (argv.logo) createLogo()
+      if (argv.pushstate) createPushstateFile()
+    })
+  })
+})
+
+function createPushstateFile (done) {
+  state.contents = contents
+  var page = app.toString('/', state)
+  var pushstatefile = path.join(outputDir, '200.html')
+
+  var html = createHTML({
+    title: state.title,
+    body: page,
+    script: '/bundle.js',
+    css: '/bundle.css'
+  })
+
+  fs.writeFile(pushstatefile, html, function (err) {
+    if (err) return error(err)
+  })
 }

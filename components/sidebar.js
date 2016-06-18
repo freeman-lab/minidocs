@@ -1,91 +1,117 @@
-var css = require('dom-css')
-var inherits = require('inherits')
-var foreach = require('lodash.foreach')
-var isobject = require('lodash.isobject')
-var EventEmitter = require('events').EventEmitter
+var url = require('url')
+var css = require('sheetify')
+var el = require('bel')
 
-module.exports = Sidebar
-inherits(Sidebar, EventEmitter)
+module.exports = function (params, state, send) {
+  var contents = state.contents
 
-function Sidebar (container, contents, logo, title) {
-  if (!(this instanceof Sidebar)) return new Sidebar(container, contents, logo, title)
-  var self = this
-
-  var style = {
-    sidebar: {
-      width: '24%',
-      paddingLeft: '3%',
-      display: 'inline-block',
-      paddingBottom: window.innerHeight * 0.03,
-      overflowY: 'scroll',
-      background: 'rgb(240,240,240)',
-      height: window.innerHeight * 0.96
-    },
-    link: {
+  var prefix = css`
+    :host {
+      width: 24%;
+      padding: 0px 20px 20px 20px;
+      display: inline-block;
+      padding-bottom: 3%;
+      overflow-y: scroll;
+      background: rgb(240,240,240);
+      height: 100%;
+      position: fixed;
+      top: 0;
+      bottom: 0;
     }
+
+    .minidocs-logo {
+      width: 100%;
+      max-width: 250px;
+    }
+
+    .h1 {
+      display: block;
+      font-size: 2em;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .h1:before {
+      content: '# '
+    }
+
+    h1 a {
+      color: #505050;
+      text-decoration: none;
+    }
+
+    h1 a:hover {
+      color: #222;
+    }
+
+    .h2 {
+      display: block;
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    a.content-link {
+      padding: 5px 8px 5px 5px;
+      margin-bottom: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      color: #505050;
+      display: block;
+      border-left: 3px solid #eee;
+    }
+
+    a.content-link.active, a.content-link:hover {
+      background-color: #fff;
+      border-left: 3px solid #aaa;
+    }
+  `
+
+  function createHeader () {
+    if (state.logo) {
+      return el`
+        <img class="minidocs-logo" src="${state.logo}" alt="${state.title}">
+      `
+    }
+    return state.title
   }
 
-  var sidebar = document.createElement('div')
-  require('./header')(sidebar, logo, title)
+  function createMenu (contents) {
+    return contents.map(function (item) {
+      // TODO: figure out a better way to get current page in state based on link click
+      var current
+      var location
 
-  sidebar.className = 'minidocs-contents'
-  iterate(sidebar, contents, -1)
-
-  function heading (name, depth) {
-    var el
-    if (depth === 0) el = document.createElement('h1')
-    if (depth === 1) el = document.createElement('h2')
-    if (depth === 2) el = document.createElement('h3')
-    if (depth === 3) el = document.createElement('h4')
-    if (depth === 0) el.innerHTML = '# '
-    el.innerHTML += name
-    return el
-  }
-
-  function iterate (container, contents, depth) {
-    foreach(contents, function (value, key) {
-      level(container, key, value, depth + 1)
-    })
-  }
-
-  function level (container, key, value, depth) {
-    if (isobject(value) && Object.keys(value).indexOf('file') < 0) {
-      var el = document.createElement('div')
-      container.appendChild(el)
-      el.appendChild(heading(key, depth))
-      iterate(el, value, depth)
-    } else {
-      var item = document.createElement('div')
-      css(item, {marginBottom: '5px'})
-      container.appendChild(item)
-      var link = document.createElement('a')
-      css(link, style.link)
-      link.id = key.replace(/\s+/g, '-') + '-link'
-      link.innerHTML = key
-      link.className = 'contents-link'
-
-      link.onclick = function () {
-        highlight(link)
-        self.emit('selected', key)
+      if (state.app && state.app.location) {
+        location = url.parse(state.app.location)
+        current = location.pathname.slice(1)
       }
-      item.appendChild(link)
-    }
-  }
+      
+      if (!current || current.length <= 1) {
+        current = state.current
+      }
 
-  function highlight (link) {
-    foreach(document.querySelectorAll('.contents-link'), function (item) {
-      item.className = 'contents-link'
+      if (item.link) {
+        return el`<div class="depth-${item.depth}">
+          <a href="${item.link}" class="content-link ${isActive(current, item.key)}">${item.name}</a>
+        </div>`
+      }
+
+      return el`<div class="h${item.depth} depth-${item.depth}">${item.name}</div>`
     })
-    link.className = 'contents-link contents-link-selected'
   }
 
-  function select (key) {
-    highlight(document.querySelector('#' + key.replace(/\s+/g, '-') + '-link'))
-    self.emit('selected', key)
+  function isActive (current, item) {
+    return current === item ? 'active' : ''
   }
 
-  css(sidebar, style.sidebar)
-  container.appendChild(sidebar)
-
-  self.select = select
+  return el`<div class="${prefix} minidocs-sidebar">
+    <div class="minidocs-header">
+      <h1><a href="/">${createHeader()}</a></h1>
+    </div>
+    <div class="minidocs-contents">
+      ${createMenu(contents)}
+    </div>
+  </div>`
 }

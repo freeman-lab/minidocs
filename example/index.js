@@ -1,8 +1,11 @@
 var contents = require('./contents')
-var include = require('include-folder')
+var read = require('read-directory')
 
-require('../index.js')({
+var app = require('../index.js')({
   contents: contents,
-  markdown: include('./markdown'),
+  markdown: read.sync('./markdown', { extensions: false }),
   logo: './logo.svg'
 })
+
+var tree = app.start()
+document.body.appendChild(tree)

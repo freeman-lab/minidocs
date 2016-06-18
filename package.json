@@ -5,14 +5,20 @@
   "main": "index.js",
   "style": "components/styles/index.css",
   "scripts": {
+    "start": "budo index.js:bundle.js --live",
     "lint": "standard",
-    "build:example": "cd example && browserify index.js -o bundle.js",
+    "build:example": "cd example && browserify index.js -p yo-yoify -o bundle.js",
     "deploy:example": "surge example minidocs-example.surge.sh",
-    "build": "browserify docs/index.js -o docs/bundle.js",
+    "build": "browserify docs/index.js -p yo-yoify -o docs/bundle.js",
     "deploy": "npm run build && surge site minidocs.surge.sh"
   },
   "bin": {
     "minidocs": "cli.js"
+  },
+  "browserify": {
+    "transform": [
+      "sheetify/transform"
+    ]
   },
   "repository": {
     "type": "git",
@@ -30,39 +36,33 @@
   "bugs": {
     "url": "https://github.com/freeman-lab/minidocs/issues"
   },
-  "browserify": {
-    "transform": [
-      "brfs",
-      "folderify"
-    ]
-  },
   "homepage": "https://github.com/freeman-lab/minidocs#readme",
   "dependencies": {
-    "brfs": "^1.4.3",
-    "browserify": "^13.0.0",
-    "camelcase": "^2.1.1",
-    "dom-css": "^2.0.0",
+    "bel": "^4.3.1",
+    "choo": "^2.1.3",
+    "create-html": "^1.0.0",
+    "css-extract": "^1.1.0",
     "exit": "^0.1.2",
-    "folderify": "^1.2.0",
-    "from2-string": "^1.1.0",
     "highlight.js": "^9.2.0",
-    "include-folder": "^1.0.0",
-    "insert-css": "^0.2.0",
-    "lodash.foreach": "^4.1.0",
     "lodash.isobject": "^3.0.2",
-    "lodash.map": "^4.2.1",
+    "lodash.map": "^4.4.0",
     "marked": "^0.3.5",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
-    "os-tmpdir": "^1.0.1",
     "parse-filepath": "^1.0.1",
     "read-directory": "^1.2.0",
     "rimraf": "^2.5.2",
-    "simple-html-index": "^1.2.0"
+    "slug": "^0.9.1",
+    "unicode": "^0.6.1"
   },
   "devDependencies": {
+    "browserify": "^13.0.1",
     "budo": "^8.1.0",
     "debug": "^2.2.0",
-    "standard": "^6.0.8"
+    "insert-css": "^0.2.0",
+    "sheetify": "^5.0.2",
+    "sheetify-cssnext": "^1.0.7",
+    "standard": "^6.0.8",
+    "yo-yoify": "^2.0.1"
   }
 }

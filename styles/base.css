@@ -1,6 +1,8 @@
 body {
   font-family: 'clear_sans_thinregular';
   color: rgb(80,80,80);
+  margin: 0px;
+  padding: 0px;
 }
 
 .contents-link {
@@ -16,21 +18,6 @@ body {
 
 .contents-link-selected {
   background: rgb(255,255,255);
-}
-
-a.markdown-link {
-  color: #aaa;
-  border: 1px solid #eee;
-  display: inline-block;
-}
-
-a.markdown-link:hover {
-  color: #4078c0;
-  border: 1px solid #4078c0;
-}
-
-a.markdown-link.hidden {
-  display: none;
 }
 
 ::-webkit-scrollbar {

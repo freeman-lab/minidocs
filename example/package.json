@@ -4,7 +4,7 @@
   "description": "example for minidocs",
   "main": "index.js",
   "scripts": {
-    "start": "budo index.js:bundle.js"
+    "start": "budo index.js:bundle.js --pushstate"
   },
   "repository": {
     "type": "git",
@@ -17,8 +17,8 @@
   ],
   "browserify": {
     "transform": [
-      "brfs",
-      "folderify"
+      "sheetify/transform",
+      "read-directory/transform"
     ]
   },
   "author": "freeman-lab",
