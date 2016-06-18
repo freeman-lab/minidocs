@@ -166,7 +166,7 @@ Surge supports HTML5 pushstate if you have a 200.html file in your built site. Y
 minidocs docs/ -c contents.json --pushstate -o site/
 ```
 
-#### Deploy with the `surge` command
+##### Deploy with the `surge` command
 
 You can use the [`surge`](https://www.npmjs.com/package/surge) module to push the built site to the [surge.sh service](https://surge.sh).
 
@@ -178,9 +178,11 @@ npm install --save-dev surge
 
 Create a `deploy` npm script:
 
+```js
 "scripts": {
   "deploy": "surge dist"
 }
+```
 
 Publish your site:
 
@@ -192,7 +194,7 @@ npm run deploy
 
 GitHub Pages doesn't support HTML5 pushstate, so you have two options:
 
-#### 1. Generate the site with the minidocs cli
+##### 1. Generate the site with the minidocs cli
 
 To create a minidocs site with the cli:
 
@@ -200,7 +202,7 @@ To create a minidocs site with the cli:
 minidocs path/to/docs/dir -c contents.json -o site
 ```
 
-#### 2. Use hash routing with the JS module
+##### 2. Use hash routing with the JS module
 
 To use hash routing, start the app with the `{ hash: true }` option in the `minidocs.start` method:
 
@@ -209,7 +211,7 @@ var tree = app.start({ hash: true })
 document.body.appendChild(tree)
 ```
 
-#### Deploy with the `gh-pages` command
+##### Deploy with the `gh-pages` command
 
 You can use the [`gh-pages`](https://www.npmjs.com/package/gh-pages) module to push the built site to the gh-pages branch of your repo.
 
@@ -221,16 +223,17 @@ npm install --save-dev gh-pages
 
 Create a `deploy` npm script:
 
+```js
 "scripts": {
   "deploy": "gh-pages -d dist"
 }
+```
 
 Publish your site:
 
 ```sh
 npm run deploy
 ```
-
 
 ## license
 
