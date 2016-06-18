@@ -8,7 +8,7 @@ module.exports = function (params, state, send) {
   var prefix = css`
     :host {
       width: 24%;
-      padding: 0px 20px 20px 20px;
+      padding: 0px 20px 20px 35px;
       display: inline-block;
       padding-bottom: 3%;
       overflow-y: scroll;
@@ -22,6 +22,10 @@ module.exports = function (params, state, send) {
     .minidocs-logo {
       width: 100%;
       max-width: 250px;
+    }
+
+    .minidocs-header {
+      height: 105px;
     }
 
     .h1 {
@@ -54,7 +58,7 @@ module.exports = function (params, state, send) {
 
     a.content-link {
       padding: 5px 8px 5px 5px;
-      margin-bottom: 5px;
+      margin-bottom: 1px;
       cursor: pointer;
       text-decoration: none;
       color: #505050;
@@ -112,6 +116,8 @@ module.exports = function (params, state, send) {
     </div>
     <div class="minidocs-contents">
       ${createMenu(contents)}
+      <br>
+      <br>
     </div>
   </div>`
 }
