@@ -52,7 +52,8 @@
     "parse-filepath": "^1.0.1",
     "read-directory": "^1.2.0",
     "rimraf": "^2.5.2",
-    "slug": "^0.9.1"
+    "slug": "^0.9.1",
+    "unicode": "^0.6.1"
   },
   "devDependencies": {
     "browserify": "^13.0.1",
