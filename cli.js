@@ -71,7 +71,6 @@ var state = {
 var contents = parseContents(state.contents)
 var documents = parseMarkdown(state.markdown)
 var app = minidocs(state)
-state.contents = contents
 
 function usage (exitcode) {
   console.log(`
@@ -106,6 +105,7 @@ function createOutputDir (done) {
 
 function buildHTML (done) {
   Object.keys(documents.routes).forEach(function (key) {
+    state.contents = contents
     var route = documents.routes[key]
     var dirpath = path.join(outputDir, route)
     var filepath = path.join(dirpath, 'index.html')
@@ -179,6 +179,7 @@ createOutputDir(function () {
 })
 
 function createPushstateFile (done) {
+  state.contents = contents
   var page = app.toString('/', state)
   var pushstatefile = path.join(outputDir, '200.html')
 
