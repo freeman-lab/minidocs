@@ -21,6 +21,7 @@ module.exports = function (params, state, send) {
 
     .minidocs-logo {
       width: 100%;
+      max-width: 250px;
     }
 
     .h1 {
