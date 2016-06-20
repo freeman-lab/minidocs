@@ -92,7 +92,7 @@ To run this in the browser you'll need two browserify transforms:
 - [read-directory/transform](https://github.com/sethvincent/read-directory), to transform the call to the `read.sync` module into an object with all your markdown files. This transform is part of the read-directory module.
 - [sheetify/transform](https://github.com/stackcss/sheetify), to transform styles defined in the components into CSS that the browser can use. This transform is part of the sheetify module.
 
-The easiest way to add transforms to your project is to add a `browserify` field to the package.json file with a `transform` array:
+The easiest way to add transforms to your project is to add a `browserify` field to the `package.json` file with a `transform` array:
 
 ```js
 "browserify": {
@@ -131,7 +131,7 @@ Options:
 
 ### library
 
-#### `var minidocs = require('minidocs')(opts)`
+#### `var app = require('minidocs')(opts)`
 
 Where `opts` is an object that can specify the following options
 
@@ -142,7 +142,7 @@ Where `opts` is an object that can specify the following options
 - `initial` which document to show on load, if unspecified will load the first document
 - `root` a DOM node to append to, if unspecified will append to `document.body`
 
-#### `var tree = minidocs.start(rootId?, opts)`
+#### `var tree = app.start(rootId?, opts)`
 The `start` method accepts the same options as [choo's `start` method](https://github.com/yoshuawuyts/choo#tree--appstartrootid-opts).
 
 This generates the html tree of the application that can be added to the DOM like this:
