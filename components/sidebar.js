@@ -91,7 +91,7 @@ module.exports = function (params, state, send) {
         location = url.parse(state.app.location)
         current = location.pathname.slice(1)
       }
-      
+
       if (!current || current.length <= 1) {
         current = state.current
       }

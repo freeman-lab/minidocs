@@ -130,7 +130,7 @@ function buildHTML (done) {
 
 function buildJS (done) {
   var filepath = path.join(outputDir, 'index.js')
-  
+
   if (argv.css) {
     var customStylePath = path.join(cwd, argv.css)
     var customStyle = argv.css ? `css('${customStylePath}', { global: true })` : ''
