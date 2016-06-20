@@ -8,7 +8,7 @@ module.exports = function (params, state, send) {
     :host {
       width: 56%;
       height: 529.5px;
-      padding: 117.9px 10% 70.6px 6%;
+      padding: 125.9px 10% 70.6px 6%;
       vertical-align: top;
       display: inline-block;
       margin-left: 28%;

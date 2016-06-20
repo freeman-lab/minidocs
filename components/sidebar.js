@@ -32,7 +32,8 @@ module.exports = function (params, state, send) {
       display: block;
       font-size: 2em;
       font-weight: bold;
-      margin-top: 10px;
+      margin-top: 16px;
+      margin-bottom: 16px;
     }
 
     .h1:before {
@@ -52,12 +53,12 @@ module.exports = function (params, state, send) {
       display: block;
       font-size: 1.5em;
       font-weight: bold;
-      margin-top: 6px;
-      margin-bottom: 4px;
+      margin-top: 12px;
+      margin-bottom: 12px;
     }
 
     a.content-link {
-      padding: 5px 8px 5px 5px;
+      padding: 2px 8px 2px 5px;
       margin-bottom: 1px;
       cursor: pointer;
       text-decoration: none;
@@ -68,7 +69,7 @@ module.exports = function (params, state, send) {
 
     a.content-link.active, a.content-link:hover {
       background-color: #fff;
-      border-left: 3px solid #aaa;
+      border-left: 3px solid rgb(200,200,200);
     }
   `
 
@@ -97,12 +98,12 @@ module.exports = function (params, state, send) {
       }
 
       if (item.link) {
-        return el`<div class="depth-${item.depth}">
+        return el`<div>
           <a href="${item.link}" class="content-link ${isActive(current, item.key)}">${item.name}</a>
         </div>`
       }
 
-      return el`<div class="h${item.depth} depth-${item.depth}">${item.name}</div>`
+      return el`<div class="h${item.depth}">${item.name}</div>`
     })
   }
 
