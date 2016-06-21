@@ -56,7 +56,6 @@
     "rimraf": "^2.5.2",
     "sheetify": "^5.0.2",
     "sheetify-cssnext": "^1.0.7",
-    "slug": "^0.9.1",
     "unicode": "^0.6.1",
     "yo-yoify": "^2.0.1"
   },
