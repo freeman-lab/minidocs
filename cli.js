@@ -13,9 +13,7 @@ var exit = require('exit')
 
 var debug = require('debug')('minidocs')
 var minidocs = require('./app')
-
-var parseContents = require('./lib/parse-contents')
-var parseMarkdown = require('./lib/parse-markdown')
+var parseDocs = require('./lib/parse-docs')
 
 var cwd = process.cwd()
 var cwdParsed = parsePath(cwd)
@@ -68,8 +66,7 @@ var state = {
   initial: argv.initial || Object.keys(markdown)[0]
 }
 
-var contents = parseContents(state.contents)
-var documents = parseMarkdown(state.markdown)
+var docs = parseDocs(state)
 var app = minidocs(state)
 
 function usage (exitcode) {
@@ -104,9 +101,9 @@ function createOutputDir (done) {
 }
 
 function buildHTML (done) {
-  Object.keys(documents.routes).forEach(function (key) {
-    state.contents = contents
-    var route = documents.routes[key]
+  Object.keys(docs.routes).forEach(function (key) {
+    state.contents = docs.contents
+    var route = docs.routes[key]
     var dirpath = path.join(outputDir, route)
     var filepath = path.join(dirpath, 'index.html')
     var page = app.toString(route, state)
@@ -179,7 +176,7 @@ createOutputDir(function () {
 })
 
 function createPushstateFile (done) {
-  state.contents = contents
+  state.contents = docs.contents
   var page = app.toString('/', state)
   var pushstatefile = path.join(outputDir, '200.html')
 
