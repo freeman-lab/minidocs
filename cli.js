@@ -28,12 +28,14 @@ var argv = minimist(process.argv.slice(2), {
     i: 'initial',
     p: 'pushstate',
     b: 'basedir',
+    e: 'extensions',
     h: 'help'
   },
   default: {
     output: 'site',
     title: projectdir,
-    basedir: ''
+    basedir: '',
+    extensions: false
   }
 })
 
@@ -108,9 +110,7 @@ function buildHTML (done) {
   Object.keys(docs.routes).forEach(function (key) {
     state.contents = docs.contents
     var route = docs.routes[key]
-    var dirpath = path.join(outputDir, route)
-    var filepath = path.join(dirpath, 'index.html')
-    console.log('route', route)
+    var filepath = path.join(outputDir, key + '.html')
     var page = app.toString(state.basedir + route, state)
 
     var html = createHTML({
@@ -120,12 +120,9 @@ function buildHTML (done) {
       css: argv.basedir + '/bundle.css'
     })
 
-    mkdir(dirpath, function (err) {
+    fs.writeFile(filepath, html, function (err) {
       if (err) error(err)
-      fs.writeFile(filepath, html, function (err) {
-        if (err) error(err)
-        done()
-      })
+      done()
     })
   })
 }

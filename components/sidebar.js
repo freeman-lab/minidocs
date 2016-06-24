@@ -90,7 +90,8 @@ module.exports = function (params, state, send) {
 
       if (state.app && state.app.location) {
         location = url.parse(state.app.location)
-        current = location.pathname.slice(1)
+        var sliceBy = state.basedir.length + 1
+        current = location.pathname.slice(sliceBy)
       }
 
       if (!current || current.length <= 1) {
