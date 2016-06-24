@@ -125,7 +125,8 @@ Options:
   * --logo, -l         Project logo
   * --css, -s          Optional stylesheet
   * --initial, -i      Page to use for root url
-  * --pushstate, p     Create a 200.html file for hosting services like surge.sh
+  * --pushstate, -p    Create a 200.html file for hosting services like surge.sh
+  * --basedir, -b      Base directory of the site
   * --help, -h         Show this help message
 ```
 
@@ -215,6 +216,8 @@ document.body.appendChild(tree)
 ##### Deploy with the `gh-pages` command
 
 You can use the [`gh-pages`](https://www.npmjs.com/package/gh-pages) module to push the built site to the gh-pages branch of your repo.
+
+> Note: if you're deploying a project at a basedir like username.github.io/project-name, you'll want to use the `--basedir /project-name` option
 
 Install `gh-pages`:
 
