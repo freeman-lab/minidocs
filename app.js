@@ -4,7 +4,7 @@ var parseDocs = require('./lib/parse-docs')
 var main = require('./components/main')
 
 module.exports = function (opts) {
-  opts.basedir = opts.basedir.replace(/\/$/, '') || ''
+  opts.basedir = (opts.basedir || '').replace(/\/$/, '')
   var app = choo()
   var docs = parseDocs(opts)
 
@@ -27,6 +27,6 @@ module.exports = function (opts) {
       route('/:page', main)
     ]
   })
-``
+
   return app
 }
