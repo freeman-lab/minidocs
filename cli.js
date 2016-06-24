@@ -27,11 +27,13 @@ var argv = minimist(process.argv.slice(2), {
     s: 'css',
     i: 'initial',
     p: 'pushstate',
+    b: 'basedir',
     h: 'help'
   },
   default: {
     output: 'site',
-    title: projectdir
+    title: projectdir,
+    basedir: ''
   }
 })
 
@@ -81,7 +83,8 @@ function usage (exitcode) {
     * --logo, -l         Project logo
     * --css, -s          Optional stylesheet
     * --initial, -i      Page to use for root url
-    * --pushstate, p     Create a 200.html file for hosting services like surge.sh
+    * --pushstate, -p    Create a 200.html file for hosting services like surge.sh
+    * --basedir, -b      Base directory of the site
     * --help, -h         Show this help message
   `)
   exit(exitcode || 0)
@@ -111,8 +114,8 @@ function buildHTML (done) {
     var html = createHTML({
       title: state.title,
       body: page,
-      script: '/bundle.js',
-      css: '/bundle.css'
+      script: '/' + argv.basedir + '/bundle.js',
+      css: '/' + argv.basedir + '/bundle.css'
     })
 
     mkdir(dirpath, function (err) {
@@ -183,8 +186,8 @@ function createPushstateFile (done) {
   var html = createHTML({
     title: state.title,
     body: page,
-    script: '/bundle.js',
-    css: '/bundle.css'
+    script: '/' + argv.basedir + '/bundle.js',
+    css: '/' + argv.basedir + '/bundle.css'
   })
 
   fs.writeFile(pushstatefile, html, function (err) {

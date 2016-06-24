@@ -76,7 +76,7 @@ module.exports = function (params, state, send) {
   function createHeader () {
     if (state.logo) {
       return el`
-        <img class="minidocs-logo" src="${state.logo}" alt="${state.title}">
+        <img class="minidocs-logo" src="${state.basedir + '/' + state.logo}" alt="${state.title}">
       `
     }
     return state.title
