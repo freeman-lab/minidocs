@@ -22,10 +22,16 @@ module.exports = function (opts) {
   })
 
   app.router(function (route) {
-    return [
+    var routes = [
       route('/', main),
       route('/:page', main)
     ]
+
+    if (opts.basedir) {
+      return route(opts.basedir, routes)
+    }
+
+    return routes
   })
 
   return app

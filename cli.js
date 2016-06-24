@@ -65,7 +65,8 @@ var state = {
   logo: logo,
   contents: require(contentsPath),
   markdown: markdown,
-  initial: argv.initial || Object.keys(markdown)[0]
+  initial: argv.initial || Object.keys(markdown)[0],
+  basedir: argv.basedir
 }
 
 var docs = parseDocs(state)
@@ -109,13 +110,14 @@ function buildHTML (done) {
     var route = docs.routes[key]
     var dirpath = path.join(outputDir, route)
     var filepath = path.join(dirpath, 'index.html')
-    var page = app.toString(route, state)
+    console.log('route', route)
+    var page = app.toString(state.basedir + route, state)
 
     var html = createHTML({
       title: state.title,
       body: page,
-      script: '/' + argv.basedir + '/bundle.js',
-      css: '/' + argv.basedir + '/bundle.css'
+      script: argv.basedir + '/bundle.js',
+      css: argv.basedir + '/bundle.css'
     })
 
     mkdir(dirpath, function (err) {
@@ -186,8 +188,8 @@ function createPushstateFile (done) {
   var html = createHTML({
     title: state.title,
     body: page,
-    script: '/' + argv.basedir + '/bundle.js',
-    css: '/' + argv.basedir + '/bundle.css'
+    script: argv.basedir + '/bundle.js',
+    css: argv.basedir + '/bundle.css'
   })
 
   fs.writeFile(pushstatefile, html, function (err) {

@@ -113,7 +113,7 @@ module.exports = function (params, state, send) {
 
   return el`<div class="${prefix} minidocs-sidebar">
     <div class="minidocs-header">
-      <h1><a href="/">${createHeader()}</a></h1>
+      <h1><a href="${state.basedir}/">${createHeader()}</a></h1>
     </div>
     <div class="minidocs-contents">
       ${createMenu(contents)}
