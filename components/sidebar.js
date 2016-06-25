@@ -99,9 +99,7 @@ module.exports = function (params, state, send) {
       }
 
       if (item.link) {
-        return el`<div>
-          <a href="${item.link}" class="content-link ${isActive(current, item.key)}">${item.name}</a>
-        </div>`
+        return el`<div><a href="${item.link}" class="content-link ${isActive(current, item.key)}">${item.name}</a></div>`
       }
 
       return el`<div class="h${item.depth}">${item.name}</div>`

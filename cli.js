@@ -111,6 +111,7 @@ function buildHTML (done) {
     state.contents = docs.contents
     var route = docs.routes[key]
     var filepath = path.join(outputDir, key + '.html')
+    state.current = key === 'index' ? state.initial : key
     var page = app.toString(state.basedir + route, state)
 
     var html = createHTML({
