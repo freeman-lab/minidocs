@@ -24,3 +24,20 @@ var contents = {
 ```
 
 Then build the site with `require('minidocs')(contents, {logo: 'logo.svg'})`
+
+```javascript
+var contents = {
+  'overview': {
+    'about': 'about.md'
+  },
+  'animals': {
+    'furry': {
+      'sheep': 'sheep.md',
+      'puppy': 'puppy.md'
+    },
+    'pink': {
+      'pig': 'pig.md'
+    }
+  }
+}
+```
