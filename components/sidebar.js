@@ -7,7 +7,7 @@ module.exports = function (params, state, send) {
 
   var prefix = css`
     :host {
-      width: 24%;
+      width: 21%;
       padding: 0px 20px 20px 35px;
       display: inline-block;
       padding-bottom: 3%;
