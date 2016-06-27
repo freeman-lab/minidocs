@@ -11,8 +11,8 @@ module.exports = function (params, state, send) {
 
   var prefix = css`
     a.markdown-link {
-      color: #aaa;
-      border: 1px solid #eee;
+      color: rgb(173,173,173);
+      background: rgb(240,240,240);
       display: inline-block;
       position: fixed;
       margin-top: -50px;
@@ -21,8 +21,8 @@ module.exports = function (params, state, send) {
     }
 
     a.markdown-link:hover {
-      color: #4078c0;
-      border: 1px solid #4078c0;
+      color: rgb(130,130,130);
+      background: rgb(225,225,225);
     }
   `
 
