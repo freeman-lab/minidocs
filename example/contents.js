@@ -13,23 +13,5 @@ module.exports = {
     'pink': {
       'pig': 'pig.md'
     }
-  },
-  'foo': {
-    'duh': {
-      'asdasd': 'sheep.md',
-      'asdasd': 'puppy.md'
-    },
-    'asdasd': {
-      'asdasd': 'pig.md'
-    }
-  },
-  'asdasdasd': {
-    'qweqw': {
-      'yrtert': 'sheep.md',
-      'qwe': 'puppy.md'
-    },
-    'werwer': {
-      'wet': 'pig.md'
-    }
   }
 }
