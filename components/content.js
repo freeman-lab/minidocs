@@ -15,7 +15,7 @@ module.exports = function (params, state, send) {
       color: rgb(173,173,173);
       background: rgb(240,240,240);
       display: inline-block;
-      position: fixed;
+      position: absolute;
       margin-top: -50px;
       padding: 3px 5px;
       text-decoration: none;
@@ -54,7 +54,7 @@ module.exports = function (params, state, send) {
       width: 40%;
       right: 12%;
       margin-top: -50px;
-      position: fixed;
+      position: absolute;
       display: inline-block;
       text-align: right;
     }
