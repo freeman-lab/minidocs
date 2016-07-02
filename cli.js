@@ -144,7 +144,7 @@ function buildJS (done) {
   fs.writeFile(filepath, js, function (err) {
     if (err) return error(err)
     browserify(filepath, { paths: [path.join(__dirname, 'node_modules')] })
-      .transform(require('sheetify/transform'), { global: true })
+      .transform(require('sheetify/transform'))
       .plugin(require('css-extract'), { out: path.join(outputDir, 'bundle.css') })
       .bundle(function (err, src) {
         if (err) return error(err)
