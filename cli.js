@@ -72,6 +72,7 @@ var state = {
 }
 
 var docs = parseDocs(state)
+state.initial = argv.initial || docs.initial
 var app = minidocs(state)
 
 function usage (exitcode) {

@@ -16,7 +16,7 @@ module.exports = function (opts) {
       markdown: docs.markdown,
       html: docs.html,
       routes: docs.routes,
-      current: opts.initial,
+      current: opts.initial || docs.initial,
       basedir: opts.basedir
     },
     reducers: {}
