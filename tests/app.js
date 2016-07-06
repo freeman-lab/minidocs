@@ -1,5 +1,4 @@
 var test = require('tape')
-var xtend = require('xtend')
 
 var createApp = require('../app')
 var parseDocs = require('../lib/parse-docs')

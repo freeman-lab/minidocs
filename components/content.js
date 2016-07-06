@@ -71,6 +71,10 @@ module.exports = function (params, state, send) {
       var img = el`<img class="${prefix} contributor"></img>`
       img.style.opacity = 0
       avatar(user, function (err, url) {
+        if (err) {
+          // TODO: handle requests in effects, send error messages to state
+          console.log(err)
+        }
         img.src = url
         img.onload = function () {
           img.style.opacity = 1

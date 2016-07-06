@@ -1,9 +1,9 @@
 module.exports = {
-  "title": "minidocs",
-  "contents": {
-    "about": "about.md"
+  title: 'minidocs',
+  contents: {
+    about: 'about.md'
   },
-  "markdown": {
-    "about": "# about"
+  markdown: {
+    about: '# about'
   }
 }
