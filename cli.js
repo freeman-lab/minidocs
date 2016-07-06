@@ -67,7 +67,7 @@ var state = {
   logo: logo,
   contents: require(contentsPath),
   markdown: markdown,
-  initial: argv.initial || Object.keys(markdown)[0],
+  initial: argv.initial,
   basedir: argv.basedir
 }
 
