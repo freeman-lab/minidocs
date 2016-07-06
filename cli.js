@@ -27,11 +27,15 @@ var argv = minimist(process.argv.slice(2), {
     s: 'css',
     i: 'initial',
     p: 'pushstate',
+    b: 'basedir',
+    f: 'full-html',
     h: 'help'
-  },
+  }, 
   default: {
     output: 'site',
-    title: projectdir
+    title: projectdir,
+    basedir: '',
+    'full-html': false
   }
 })
 
@@ -63,7 +67,8 @@ var state = {
   logo: logo,
   contents: require(contentsPath),
   markdown: markdown,
-  initial: argv.initial || Object.keys(markdown)[0]
+  initial: argv.initial || Object.keys(markdown)[0],
+  basedir: argv.basedir
 }
 
 var docs = parseDocs(state)
@@ -81,7 +86,9 @@ function usage (exitcode) {
     * --logo, -l         Project logo
     * --css, -s          Optional stylesheet
     * --initial, -i      Page to use for root url
-    * --pushstate, p     Create a 200.html file for hosting services like surge.sh
+    * --pushstate, -p    Create a 200.html file for hosting services like surge.sh
+    * --basedir, -b      Base directory of the site
+    * --full-html, -f    Create HTML files for all routes. Useful for GitHub Pages. [false]
     * --help, -h         Show this help message
   `)
   exit(exitcode || 0)
@@ -101,28 +108,36 @@ function createOutputDir (done) {
 }
 
 function buildHTML (done) {
-  Object.keys(docs.routes).forEach(function (key) {
-    state.contents = docs.contents
-    var route = docs.routes[key]
-    var dirpath = path.join(outputDir, route)
-    var filepath = path.join(dirpath, 'index.html')
-    var page = app.toString(route, state)
+  state.contents = docs.contents
+
+  function createFile (route, filepath, done) {
+    var page = app.toString(state.basedir + route, state)
 
     var html = createHTML({
       title: state.title,
       body: page,
-      script: '/bundle.js',
-      css: '/bundle.css'
+      script: argv.basedir + '/bundle.js',
+      css: argv.basedir + '/bundle.css'
     })
 
-    mkdir(dirpath, function (err) {
+    fs.writeFile(filepath, html, function (err) {
       if (err) error(err)
-      fs.writeFile(filepath, html, function (err) {
-        if (err) error(err)
-        done()
-      })
+      done()
     })
-  })
+  }
+
+  if (argv['full-html']) {
+    Object.keys(docs.routes).forEach(function (key) {
+      var route = docs.routes[key]
+      var filepath = path.join(outputDir, key + '.html')
+      state.current = key === 'index' ? state.initial : key
+      createFile(route, filepath, done)
+    })
+  } else {
+    var filepath = path.join(outputDir, 'index.html')
+    state.current = state.initial
+    createFile('/', filepath, done)
+  }
 }
 
 function buildJS (done) {
@@ -177,14 +192,14 @@ createOutputDir(function () {
 
 function createPushstateFile (done) {
   state.contents = docs.contents
-  var page = app.toString('/', state)
+  var page = app.toString(state.basedir + '/', state)
   var pushstatefile = path.join(outputDir, '200.html')
 
   var html = createHTML({
     title: state.title,
     body: page,
-    script: '/bundle.js',
-    css: '/bundle.css'
+    script: argv.basedir + '/bundle.js',
+    css: argv.basedir + '/bundle.css'
   })
 
   fs.writeFile(pushstatefile, html, function (err) {

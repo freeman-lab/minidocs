@@ -125,7 +125,9 @@ Options:
   * --logo, -l         Project logo
   * --css, -s          Optional stylesheet
   * --initial, -i      Page to use for root url
-  * --pushstate, p     Create a 200.html file for hosting services like surge.sh
+  * --pushstate, -p    Create a 200.html file for hosting services like surge.sh
+  * --basedir, -b      Base directory of the site
+  * --full-html, -f    Create HTML files for all routes. Useful for GitHub Pages. [false]
   * --help, -h         Show this help message
 ```
 
@@ -197,11 +199,13 @@ GitHub Pages doesn't support HTML5 pushstate, so you have two options:
 
 ##### 1. Generate the site with the minidocs cli
 
-To create a minidocs site with the cli:
+Build a minidocs site with the cli and the `--full-html` option:
 
 ```sh
-minidocs path/to/docs/dir -c contents.json -o site
+minidocs path/to/docs/dir -c contents.json -o site --full-html
 ```
+
+This creates an HTML file for each route of the site, so that on initial page load all content is sent from the server, and once the JS is loaded the minidocs app takes over all routing.
 
 ##### 2. Use hash routing with the JS module
 
@@ -215,6 +219,8 @@ document.body.appendChild(tree)
 ##### Deploy with the `gh-pages` command
 
 You can use the [`gh-pages`](https://www.npmjs.com/package/gh-pages) module to push the built site to the gh-pages branch of your repo.
+
+> Note: if you're deploying a project at a basedir like username.github.io/project-name, you'll want to use the `--basedir /project-name` option
 
 Install `gh-pages`:
 

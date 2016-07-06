@@ -76,7 +76,7 @@ module.exports = function (params, state, send) {
   function createHeader () {
     if (state.logo) {
       return el`
-        <img class="minidocs-logo" src="${state.logo}" alt="${state.title}">
+        <img class="minidocs-logo" src="${state.basedir + '/' + state.logo}" alt="${state.title}">
       `
     }
     return state.title
@@ -90,7 +90,8 @@ module.exports = function (params, state, send) {
 
       if (state.app && state.app.location) {
         location = url.parse(state.app.location)
-        current = location.pathname.slice(1)
+        var sliceBy = state.basedir.length + 1
+        current = location.pathname.slice(sliceBy)
       }
 
       if (!current || current.length <= 1) {
@@ -98,9 +99,7 @@ module.exports = function (params, state, send) {
       }
 
       if (item.link) {
-        return el`<div>
-          <a href="${item.link}" class="content-link ${isActive(current, item.key)}">${item.name}</a>
-        </div>`
+        return el`<div><a href="${item.link}" class="content-link ${isActive(current, item.key)}">${item.name}</a></div>`
       }
 
       return el`<div class="h${item.depth}">${item.name}</div>`
@@ -113,7 +112,7 @@ module.exports = function (params, state, send) {
 
   return el`<div class="${prefix} minidocs-sidebar">
     <div class="minidocs-header">
-      <h1><a href="/">${createHeader()}</a></h1>
+      <h1><a href="${state.basedir}/">${createHeader()}</a></h1>
     </div>
     <div class="minidocs-contents">
       ${createMenu(contents)}

@@ -4,6 +4,7 @@ var parseDocs = require('./lib/parse-docs')
 var main = require('./components/main')
 
 module.exports = function (opts) {
+  opts.basedir = (opts.basedir || '').replace(/\/$/, '')
   var app = choo()
   var docs = parseDocs(opts)
 
@@ -15,16 +16,22 @@ module.exports = function (opts) {
       markdown: docs.markdown,
       html: docs.html,
       routes: docs.routes,
-      current: opts.initial || Object.keys(docs.markdown)[0]
-    },
-    reducers: {}
+      current: opts.initial || Object.keys(docs.markdown)[0],
+      basedir: opts.basedir
+    }
   })
 
   app.router(function (route) {
-    return [
+    var routes = [
       route('/', main),
       route('/:page', main)
     ]
+
+    if (opts.basedir) {
+      return route(opts.basedir, routes)
+    }
+
+    return routes
   })
 
   return app
