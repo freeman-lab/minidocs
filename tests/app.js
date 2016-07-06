@@ -33,5 +33,3 @@ test('app.toString() returns html', function (t) {
   t.ok(html)
   t.end()
 })
-
-
