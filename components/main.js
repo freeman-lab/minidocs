@@ -1,9 +1,9 @@
-var el = require('bel')
+var html = require('choo/html')
 var css = require('sheetify')
 var sidebar = require('./sidebar')
 var content = require('./content')
 
-module.exports = function (params, state, send) {
+module.exports = function (state, prev, send) {
   var prefix = css`
     :host {
       width: 58%;
@@ -19,11 +19,11 @@ module.exports = function (params, state, send) {
     document.body.scrollTop = 0
   }
 
-  return el`<div id="choo-root" class="minidocs">
-    ${sidebar(params, state, send)}
+  return html`<div id="choo-root" class="minidocs">
+    ${sidebar(state, prev, send)}
     <div class="${prefix} minidocs-main">
       <div class="markdown-body">
-        ${content(params, state, send)}
+        ${content(state, prev, send)}
       </div>
     </div>
   </div>`
