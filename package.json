@@ -40,7 +40,7 @@
   "dependencies": {
     "bel": "^4.3.1",
     "browserify": "^13.0.1",
-    "choo": "^2.1.3",
+    "choo": "^3.0.1",
     "create-html": "^1.0.0",
     "css-extract": "^1.1.0",
     "exit": "^0.1.2",
