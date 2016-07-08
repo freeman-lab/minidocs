@@ -38,7 +38,6 @@
   },
   "homepage": "https://github.com/freeman-lab/minidocs#readme",
   "dependencies": {
-    "bel": "^4.3.1",
     "browserify": "^13.0.1",
     "choo": "^3.0.1",
     "create-html": "^1.0.0",
