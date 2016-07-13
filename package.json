@@ -42,6 +42,7 @@
     "choo": "^3.0.1",
     "create-html": "^1.0.0",
     "css-extract": "^1.1.0",
+    "debug": "^2.2.0",
     "exit": "^0.1.2",
     "github-avatar-url": "^1.0.0",
     "highlight.js": "^9.2.0",
@@ -61,7 +62,6 @@
   },
   "devDependencies": {
     "budo": "^8.1.0",
-    "debug": "^2.2.0",
     "standard": "^6.0.8"
   }
 }
