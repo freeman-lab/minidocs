@@ -1,11 +1,10 @@
-var el = require('bel')
+var html = require('choo/html')
 var css = require('sheetify')
 var avatar = require('github-avatar-url')
 
-module.exports = function (params, state, send) {
-  var html = state.html
-  var currentPage = params.page || state.current
-  var page = html[currentPage]
+module.exports = function (state, prev, send) {
+  var currentPage = state.params.page || state.current
+  var page = state.html[currentPage]
   var pageData = state.contents.filter(function (item) {
     return item.key === currentPage
   })[0]
@@ -60,15 +59,15 @@ module.exports = function (params, state, send) {
     }
   `
 
-  var contentWrapper = el`<div></div>`
+  var contentWrapper = html`<div></div>`
   contentWrapper.innerHTML = page
 
-  var link = pageData.source ? el`<a class="markdown-link" href="${pageData.source}">source</a>` : ''
+  var link = pageData.source ? html`<a class="markdown-link" href="${pageData.source}">source</a>` : ''
 
   function contributors (items) {
     return items.map(function (item) {
       var user = item.replace('@', '')
-      var img = el`<img class="${prefix} contributor"></img>`
+      var img = html`<img class="${prefix} contributor"></img>`
       img.style.opacity = 0
       avatar(user, function (err, url) {
         if (err) {
@@ -80,7 +79,7 @@ module.exports = function (params, state, send) {
           img.style.opacity = 1
         }
       })
-      return el`<div class="${prefix} contributor-wrapper">
+      return html`<div class="${prefix} contributor-wrapper">
         <a href='https://github.com/${user}'>
           ${img}
         </a>
@@ -89,12 +88,12 @@ module.exports = function (params, state, send) {
   }
 
   if (pageData.contributors) {
-    var contributorWrapper = el`<div class="${prefix} contributor-container">
+    var contributorWrapper = html`<div class="${prefix} contributor-container">
       ${contributors(pageData.contributors)}
     </div>`
   }
 
-  return el`<div class="${prefix} minidocs-content">
+  return html`<div class="${prefix} minidocs-content">
     ${link}
     ${contributorWrapper}
     ${contentWrapper}

@@ -1,8 +1,8 @@
 var url = require('url')
 var css = require('sheetify')
-var el = require('bel')
+var html = require('choo/html')
 
-module.exports = function (params, state, send) {
+module.exports = function (state, prev, send) {
   var contents = state.contents
 
   var prefix = css`
@@ -75,7 +75,7 @@ module.exports = function (params, state, send) {
 
   function createHeader () {
     if (state.logo) {
-      return el`
+      return html`
         <img class="minidocs-logo" src="${state.basedir + '/' + state.logo}" alt="${state.title}">
       `
     }
@@ -88,8 +88,8 @@ module.exports = function (params, state, send) {
       var current
       var location
 
-      if (state.app && state.app.location) {
-        location = url.parse(state.app.location)
+      if (state.location && state.location.pathname) {
+        location = url.parse(state.location.pathname)
         var sliceBy = state.basedir.length + 1
         current = location.pathname.slice(sliceBy)
       }
@@ -99,10 +99,10 @@ module.exports = function (params, state, send) {
       }
 
       if (item.link) {
-        return el`<div><a href="${item.link}" class="content-link ${isActive(current, item.key)}">${item.name}</a></div>`
+        return html`<div><a href="${item.link}" class="content-link ${isActive(current, item.key)}">${item.name}</a></div>`
       }
 
-      return el`<div class="h${item.depth}">${item.name}</div>`
+      return html`<div class="h${item.depth}">${item.name}</div>`
     })
   }
 
@@ -110,7 +110,7 @@ module.exports = function (params, state, send) {
     return current === item ? 'active' : ''
   }
 
-  return el`<div class="${prefix} minidocs-sidebar">
+  return html`<div class="${prefix} minidocs-sidebar">
     <div class="minidocs-header">
       <h1><a href="${state.basedir}/">${createHeader()}</a></h1>
     </div>
