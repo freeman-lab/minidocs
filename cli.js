@@ -30,7 +30,7 @@ var argv = minimist(process.argv.slice(2), {
     b: 'basedir',
     f: 'full-html',
     h: 'help'
-  }, 
+  },
   default: {
     output: 'site',
     title: projectdir,

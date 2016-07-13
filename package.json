@@ -7,6 +7,9 @@
   "scripts": {
     "start": "budo index.js:bundle.js --live",
     "lint": "standard",
+    "test:browser": "browserify tests/index.js | tape-run --render=\"tap-spec\"",
+    "test:node": "TEST_ENV=node tape tests/index.js | tap-spec",
+    "test": "npm run test:node && npm run test:browser",
     "build:example": "cd example && browserify index.js -p yo-yoify -o bundle.js",
     "deploy:example": "surge example minidocs-example.surge.sh",
     "build": "browserify docs/index.js -p yo-yoify -o docs/bundle.js",
@@ -62,6 +65,10 @@
   },
   "devDependencies": {
     "budo": "^8.1.0",
-    "standard": "^6.0.8"
+    "debug": "^2.2.0",
+    "standard": "^6.0.8",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.0",
+    "tape-run": "^2.1.4"
   }
 }
