@@ -53,7 +53,7 @@ The folder `site` will now contain the `html` `js` and `css` for your site.
 
 Create a table of contents in a file named `contents.json`:
 
-```javascript
+```json
 {
   "overview": {
     "about": "about.md"
