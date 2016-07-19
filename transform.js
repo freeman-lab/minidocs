@@ -1,13 +1,9 @@
 var path = require('path')
 var through = require('through2')
 var staticModule = require('static-module')
-var xtend = require('xtend')
-
-var sheetify = require('sheetify/transform')
-var read = require('read-directory')
 
 var minidocs = require('./index')
-var parseDocs = require('./lib/parse-docs')
+var parseOptions = require('./lib/parse-options')
 
 module.exports = function minidocsTransform (filename) {
   if (/\.json$/.test(filename)) return through()
@@ -20,18 +16,8 @@ module.exports = function minidocsTransform (filename) {
 
   var sm = staticModule({
     minidocs: function (options) {
-      var contentsPath = path.resolve(basedir, options.contents)
-      var markdownPath = path.resolve(basedir, options.markdown)
-      var contents = require(contentsPath)
-      var markdown = read.sync(markdownPath, { extensions: false })
-
-      var docs = parseDocs({
-        initial: options.initial,
-        markdown: markdown,
-        contents: contents
-      })
-
-      var parsedOptions = xtend(options, docs)
+      options.dir = basedir
+      var parsedOptions = parseOptions(options)
       var stream = through()
       stream.push(`require('minidocs')(${JSON.stringify(parsedOptions)})`)
       stream.push(null)
