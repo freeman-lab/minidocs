@@ -51,19 +51,19 @@ The folder `site` will now contain the `html` `js` and `css` for your site.
 
 ### library
 
-Create a table of contents in a file named `contents.js`:
+Create a table of contents in a file named `contents.json`:
 
 ```javascript
-module.exports = {
-  overview: {
-    about: 'about.md'
+{
+  "overview": {
+    "about": "about.md"
   },
-  animals: {
-    furry: {
-      sheep: 'sheep.md'
+  "animals": {
+    "furry": {
+      "sheep": "sheep.md"
     },
-    pink: {
-      pig: 'pig.md'
+    "pink": {
+      "pig": "pig.md"
     }
   }
 }
@@ -75,7 +75,7 @@ Then build the site and add it to the page with
 var minidocs = require('minidocs')
 
 var app = minidocs({
-  contents: './contents',
+  contents: './contents.json',
   markdown: './markdown',,
   logo: './logo.svg'
 })
@@ -140,16 +140,19 @@ Options:
 
 ### library
 
-#### `var app = require('minidocs')(opts)`
+#### `var minidocs = require('minidocs')`
+
+#### `var app = minidocs(opts)`
 
 Where `opts` is an object that can specify the following options
 
-- `contents` object with the table of contents, required
-- `documents` array of markdown files, required
+- `contents` the path to a JSON file or JS module with the table of contents, required
+- `markdown` the path to the directory of markdown files
 - `styles` a stylesheet, if not required will only use base styles
 - `logo` relative file path to a logo file, if unspecified will not include a logo
 - `initial` which document to show on load, if unspecified will load the first document
 - `root` a DOM node to append to, if unspecified will append to `document.body`
+- `basedir` the base route of the minidocs app (useful if published as a project on github pages)
 
 #### `var tree = app.start(rootId?, opts)`
 The `start` method accepts the same options as [choo's `start` method](https://github.com/yoshuawuyts/choo#tree--appstartrootid-opts).
@@ -168,9 +171,9 @@ We use this in the command-line tool to generate the static files of the site.
 
 ## deploying minidocs
 
-### surge
+### surge.sh
 
-Surge supports HTML5 pushstate if you have a 200.html file in your built site. You can either create that file yourself when using minidocs as a JS module, or you can build the site with the minidocs cli tool and the `--pushstate` option:
+[surge.sh](https://surge.sh) supports HTML5 pushstate if you have a 200.html file in your built site. You can either create that file yourself when using minidocs as a JS module, or you can build the site with the minidocs cli tool and the `--pushstate` option:
 
 ```sh
 minidocs docs/ -c contents.json --pushstate -o site/
