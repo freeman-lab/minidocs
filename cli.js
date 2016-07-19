@@ -47,7 +47,6 @@ if (argv.help) {
 
 if (argv._[0]) {
   var source = path.resolve(cwd, argv._[0])
-  var markdown = read.sync(source, { extensions: false })
 } else {
   error('\nError:\nsource markdown directory is required', { usage: true })
 }
@@ -65,14 +64,13 @@ if (argv.logo) {
 var state = {
   title: argv.title,
   logo: logo,
-  contents: require(contentsPath),
-  markdown: markdown,
+  contents: contentsPath,
+  markdown: source,
   initial: argv.initial,
   basedir: argv.basedir
 }
 
-var docs = parseDocs(state)
-state.initial = argv.initial || docs.initial
+state.initial = argv.initial
 var app = minidocs(state)
 
 function usage (exitcode) {

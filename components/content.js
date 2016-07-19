@@ -66,6 +66,7 @@ module.exports = function (state, prev, send) {
 
   function contributors (items) {
     return items.map(function (item) {
+      if (!item) return
       var user = item.replace('@', '')
       var img = html`<img class="${prefix} contributor"></img>`
       img.style.opacity = 0

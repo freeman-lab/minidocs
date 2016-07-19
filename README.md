@@ -51,19 +51,19 @@ The folder `site` will now contain the `html` `js` and `css` for your site.
 
 ### library
 
-Specify a table of contents
+Create a table of contents in a file named `contents.js`:
 
 ```javascript
-var contents = {
-  'overview': {
-    'about': 'about.md'
+module.exports = {
+  overview: {
+    about: 'about.md'
   },
-  'animals': {
-    'furry': {
-      'sheep': 'sheep.md'
+  animals: {
+    furry: {
+      sheep: 'sheep.md'
     },
-    'pink': {
-      'pig': 'pig.md'
+    pink: {
+      pig: 'pig.md'
     }
   }
 }
@@ -73,11 +73,10 @@ Then build the site and add it to the page with
 
 ```javascript
 var minidocs = require('minidocs')
-var read = require('read-directory')
 
 var app = minidocs({
-  contents: contents,
-  markdown: read.sync('./markdown', { extensions: false }),
+  contents: './contents',
+  markdown: './markdown',,
   logo: './logo.svg'
 })
 
@@ -87,18 +86,26 @@ document.body.appendChild(tree)
 
 This assumes you have the files `about.md`, `sheep.md`, and `pig.md` inside a local folder `markdown`.
 
-To run this in the browser you'll need two browserify transforms:
+To run this in the browser you'll need to use the minidocs transform with browserify or budo:
 
-- [read-directory/transform](https://github.com/sethvincent/read-directory), to transform the call to the `read.sync` module into an object with all your markdown files. This transform is part of the read-directory module.
-- [sheetify/transform](https://github.com/stackcss/sheetify), to transform styles defined in the components into CSS that the browser can use. This transform is part of the sheetify module.
+**browserify example:**
 
-The easiest way to add transforms to your project is to add a `browserify` field to the `package.json` file with a `transform` array:
+```
+browserify index.js -t minidocs/transform > bundle.js
+```
+
+**budo example:**
+
+```
+budo index.js:bundle.js -P -- -t minidocs/transform
+```
+
+You can also add transforms to your project by adding a `browserify` field to the `package.json` file with a `transform` array:
 
 ```js
 "browserify": {
   "transform": [
-    "sheetify/transform",
-    "read-directory/transform"
+    "minidocs/transform"
   ]
 }
 ```

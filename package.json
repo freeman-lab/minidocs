@@ -20,7 +20,8 @@
   },
   "browserify": {
     "transform": [
-      "./transform"
+      "./transform",
+      "sheetify/transform"
     ]
   },
   "repository": {
@@ -63,6 +64,7 @@
     "sheetify-cssnext": "^1.0.7",
     "static-module": "^1.3.1",
     "through2": "^2.0.1",
+    "xtend": "^4.0.1",
     "yo-yoify": "^2.0.1"
   },
   "devDependencies": {
