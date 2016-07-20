@@ -16,12 +16,19 @@ module.exports = function (state, prev, send) {
 
     @media (min-width: 600px) {
       :host {
-        width: 58%;
-        height: 529.5px;
-        padding: 125.9px 10% 70.6px 6%;
+        position: absolute;
+        right: 0;
+        width: 73%;
+        padding: 125.9px 8% 70.6px 8%;
         vertical-align: top;
         display: inline-block;
-        margin-left: 24%;
+      }
+    }
+
+    @media (min-width: 900px) {
+      :host {
+        width: 77%;
+        padding: 125.9px 6% 70.6px 6%;
       }
     }
   `

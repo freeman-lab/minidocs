@@ -50,15 +50,19 @@ module.exports = function (state, prev, send) {
       width: 60%;
       right: 40px;
       margin-top: -50px;
-      position: absolute;
+      position: relative;
       display: inline-block;
       text-align: right;
+      float: right;
     }
 
     @media (min-width: 600px) {
       div.contributor-wrapper {
         width: 50px;
         height: 50px;
+      }
+      div.contributor-container {
+        right: 0px;
       }
     }
   `
