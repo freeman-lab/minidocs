@@ -29,6 +29,7 @@
   "homepage": "https://github.com/freeman-lab/minidocs#readme",
   "dependencies": {
     "brfs": "^1.4.3",
+    "dom-css": "^2.0.1",
     "folderify": "^1.2.1"
   },
   "devDependencies": {

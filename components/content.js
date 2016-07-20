@@ -27,21 +27,18 @@ module.exports = function (state, prev, send) {
 
     img.contributor {
       border: none;
-      background: rgb(225,225,225);
-      width: 44px;
-      height: 44px;
-      margin-top: 3px;
+      vertical-align: top;
     }
 
     div.contributor-wrapper {
-      background: rgb(225,225,225);
-      width: 50px;
-      height: 50px;
+      width: 30px;
+      height: 30px;
       display: inline-block;
       text-align: center;
       margin-right: 5px;
       opacity: 0.8;
       cursor: pointer;
+      border: 3px solid rgb(225, 225, 225);
     }
 
     div.contributor-wrapper:hover {
@@ -50,12 +47,19 @@ module.exports = function (state, prev, send) {
     }
 
     div.contributor-container {
-      width: 40%;
-      right: 12%;
+      width: 60%;
+      right: 40px;
       margin-top: -50px;
       position: absolute;
       display: inline-block;
       text-align: right;
+    }
+
+    @media (min-width: 600px) {
+      div.contributor-wrapper {
+        width: 50px;
+        height: 50px;
+      }
     }
   `
 
