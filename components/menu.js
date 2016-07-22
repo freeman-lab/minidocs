@@ -29,7 +29,10 @@ module.exports = function (state, prev, send) {
       position: fixed;
       width: 100%;
       top: 0;
-      padding: 50px 40px;
+    }
+
+    .minidocs-menu.menu-open.menu-small .minidocs-menu-wrapper {
+      padding: 30px 50px 50px 50px;
     }
 
     a.content-link {
