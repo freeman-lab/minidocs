@@ -29,10 +29,15 @@ module.exports = function (state, prev, send) {
       position: fixed;
       width: 100%;
       top: 0;
+      height: 100%;
+      padding: 50px;
+      margin-bottom:  0px;
+      box-sizing: border-box;
     }
 
     .minidocs-menu.menu-open.menu-small .minidocs-menu-wrapper {
-      padding: 30px 50px 50px 50px;
+      height: 100%;
+      overflow-y: auto;
     }
 
     a.content-link {
@@ -57,10 +62,11 @@ module.exports = function (state, prev, send) {
       left: 10px;
       border: 0px;
       background: transparent;
-      padding-left: 15px;
+      padding-left: 20px;
       line-height: 0.9;
       z-index: 2000;
       cursor: pointer;
+      font-size: 16px;
     }
 
     .minidocs-menu-toggle:before {
