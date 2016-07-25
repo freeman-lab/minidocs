@@ -124,7 +124,7 @@ module.exports = function (state, prev, send) {
   }
 
   function isOpen () {
-    if (window.innerWidth > 600) return 'menu-open'
+    if (typeof window !== 'undefined' && window.innerWidth > 600) return 'menu-open'
     return state.menu.open ? 'menu-open' : 'menu-closed'
   }
 
