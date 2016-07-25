@@ -5,7 +5,7 @@
   "main": "index.js",
   "style": "components/styles/index.css",
   "scripts": {
-    "start": "budo index.js:bundle.js --live",
+    "start": "budo --dir example example/index.js:bundle.js --pushstate --live",
     "lint": "standard",
     "test:browser": "browserify tests/index.js | tape-run --render=\"tap-spec\"",
     "test:node": "TEST_ENV=node tape tests/index.js | tap-spec",
@@ -20,7 +20,7 @@
   },
   "browserify": {
     "transform": [
-      "./transform",
+      "./transform.js",
       "sheetify/transform"
     ]
   },
