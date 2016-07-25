@@ -19,6 +19,35 @@ module.exports = function (opts) {
     reducers: {}
   })
 
+  app.model({
+    namespace: 'menu',
+    state: {
+      open: false,
+      size: 'small'
+    },
+    reducers: {
+      set: function (data, state) {
+        return data
+      },
+      size: function (data, state) {
+        return data
+      }
+    },
+    subscriptions: [
+      checkSize,
+      function (send, done) {
+        window.onresize = function () {
+          checkSize(send, done)
+        }
+      }
+    ]
+  })
+
+  function checkSize (send, done) {
+    var size = window.innerWidth > 600 ? 'large' : 'small'
+    send('menu:size', { size: size }, done)
+  }
+
   app.router(function (route) {
     var routes = [
       route('/', main),
