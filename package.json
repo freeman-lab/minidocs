@@ -1,6 +1,6 @@
 {
   "name": "minidocs",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "build a simple site for your documentation",
   "main": "index.js",
   "style": "components/styles/index.css",
