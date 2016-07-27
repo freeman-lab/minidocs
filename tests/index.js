@@ -1,2 +1,2 @@
-require('./parse-docs')
+require('./parse-options')
 require('./app')

@@ -51,19 +51,19 @@ The folder `site` will now contain the `html` `js` and `css` for your site.
 
 ### library
 
-Specify a table of contents
+Create a table of contents in a file named `contents.json`:
 
-```javascript
-var contents = {
-  'overview': {
-    'about': 'about.md'
+```json
+{
+  "overview": {
+    "about": "about.md"
   },
-  'animals': {
-    'furry': {
-      'sheep': 'sheep.md'
+  "animals": {
+    "furry": {
+      "sheep": "sheep.md"
     },
-    'pink': {
-      'pig': 'pig.md'
+    "pink": {
+      "pig": "pig.md"
     }
   }
 }
@@ -73,11 +73,10 @@ Then build the site and add it to the page with
 
 ```javascript
 var minidocs = require('minidocs')
-var read = require('read-directory')
 
 var app = minidocs({
-  contents: contents,
-  markdown: read.sync('./markdown', { extensions: false }),
+  contents: './contents.json',
+  markdown: './markdown',,
   logo: './logo.svg'
 })
 
@@ -87,18 +86,26 @@ document.body.appendChild(tree)
 
 This assumes you have the files `about.md`, `sheep.md`, and `pig.md` inside a local folder `markdown`.
 
-To run this in the browser you'll need two browserify transforms:
+To run this in the browser you'll need to use the minidocs transform with browserify or budo:
 
-- [read-directory/transform](https://github.com/sethvincent/read-directory), to transform the call to the `read.sync` module into an object with all your markdown files. This transform is part of the read-directory module.
-- [sheetify/transform](https://github.com/stackcss/sheetify), to transform styles defined in the components into CSS that the browser can use. This transform is part of the sheetify module.
+**browserify example:**
 
-The easiest way to add transforms to your project is to add a `browserify` field to the `package.json` file with a `transform` array:
+```
+browserify index.js -t minidocs/transform > bundle.js
+```
+
+**budo example:**
+
+```
+budo index.js:bundle.js -P -- -t minidocs/transform
+```
+
+You can also add transforms to your project by adding a `browserify` field to the `package.json` file with a `transform` array:
 
 ```js
 "browserify": {
   "transform": [
-    "sheetify/transform",
-    "read-directory/transform"
+    "minidocs/transform"
   ]
 }
 ```
@@ -133,16 +140,19 @@ Options:
 
 ### library
 
-#### `var app = require('minidocs')(opts)`
+#### `var minidocs = require('minidocs')`
+
+#### `var app = minidocs(opts)`
 
 Where `opts` is an object that can specify the following options
 
-- `contents` object with the table of contents, required
-- `documents` array of markdown files, required
+- `contents` the path to a JSON file or JS module with the table of contents, required
+- `markdown` the path to the directory of markdown files
 - `styles` a stylesheet, if not required will only use base styles
 - `logo` relative file path to a logo file, if unspecified will not include a logo
 - `initial` which document to show on load, if unspecified will load the first document
 - `root` a DOM node to append to, if unspecified will append to `document.body`
+- `basedir` the base route of the minidocs app (useful if published as a project on github pages)
 
 #### `var tree = app.start(rootId?, opts)`
 The `start` method accepts the same options as [choo's `start` method](https://github.com/yoshuawuyts/choo#tree--appstartrootid-opts).
@@ -161,9 +171,9 @@ We use this in the command-line tool to generate the static files of the site.
 
 ## deploying minidocs
 
-### surge
+### surge.sh
 
-Surge supports HTML5 pushstate if you have a 200.html file in your built site. You can either create that file yourself when using minidocs as a JS module, or you can build the site with the minidocs cli tool and the `--pushstate` option:
+[surge.sh](https://surge.sh) supports HTML5 pushstate if you have a 200.html file in your built site. You can either create that file yourself when using minidocs as a JS module, or you can build the site with the minidocs cli tool and the `--pushstate` option:
 
 ```sh
 minidocs docs/ -c contents.json --pushstate -o site/

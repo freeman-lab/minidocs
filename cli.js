@@ -13,7 +13,7 @@ var exit = require('exit')
 
 var debug = require('debug')('minidocs')
 var minidocs = require('./app')
-var parseDocs = require('./lib/parse-docs')
+var parseOptions = require('./lib/parse-options')
 
 var cwd = process.cwd()
 var cwdParsed = parsePath(cwd)
@@ -47,13 +47,12 @@ if (argv.help) {
 
 if (argv._[0]) {
   var source = path.resolve(cwd, argv._[0])
-  var markdown = read.sync(source, { extensions: false })
 } else {
   error('\nError:\nsource markdown directory is required', { usage: true })
 }
 
 if (argv.contents) {
-  var contentsPath = path.resolve(process.cwd(), argv.contents)
+  var contentsPath = path.resolve(cwd, argv.contents)
 } else {
   error('\nError:\n--contents/-c option is required', { usage: true })
 }
@@ -65,15 +64,15 @@ if (argv.logo) {
 var state = {
   title: argv.title,
   logo: logo,
-  contents: require(contentsPath),
-  markdown: markdown,
+  contents: contentsPath,
+  markdown: source,
   initial: argv.initial,
-  basedir: argv.basedir
+  basedir: argv.basedir,
+  dir: cwd
 }
 
-var docs = parseDocs(state)
-state.initial = argv.initial || docs.initial
-var app = minidocs(state)
+var parsedState = parseOptions(state)
+var app = minidocs(parsedState)
 
 function usage (exitcode) {
   console.log(`
@@ -109,10 +108,8 @@ function createOutputDir (done) {
 }
 
 function buildHTML (done) {
-  state.contents = docs.contents
-
   function createFile (route, filepath, done) {
-    var page = app.toString(state.basedir + route, state)
+    var page = app.toString(parsedState.basedir + route, parsedState)
 
     var html = createHTML({
       title: state.title,
@@ -131,12 +128,12 @@ function buildHTML (done) {
     Object.keys(docs.routes).forEach(function (key) {
       var route = docs.routes[key]
       var filepath = path.join(outputDir, key + '.html')
-      state.current = key === 'index' ? state.initial : key
+      parsedState.current = key === 'index' ? parsedState.initial : key
       createFile(route, filepath, done)
     })
   } else {
     var filepath = path.join(outputDir, 'index.html')
-    state.current = state.initial
+    parsedState.current = parsedState.initial
     createFile('/', filepath, done)
   }
 }
@@ -144,17 +141,15 @@ function buildHTML (done) {
 function buildJS (done) {
   var filepath = path.join(outputDir, 'index.js')
 
-  if (argv.css) {
-    var customStylePath = path.join(cwd, argv.css)
-    var customStyle = argv.css ? `css('${customStylePath}', { global: true })` : ''
-  }
+  var customStylePath = argv.css ? path.join(cwd, argv.css) : null
+  var customStyle = argv.css ? `css('${customStylePath}', { global: true })` : ''
 
   var js = `
-  var insertCSS = require('insert-css')
   var css = require('sheetify')
-  var minidocs = require('minidocs')(${JSON.stringify(state)})
+  var minidocs = require('minidocs')
+  var app = minidocs(${JSON.stringify(parsedState)})
   ${customStyle}
-  minidocs.start('#choo-root')
+  app.start('#choo-root')
   `
 
   fs.writeFile(filepath, js, function (err) {
@@ -192,8 +187,7 @@ createOutputDir(function () {
 })
 
 function createPushstateFile (done) {
-  state.contents = docs.contents
-  var page = app.toString(state.basedir + '/', state)
+  var page = app.toString(parsedState.basedir + '/', parsedState)
   var pushstatefile = path.join(outputDir, '200.html')
 
   var html = createHTML({

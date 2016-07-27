@@ -17,8 +17,7 @@
   ],
   "browserify": {
     "transform": [
-      "sheetify/transform",
-      "read-directory/transform"
+      "minidocs/transform"
     ]
   },
   "author": "freeman-lab",
@@ -27,11 +26,7 @@
     "url": "https://github.com/freeman-lab/minidocs/issues"
   },
   "homepage": "https://github.com/freeman-lab/minidocs#readme",
-  "dependencies": {
-    "brfs": "^1.4.3",
-    "dom-css": "^2.0.1",
-    "folderify": "^1.2.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "budo": "^8.1.0"
   }
