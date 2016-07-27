@@ -24,3 +24,5 @@ var contents = {
 ```
 
 Then build the site with `require('minidocs')(contents, {logo: 'logo.svg'})`
+
+<p><b>Have fun with minidocs!</b></p>
