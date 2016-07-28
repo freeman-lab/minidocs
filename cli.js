@@ -125,8 +125,8 @@ function buildHTML (done) {
   }
 
   if (argv['full-html']) {
-    Object.keys(docs.routes).forEach(function (key) {
-      var route = docs.routes[key]
+    Object.keys(parsedState.routes).forEach(function (key) {
+      var route = parsedState.routes[key]
       var filepath = path.join(outputDir, key + '.html')
       parsedState.current = key === 'index' ? parsedState.initial : key
       createFile(route, filepath, done)
