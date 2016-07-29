@@ -37,9 +37,9 @@ Add to your project with
 npm install --save minidocs
 ```
 
-## example
+## examples
 
-### command-line
+### using minidocs on the command-line
 
 Just specify the location of your markdown files, the table of contents, the output location, and build the site
 
@@ -49,7 +49,7 @@ minidocs docs/ --contents contents.json --output site/
 
 The folder `site` will now contain the `html` `js` and `css` for your site.
 
-### library
+### using minidocs as a JS module
 
 Create a table of contents in a file named `contents.json`:
 
@@ -109,6 +109,15 @@ You can also add transforms to your project by adding a `browserify` field to th
   ]
 }
 ```
+
+### about the minidocs transform
+
+Packaged with minidocs is a transform that takes care of reading the contents file, the markdown files, highlighting code in the markdown, and bundling the JS and CSS.
+
+The minidocs transform is only necessary when using minidocs as a JS module, not when using the minidocs cli tool.
+
+
+## run the example
 
 To run a full example, clone this repository, go into the folder [`example`](example) then call
 
