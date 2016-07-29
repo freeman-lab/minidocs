@@ -3,6 +3,7 @@ body {
   color: rgb(80,80,80);
   margin: 0px;
   padding: 0px;
+  overflow-y: scroll;
 }
 
 .contents-link {
