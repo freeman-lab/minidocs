@@ -113,6 +113,7 @@ function buildHTML (done) {
 
     var html = createHTML({
       title: state.title,
+      head: '<meta name="viewport" content="width=device-width, initial-scale=1">',
       body: page,
       script: argv.basedir + '/bundle.js',
       css: argv.basedir + '/bundle.css'
