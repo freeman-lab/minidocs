@@ -32,11 +32,7 @@ module.exports = function (state, prev, send) {
     }
   `
 
-  if (typeof document !== 'undefined' && document.body.scrollTop > 0) {
-    document.body.scrollTop = 0
-  }
-
-  return html`<div id="choo-root" class="minidocs">
+  return html`<div id="choo-root" class="minidocs"}>
     ${sidebar(state, prev, send)}
     <div class="${prefix} minidocs-main">
       <div class="markdown-body">

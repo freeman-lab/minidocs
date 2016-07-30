@@ -109,10 +109,15 @@ module.exports = function (state, prev, send) {
         current = state.current
       }
 
+      function onclick (e) {
+        if (typeof document !== 'undefined' && document.body.scrollTop > 0) {
+          document.body.scrollTop = 0
+        }
+        send('menu:set', { open: false })
+      }
+
       if (item.link) {
-        return html`<div><a href="${item.link}" class="content-link ${isActive(current, item.key)}" onclick=${function (e) {
-          send('menu:set', { open: false })
-        }}>${item.name}</a></div>`
+        return html`<div><a href="${item.link}" class="content-link ${isActive(current, item.key)}" onclick=${onclick}>${item.name}</a></div>`
       }
 
       return html`<div class="h${item.depth}">${item.name}</div>`
