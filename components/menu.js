@@ -85,6 +85,7 @@ module.exports = function (state, prev, send) {
     @media (min-width: 600px) {
       .minidocs-menu {
         display: block;
+        margin-bottom: 25px;
       }
 
       .minidocs-menu-toggle {
