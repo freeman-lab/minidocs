@@ -9,5 +9,15 @@ module.exports = function (opts) {
   css('./styles/github-markdown.css', { global: true })
   css('./styles/highlighting/tomorrow.css', { global: true })
 
-  return app
+  return {
+    app: app,
+    start: function (id, opts) {
+      if (typeof id === 'object') {
+        opts = id
+        id = null
+      }
+      opts.href = opts.href || false
+      return app.start(id, opts)
+    }
+  }
 }
