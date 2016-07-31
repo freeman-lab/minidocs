@@ -6,5 +6,5 @@ var app = minidocs({
   logo: './logo.svg'
 })
 
-var tree = app.start()
+var tree = app.start({ href: false })
 document.body.appendChild(tree)

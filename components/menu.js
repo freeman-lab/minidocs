@@ -111,9 +111,6 @@ module.exports = function (state, prev, send) {
       }
 
       function onclick (e) {
-        if (typeof document !== 'undefined' && document.body.scrollTop > 0) {
-          document.body.scrollTop = 0
-        }
         send('menu:set', { open: false })
       }
 

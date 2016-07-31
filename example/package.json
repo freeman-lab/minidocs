@@ -4,6 +4,7 @@
   "description": "example for minidocs",
   "main": "index.js",
   "scripts": {
+    "bundle": "browserify index.js -o bundle.js",
     "start": "budo index.js:bundle.js --pushstate"
   },
   "repository": {
@@ -28,6 +29,7 @@
   "homepage": "https://github.com/freeman-lab/minidocs#readme",
   "dependencies": {},
   "devDependencies": {
+    "browserify": "^13.1.0",
     "budo": "^8.1.0"
   }
 }
