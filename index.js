@@ -16,6 +16,7 @@ module.exports = function (opts) {
         opts = id
         id = null
       }
+      if (!opts) opts = {}
       opts.href = opts.href || false
       return app.start(id, opts)
     }
