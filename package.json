@@ -5,18 +5,17 @@
   "main": "index.js",
   "style": "components/styles/index.css",
   "scripts": {
-    "start": "budo --dir example example/index.js:bundle.js --pushstate --live",
+    "link:example": "npm link && cd examples/browser && npm link minidocs",
+    "start": "npm run link:example && budo --dir examples/browser/ examples/browser/index.js:bundle.js --pushstate --live",
     "lint": "standard",
-    "test:browser": "browserify tests/index.js | tape-run --render=\"tap-spec\"",
-    "test:node": "TEST_ENV=node tape tests/index.js | tap-spec",
-    "test": "npm run test:node && npm run test:browser",
+    "test": "tape tests/*.js | tap-spec",
     "build:example": "cd example && browserify index.js -p yo-yoify -o bundle.js",
     "deploy:example": "surge example minidocs-example.surge.sh",
     "build": "browserify docs/index.js -p yo-yoify -o docs/bundle.js",
     "deploy": "npm run build && surge site minidocs.surge.sh"
   },
   "bin": {
-    "minidocs": "cli.js"
+    "minidocs": "bin/index.js"
   },
   "browserify": {
     "transform": [
@@ -42,15 +41,19 @@
   },
   "homepage": "https://github.com/freeman-lab/minidocs#readme",
   "dependencies": {
+    "async.applyeachseries": "^0.5.2",
     "browserify": "^13.0.1",
     "choo": "^3.0.1",
     "create-html": "^1.0.0",
     "css-extract": "^1.1.0",
     "debug": "^2.2.0",
+    "each-async": "^1.1.1",
+    "execspawn": "^1.0.1",
     "exit": "^0.1.2",
     "github-avatar-url": "^1.0.0",
     "highlight.js": "^9.2.0",
     "insert-css": "^0.2.0",
+    "is-absolute": "^0.2.5",
     "lodash.isarray": "^4.0.0",
     "lodash.isobject": "^3.0.2",
     "lodash.map": "^4.4.0",

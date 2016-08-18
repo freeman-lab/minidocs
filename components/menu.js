@@ -77,7 +77,7 @@ module.exports = function (state, prev, send) {
       width: 1em;
       height: 0.15em;
       background: black;
-      box-shadow: 
+      box-shadow:
         0 0.25em 0 0 black,
         0 0.5em 0 0 black;
     }

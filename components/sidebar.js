@@ -1,12 +1,9 @@
-var url = require('url')
 var css = require('sheetify')
 var html = require('choo/html')
 
 var menu = require('./menu')
 
 module.exports = function (state, prev, send) {
-  var contents = state.contents
-
   var prefix = css`
     :host {
       width: 100%;

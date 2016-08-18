@@ -32,7 +32,7 @@ module.exports = function (opts) {
           e.preventDefault()
           var href = node.href
 
-          if (location.pathname !== node.pathname) {
+          if (window.location.pathname !== node.pathname) {
             send('location:setLocation', { location: href }, done)
             window.history.pushState(null, null, href)
             document.body.scrollTop = 0
