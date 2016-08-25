@@ -25,6 +25,25 @@ module.exports = function (state, prev, send) {
       function onclick (e) {
         send('menu:set', { open: false })
       }
+      
+      function createTocItem (tocItem) {
+        if (tocItem.level === 1) return '' // Don't put title
+        var depth = item.depth + (tocItem.level - 1)
+        return html`<a href="#${tocItem.slug}" class="h${depth} content-link">${tocItem.title}</a>`
+      }
+
+      if (isActive(current, item.key) && item.toc.length > 1) {
+        return html`
+          <div>
+            <a href="${item.link}" class="content-link ${isActive(current, item.key)}" onclick=${onclick}>${item.name}</a>
+            <div class="minidocs-menu-toc">
+              ${item.toc.map(function (tocItem) {
+                return createTocItem(tocItem)
+              })}
+            </div>
+          </div>
+        `
+      }
 
       if (item.link) {
         return html`<div><a href="${item.link}" class="content-link ${isActive(current, item.key)}" onclick=${onclick}>${item.name}</a></div>`
