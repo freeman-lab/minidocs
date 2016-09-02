@@ -1,7 +1,8 @@
 var css = require('sheetify')
+var insertCSS = require('insert-css')
 var minidocs = require('./app')
 
-module.exports = function (opts) {
+module.exports = function (opts, callback) {
   var app = minidocs(opts)
 
   css('./styles/base.css', { global: true })

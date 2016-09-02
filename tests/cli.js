@@ -11,12 +11,8 @@ test('basic cli usage', function (t) {
     cwd: __dirname
   })
 
-  cmd.stdout.on('data', function (data) {
-    console.log(data.toString())
-  })
-
   cmd.on('close', function () {
-    check(['bundle.css', 'bundle.js', 'index.html', 'index.js'], function (err) {
+    check(['bundle.css', 'bundle.js', 'index.html'], function (err) {
       t.notOk(err)
       t.end()
     })

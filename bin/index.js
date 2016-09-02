@@ -9,8 +9,9 @@ var exit = require('exit')
 
 var minidocs = require('../app')
 var parseOptions = require('../lib/parse-options')
+var createCSS = require('../lib/create-css')
 var createHTML = require('../lib/create-html')
-var createImages = require('../lib/create-html')
+var createAssets = require('../lib/create-assets')
 var createJS = require('../lib/create-js')
 var createOutputDir = require('../lib/create-output-dir')
 var createPushstateFile = require('../lib/create-pushstate-file')
@@ -26,6 +27,7 @@ var argv = minimist(process.argv.slice(2), {
     l: 'logo',
     s: 'css',
     i: 'initial',
+    a: 'assets',
     p: 'pushstate',
     b: 'basedir',
     f: 'full-html',
@@ -58,12 +60,14 @@ if (argv.contents) {
 }
 
 if (argv.logo) {
+  var logoSource = path.resolve(cwd, argv.logo)
   var logo = path.parse(argv.logo).base
 }
 
 var state = {
   title: argv.title,
   logo: logo,
+  logoSource: logoSource,
   contents: contentsPath,
   markdown: source,
   initial: argv.initial,
@@ -92,8 +96,9 @@ function build (options) {
   var tasks = [
     createOutputDir,
     createJS,
+    createCSS,
     createHTML,
-    createImages
+    createAssets
   ]
 
   if (options.argv.pushstate) {
@@ -121,6 +126,7 @@ function usage (exitcode) {
     * --title, -t        Project name [name of current directory]
     * --logo, -l         Project logo
     * --css, -s          Optional stylesheet
+    * --assets, -a       Directory of assets to be copied to the built site
     * --initial, -i      Page to use for root url
     * --pushstate, -p    Create a 200.html file for hosting services like surge.sh
     * --basedir, -b      Base directory of the site

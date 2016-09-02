@@ -1,0 +1,30 @@
+{
+  "name": "minidocs-example-cli",
+  "version": "0.0.0",
+  "description": "example for minidocs",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm link minidocs && minidocs docs -c contents.js --assets assets -o site",
+    "start": "npm run build && budo --dir site --pushstate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freeman-lab/minidocs.git"
+  },
+  "keywords": [
+    "minidocs",
+    "example",
+    "documentation"
+  ],
+  "browserify": {},
+  "author": "freeman-lab",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/freeman-lab/minidocs/issues"
+  },
+  "homepage": "https://github.com/freeman-lab/minidocs#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "budo": "^8.1.0"
+  }
+}
