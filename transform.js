@@ -2,7 +2,6 @@ var path = require('path')
 var through = require('through2')
 var staticModule = require('static-module')
 
-var minidocs = require('./index')
 var parseOptions = require('./lib/parse-options')
 
 module.exports = function minidocsTransform (filename) {

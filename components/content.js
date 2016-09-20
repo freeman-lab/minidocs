@@ -9,63 +9,7 @@ module.exports = function (state, prev, send) {
     return item.key === currentPage
   })[0]
 
-  var prefix = css`
-    a.markdown-link {
-      color: rgb(173,173,173);
-      background: rgb(240,240,240);
-      display: inline-block;
-      position: absolute;
-      margin-top: -50px;
-      padding: 3px 5px;
-      text-decoration: none;
-    }
-
-    a.markdown-link:hover {
-      color: rgb(130,130,130);
-      background: rgb(225,225,225);
-    }
-
-    img.contributor {
-      border: none;
-      vertical-align: top;
-    }
-
-    div.contributor-wrapper {
-      width: 30px;
-      height: 30px;
-      display: inline-block;
-      text-align: center;
-      margin-right: 5px;
-      opacity: 0.8;
-      cursor: pointer;
-      border: 3px solid rgb(225, 225, 225);
-    }
-
-    div.contributor-wrapper:hover {
-      background: rgb(205,205,205);
-      opacity: 0.95;
-    }
-
-    div.contributor-container {
-      width: 60%;
-      right: 40px;
-      margin-top: -50px;
-      position: relative;
-      display: inline-block;
-      text-align: right;
-      float: right;
-    }
-
-    @media (min-width: 600px) {
-      div.contributor-wrapper {
-        width: 50px;
-        height: 50px;
-      }
-      div.contributor-container {
-        right: 0px;
-      }
-    }
-  `
+  var prefix = css('./content.css')
 
   var contentWrapper = html`<div></div>`
   contentWrapper.innerHTML = page
