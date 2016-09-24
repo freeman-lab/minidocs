@@ -47,7 +47,21 @@ Just specify the location of your markdown files, the table of contents, the out
 minidocs docs/ --contents contents.json --output site/
 ```
 
-The folder `site` will now contain the `html` `js` and `css` for your site.
+The folder `site` will now contain the `html`, `js`, and `css` for your site.
+
+**Have a images or other files you'd like to include?** You can copy a directory into the build of your site with the `--assets` option:
+
+```
+minidocs docs/ --contents contents.json --output site/ --assets images
+```
+
+**Want to change the styles?** Use the `--css` option to include a custom stylesheet.
+
+```
+minidocs docs/ --contents contents.json --output site/ --css style.css
+```
+
+**[See all other cli options.](https://github.com/freeman-lab/minidocs#command-line-1)**
 
 ### using minidocs as a JS module
 
@@ -140,6 +154,7 @@ Options:
   * --title, -t        Project name [name of current directory]
   * --logo, -l         Project logo
   * --css, -s          Optional stylesheet
+  * --assets, -a       Directory of assets to be copied to the built site
   * --initial, -i      Page to use for root url
   * --pushstate, -p    Create a 200.html file for hosting services like surge.sh
   * --basedir, -b      Base directory of the site
