@@ -5,10 +5,10 @@
   "main": "index.js",
   "style": "components/styles/index.css",
   "scripts": {
-    "link:example": "npm link && cd examples/browser && npm link minidocs",
-    "start": "npm run link:example && budo --dir examples/browser/ examples/browser/index.js:bundle.js --pushstate --live",
+    "link:minidocs": "npm link && npm link minidocs",
+    "start": "npm run link:minidocs && budo --dir examples/browser/ examples/browser/index.js:bundle.js --pushstate --live",
     "lint": "standard",
-    "test": "tape tests/*.js | tap-spec",
+    "test": "npm run link:minidocs && tape tests/*.js | tap-spec",
     "build:example": "cd example && browserify index.js -p yo-yoify -o bundle.js",
     "deploy:example": "surge example minidocs-example.surge.sh",
     "build": "browserify docs/index.js -p yo-yoify -o docs/bundle.js",
