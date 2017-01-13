@@ -2,6 +2,8 @@
 
 Hello! This is an introduction to an example site built with [`minidocs`](https://github.com/freeman-lab/minidocs).
 
+## doing the how it works thing
+
 ### how it works
 
 Just make a folder of markdown files, and specify an object describing the table of contents
