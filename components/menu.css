@@ -33,7 +33,7 @@
 }
 
 a.content-link {
-  padding: 2px 8px 2px 5px;
+  padding: 6px 8px 6px 5px;
   margin-bottom: 1px;
   cursor: pointer;
   text-decoration: none;
@@ -42,7 +42,12 @@ a.content-link {
   border-left: 3px solid #eee;
 }
 
-a.content-link.active, a.content-link:hover {
+a.content-link.active {
+  background-color: #fff;
+  border-left: 3px solid rgb(200,200,200);
+}
+
+a.content-link:hover {
   background-color: #fff;
   border-left: 3px solid rgb(200,200,200);
 }
@@ -75,14 +80,14 @@ a.content-link.active, a.content-link:hover {
 }
 
 .minidocs-menu-toc {
-  background-color: #fff;
+  margin-top:-2px;
+  background-color: #f8f8f8;
   border-left: 3px solid rgb(200,200,200);
-  padding:2px 0 0 8px;
-  margin-top:-2px
 }
 
 .minidocs-menu-toc a.content-link {
   border-left:0px;
+  padding: 4px 0px 4px 10px;
 }
 
 @media (min-width: 600px) {
