@@ -25,7 +25,7 @@ module.exports = function (state, prev, send) {
       function onclick (e) {
         send('menu:set', { open: false })
       }
-      
+
       function createTocItem (tocItem) {
         if (tocItem.level === 1) return '' // Don't put title
         var depth = item.depth + (tocItem.level - 1)
@@ -38,7 +38,7 @@ module.exports = function (state, prev, send) {
             <a href="${item.link}" class="content-link ${isActive(current, item.key)}" onclick=${onclick}>${item.name}</a>
             <div class="minidocs-menu-toc">
               ${item.toc.map(function (tocItem) {
-                return createTocItem(tocItem)
+                return (tocItem.level === 2) ? createTocItem(tocItem) : ''
               })}
             </div>
           </div>
