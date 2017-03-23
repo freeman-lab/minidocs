@@ -3,7 +3,7 @@ var html = require('choo/html')
 
 var menu = require('./menu')
 
-module.exports = function (state, prev, send) {
+module.exports = function (state, emit) {
   var prefix = css('./sidebar.css')
 
   function createHeader () {
@@ -19,6 +19,6 @@ module.exports = function (state, prev, send) {
     <div class="minidocs-header">
       <h1><a href="${state.basedir}/">${createHeader()}</a></h1>
     </div>
-    ${menu(state, prev, send)}
+    ${menu(state, emit)}
   </div>`
 }

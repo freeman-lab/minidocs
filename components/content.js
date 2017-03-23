@@ -2,7 +2,7 @@ var html = require('choo/html')
 var css = require('sheetify')
 var avatar = require('github-avatar-url')
 
-module.exports = function (state, prev, send) {
+module.exports = function (state, emit) {
   var currentPage = state.params.page || state.current
   var page = state.html[currentPage]
   var pageData = state.contents.filter(function (item) {

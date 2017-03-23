@@ -2,7 +2,7 @@ var url = require('url')
 var css = require('sheetify')
 var html = require('choo/html')
 
-module.exports = function (state, prev, send) {
+module.exports = function (state,  emit) {
   var contents = state.contents
   var prefix = css('./menu.css')
 
@@ -22,20 +22,17 @@ module.exports = function (state, prev, send) {
         current = state.current
       }
 
-      function onclick (e) {
-        send('menu:set', { open: false })
-      }
-
       function createTocItem (tocItem) {
+        console.log('item.link', item.link)
         if (tocItem.level === 1) return '' // Don't put title
         var depth = item.depth + (tocItem.level - 1)
-        return html`<a href="#${tocItem.slug}" class="h${depth} content-link">${tocItem.title}</a>`
+        return html`<a href="${item.link}#${tocItem.slug}" class="h${depth} content-link">${tocItem.title}</a>`
       }
 
       if (isActive(current, item.key) && item.toc.length > 1) {
         return html`
           <div>
-            <a href="${item.link}" class="content-link ${isActive(current, item.key)}" onclick=${onclick}>${item.name}</a>
+            <a href="${item.link}" class="content-link ${isActive(current, item.key)}">${item.name}</a>
             <div class="minidocs-menu-toc">
               ${item.toc.map(function (tocItem) {
                 return (tocItem.level === 2) ? createTocItem(tocItem) : ''
@@ -46,7 +43,7 @@ module.exports = function (state, prev, send) {
       }
 
       if (item.link) {
-        return html`<div><a href="${item.link}" class="content-link ${isActive(current, item.key)}" onclick=${onclick}>${item.name}</a></div>`
+        return html`<div><a href="${item.link}" class="content-link ${isActive(current, item.key)}">${item.name}</a></div>`
       }
 
       return html`<div class="h${item.depth}">${item.name}</div>`
@@ -58,17 +55,16 @@ module.exports = function (state, prev, send) {
   }
 
   function isOpen () {
-    if (typeof window !== 'undefined' && window.innerWidth > 600) return 'menu-open'
     return state.menu.open ? 'menu-open' : 'menu-closed'
   }
 
   function onclick (e) {
-    send('menu:set', { open: !state.menu.open })
+    emit('menu:toggle')
   }
 
   return html`<div class="${prefix} minidocs-contents">
     <button class="minidocs-menu-toggle" onclick=${onclick}>Menu</button>
-    <div class="minidocs-menu ${isOpen()} menu-${state.menu.size}">
+    <div class="minidocs-menu ${isOpen()}">
       <div class="minidocs-menu-wrapper">
         ${createMenu(contents)}
       </div>

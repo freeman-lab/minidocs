@@ -1,5 +1,4 @@
 var css = require('sheetify')
-var insertCSS = require('insert-css')
 var minidocs = require('./app')
 
 module.exports = function (opts, callback) {
@@ -13,13 +12,7 @@ module.exports = function (opts, callback) {
   return {
     app: app,
     start: function (id, opts) {
-      if (typeof id === 'object') {
-        opts = id
-        id = null
-      }
-      if (!opts) opts = {}
-      opts.href = opts.href || false
-      return app.start(id, opts)
+      return app.start()
     }
   }
 }
